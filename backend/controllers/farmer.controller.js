@@ -1,4 +1,4 @@
-const Farmer = require('../models/farmer.model')
+const Farmer = require('../models/farmer.model')    
 
 const farmersSerializer = data => ({
     id: data.id,
@@ -116,7 +116,7 @@ exports.create = (req, res) => {
 };
 
 exports.update = (req, res) => {
-    console.log(req.body,"opdate")
+    console.log(req.body,"hxhh")
     if(!req.body.name) {
         return res.status(400).send({
             message: "Farmer name can not be empty"
@@ -124,13 +124,9 @@ exports.update = (req, res) => {
     }
 
     Farmer.findByIdAndUpdate(req.params.id, {
-        // name: req.body.name.trim(),
-        // phone: req.body.phone.trim(),
-        // aadahar: req.body.aadhar.trim(),
-        // address: req.body.address.trim(),
-        // landCapacity: req.body.landCapacity.trim(),
-        status: req.body.status.trim(),
-        // date : req.body.date.trim(),
+       
+        status: req.body.status.trim()
+     
        
     }, {new: true})
     .then(data => {

@@ -11,8 +11,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
-
-
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
@@ -24,17 +22,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
-
 export default function DialogSelect(props) {
-console.log(props,"dropdwon")
-
     const states = {
         approved: "success",
         pending: "warning",
         declined: "secondary",
       };
-  
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [status, setStatus] = React.useState(props.statusprop);
@@ -42,21 +35,22 @@ console.log(props,"dropdwon")
 
   const handleChange = (event) => {
     setStatus(String(event.target.value) || "");
+
     setColor(String(event.target.value).toLowerCase() || "");
   };
-  const done= () =>{
+  const done=()=>{
     alert("done")
   }
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
-    props.farmerData.status=status;
+    props.farmerData.status=status; 
     props.updateFarmer(props.id,props.farmerData,done)
     setOpen(false);
   };
 
- 
   return (
     <div>
       <Button onClick={handleClickOpen}

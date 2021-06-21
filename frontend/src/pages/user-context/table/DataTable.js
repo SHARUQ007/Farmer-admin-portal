@@ -7,7 +7,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { Link } from "react-router-dom";
 import ConfirmDelete from './ConfirmDelete'
 import { UserContext } from "../context/UserContext";
-console.log(UserContext,"usercontext")
+
 const styles = theme => ({
     paper: {
         margin: theme.spacing(2),
@@ -24,7 +24,7 @@ const styles = theme => ({
 
 const DataTable = ({ classes, ...props }) => {
     const { users, meta, fetchUsers, deleteUser} = useContext(UserContext)
-    console.log(users,"users",useContext(UserContext))
+
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 	let [ name, setName ] = useState("")

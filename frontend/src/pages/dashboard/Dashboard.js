@@ -17,10 +17,8 @@ import Table from "./components/Table/Table";
 
 import { FarmerContext } from "./context/FarmerContext";
 
-
-export default function Dashboard(props) {
+ function Dashboard(props) {
   const { farmers,fetchFarmers,updateFarmer} = useContext(FarmerContext)
-  console.log(farmers)
   var classes = useStyles();
   const [rowsPerPage, setRowsPerPage] = useState(5);
   
@@ -31,8 +29,7 @@ export default function Dashboard(props) {
 
   return (
     <>
-      {/* <PageTitle title="Farmer Dashboard" button="Latest Reports" /> */}
-      <PageTitle title="Farmer Dashboard" />
+      <PageTitle title="Farmer Dashboard" button="Latest Reports" />
       <Grid container spacing={4}>
        
         <Grid item xs={12}>
@@ -51,8 +48,6 @@ export default function Dashboard(props) {
             }
           >
           
-    
-          
           </Widget>
         </Grid>
      
@@ -63,7 +58,7 @@ export default function Dashboard(props) {
             noBodyPadding
             bodyClass={classes.tableWidget}
           >
-            <Table data={farmers}  updateFarmer={updateFarmer} />
+            <Table data={farmers}  updateFarmer={updateFarmer}/>
           </Widget>
         </Grid>
       </Grid>
@@ -71,6 +66,9 @@ export default function Dashboard(props) {
   );
 }
 
+
+export default Dashboard;
 // #######################################################################
 
 
+  

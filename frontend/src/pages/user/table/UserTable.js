@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Paper, withStyles } from '@material-ui/core';
 import MUIDataTable from "mui-datatables";
 import { connect } from "react-redux";
-import * as actions from "../../../actions/user";
+import * as actions from "../../../actions/map";
 import FormDialogAddUser from "../formDialog/FormDialogAddUser";
 import FormDialogEditUser from "../formDialog/FormDialogEditUser";
 import FormDialogDeleteUser from "../formDialog/FormDialogDeleteUser";
@@ -194,8 +194,8 @@ const UserTable = ({ classes, ...props }) => {
 }
 
 const mapStateToProps = state => ({
-    users: state.user.users,
-    meta: state.user.metaUser
+    users: state.map.maps,
+    meta: state.map.mapMeta
 })
 
 const mapActionToProps = {

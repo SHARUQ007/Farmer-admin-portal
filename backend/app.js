@@ -11,6 +11,7 @@ const authRouter =require('./routes/auth.routes.js');
 const mapRouter =require('./routes/map.routes.js');
 const userRouter =require('./routes/user.routes.js');
 const farmerRouter =require('./routes/farmer.routes.js');
+const ordersRouter =require('./routes/orders.routes.js');
 
 const { MONGO_URI, MONGO_DB_NAME } = config;
 
@@ -41,6 +42,8 @@ app.use('/api/map', mapRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/farmer', farmerRouter);
+app.use('/api/orders', ordersRouter);
+
 
 
 // Serve static assets if in production

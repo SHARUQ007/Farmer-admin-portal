@@ -18,7 +18,6 @@ const states = {
 };
 
 export default function TableComponent({data,updateFarmer}) {
-  // let data=farmers.data
   if(data.length>0){
       var keys = Object.keys(data[0]).map(i => i.toUpperCase());
       keys.shift(); // delete "id" key
@@ -34,20 +33,20 @@ export default function TableComponent({data,updateFarmer}) {
             </TableRow>
           </TableHead>
           <TableBody >
-            {data.map(({ id, name, phone, aadhar, address,landCapacity, status,date }) => (
+            {data.map(({ id, name, mobile, address, aadhaar, date, land, status }) => (
               <TableRow key={id} >
                 <TableCell className="pl-3 fw-normal">{name}</TableCell>
-                <TableCell>{phone}</TableCell>
-                <TableCell>{aadhar}</TableCell>
+                <TableCell>{mobile}</TableCell>
                 <TableCell>{address}</TableCell>
-                <TableCell>{landCapacity}</TableCell>
+                <TableCell>{aadhaar}</TableCell>
+                <TableCell>{date}</TableCell>
+                <TableCell>{land}</TableCell>
                 <TableCell>
                 <Dropdown statusprop={status} 
-                updateFarmer={updateFarmer}
-                id={id}
-                farmerData={{ id, name, phone, aadhar, address,landCapacity, status,date}} />
+                          updateFarmer={updateFarmer} 
+                          id={id} 
+                          farmerData={{ id, name, mobile, address, aadhaar, date, land, status }}/>  
                 </TableCell>
-                <TableCell>{date}</TableCell>
              
               </TableRow>
             ))}
