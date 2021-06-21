@@ -14,11 +14,21 @@ class OrdersProvider extends React.PureComponent {
         selectedOrders: null,
     };
    
-    fetchOrders = async (page, rowsPerPage = 5, name = null, email = null) => {
+    fetchOrders = async () => {
       API.orders(). fetchAll()
         .then(res => {
           this.setState ({
             orders : res.data,
+          })
+        })
+        .catch(err => console.log(err))
+    }
+    fetchPagination = async (page, rowsPerPage = 5, name = null, email = null) => {
+      API.orders().fetchPagination(page,rowsPerPage)
+        .then(res => {
+          this.setState ({
+            orders : res.data.orders,
+            meta:res.data.meta
           })
         })
         .catch(err => console.log(err))
@@ -28,9 +38,9 @@ class OrdersProvider extends React.PureComponent {
       API.orders().fetchById(id)
         .then(res =>{
             this.setState ({
-              selectedOrders : res.data
+              orders: res.data
             })
-            onSuccess(this.state.selectedOrders)
+            onSuccess()
         })
         .catch(err => console.log(err))
     }
@@ -71,6 +81,7 @@ class OrdersProvider extends React.PureComponent {
               ...this.state,
               fetchOrders : this.fetchOrders,
               fetchById : this.fetchById,
+              fetchPagination:this.fetchPagination,
               createOrders : this.createOrders,
               updateOrders : this.updateOrders,
               deleteOrders : this.deleteOrders

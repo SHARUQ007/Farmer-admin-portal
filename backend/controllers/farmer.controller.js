@@ -64,13 +64,13 @@ exports.findPagination = async (req, res) => {
 
 exports.findOne = (req, res) => {
     Farmer.findById(req.params.id)
-        .then(data => {
+        .then(async data => {
             if(!data) {
                 return res.status(404).send({
                     message: "farmer not found with id " + req.params.id
                 });
             }
-            const farmer = farmersSerializer(data)
+            const farmer = await Promise.all(data.map(farmersSerializer));
             res.send(farmer);
         }).catch(err => {
             if(err.kind === 'ObjectId') {
@@ -79,7 +79,7 @@ exports.findOne = (req, res) => {
                 });
             }
             return res.status(500).send({
-                message: "Error retrieving farmer with id " + req.params.id
+                message: "Error retrieving farmer with id "+err + req.params.id
             });
         });
 };

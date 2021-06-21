@@ -1,4 +1,5 @@
 import React, { useState, Dropdown, useEffect, useContext} from "react";
+import {useParams} from "react-router-dom";
 import {
   Grid,
 } from "@material-ui/core";
@@ -17,15 +18,37 @@ import Table from "./components/Table/Table";
 import { OrdersContext ,OrdersProvider} from "./context/OrdersContext";
 
  function Orders(props) {
-  const { orders,fetchOrders,updateOrders} = useContext(OrdersContext)
+  let { id} = useParams();
+  const { orders,meta,fetchOrders,updateOrders,fetchPagination,fetchById } = useContext(OrdersContext)
+
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
   var classes = useStyles();
-  const [rowsPerPage, setRowsPerPage] = useState(5);
   
   
   useEffect(() => {
-        fetchOrders(1, rowsPerPage)
+    //if we dont have id in params just get all``
+    if(!id){
+        fetchPagination(1, rowsPerPage);
+    }
+    else{
+      fetchById(id)
+    }
     }, [])
 
+  const handleChangePage = async (event, newPage) => {
+        await setPage(newPage);
+        fetchPagination(newPage + 1, rowsPerPage)
+    };
+
+    const handleChangeRowsPerPage = async (event) => {
+        if (event.target.value){
+            const val = parseInt(event.target.value, 10)
+            await setRowsPerPage(val);
+            await setPage(0);
+            fetchPagination(1, val)
+        }
+    };
   return (
     <>
       <PageTitle title="Stem Availability Data Dashboard" button="Latest Reports" />
@@ -57,7 +80,15 @@ import { OrdersContext ,OrdersProvider} from "./context/OrdersContext";
             noBodyPadding
             bodyClass={classes.tableWidget}
           >
-            <Table data={orders}  updateOrders={updateOrders}/>
+            <Table data={orders}  
+                    meta={meta}
+                    page={page}
+                    rowsPerPage={rowsPerPage}
+                    updateOrders={updateOrders} 
+                    fetchPagination={fetchPagination} 
+                    handleChangePage={handleChangePage}
+                    handleChangeRowsPerPage={handleChangeRowsPerPage}
+                    />
           </Widget>
         </Grid>
       </Grid>

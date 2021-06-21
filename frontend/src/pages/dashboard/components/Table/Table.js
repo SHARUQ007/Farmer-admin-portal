@@ -6,7 +6,7 @@ import {
   TableBody,
   TableCell,
 } from "@material-ui/core";
-
+import {Link} from "react-router-dom";
 // components
 import { Button } from "../../../../components/Wrappers";
 import Dropdown from './Dropdown';
@@ -35,7 +35,11 @@ export default function TableComponent({data,updateFarmer}) {
           <TableBody >
             {data.map(({ id, name, phone, address, aadhar, landCapacity, status ,date}) => (
               <TableRow key={id} >
-                <TableCell className="pl-3 fw-normal">{name}</TableCell>
+                <TableCell className="pl-3 fw-normal">
+                  <Link to={"/admin/orders/"+id}>
+                    {name}
+                  </Link>
+                </TableCell>
                 <TableCell>{phone}</TableCell>
                 <TableCell>{aadhar}</TableCell>
                 <TableCell>{address}</TableCell>

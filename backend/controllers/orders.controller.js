@@ -27,22 +27,8 @@ exports.findAll =  (req, res) => {
 
 // Retrieve data with pagination
 exports.findPagination = async (req, res) => {
-    const { page = 1, limit = 4, name = "", category = "all" } = req.query;
-
-    let query = {}
-    if (category && category.toLowerCase() !== "all") {
-        query =  { category : category }
-        
-        if (name && name.trim() !== "") {
-            query = {
-                $and: [ { category : category } , { name: new RegExp(`${name}+`, "i") } ]
-            }
-        }
-    }
-    else if (name && name.trim() !== "") {
-        query = { name: new RegExp(`${name}+`, "i") }
-    }
-
+    const { page = 1, limit = 4} = req.query;
+    let query={}
     const paginated = await Orders.paginate(
         query,
         {
@@ -55,7 +41,6 @@ exports.findPagination = async (req, res) => {
     
     const { docs } = paginated;
     const orders = await Promise.all(docs.map(ordersSerializer));
-
     delete paginated["docs"];
     const meta = paginated
 
@@ -64,13 +49,13 @@ exports.findPagination = async (req, res) => {
 
 exports.findOne = (req, res) => {
     Orders.findById(req.params.id)
-        .then(data => {
+        .then(async data => {
             if(!data) {
                 return res.status(404).send({
                     message: "orders not found with id " + req.params.id
                 });
             }
-            const orders = ordersSerializer(data)
+            const orders =await Promise.all(data.map(ordersSerializer));
             res.send(orders);
         }).catch(err => {
             if(err.kind === 'ObjectId') {

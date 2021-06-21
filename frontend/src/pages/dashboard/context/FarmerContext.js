@@ -24,13 +24,13 @@ class FarmerProvider extends React.PureComponent {
         .catch(err => console.log(err))
     }
 
-    fetchById = async (id, onSuccess) => {
+    fetchById = async (id,onSuccess) => {
       API.farmer().fetchById(id)
         .then(res =>{
             this.setState ({
-              selectedFarmer : res.data
+              farmers: res.data
             })
-            onSuccess(this.state.selectedFarmer)
+            onSuccess()
         })
         .catch(err => console.log(err))
     }

@@ -2,6 +2,8 @@ import React, { useState, Dropdown, useEffect, useContext} from "react";
 import {
   Grid,
 } from "@material-ui/core";
+import {useParams} from "react-router-dom";
+
 
 
 import useStyles from "./styles";
@@ -18,13 +20,21 @@ import Table from "./components/Table/Table";
 import { FarmerContext } from "./context/FarmerContext";
 
  function Dashboard(props) {
-  const { farmers,fetchFarmers,updateFarmer} = useContext(FarmerContext)
-  var classes = useStyles();
+  let {id} = useParams();
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const { farmers,fetchFarmers,updateFarmer,fetchById} = useContext(FarmerContext)
+  var classes = useStyles();
   
   
   useEffect(() => {
+     //if we dont have id in params just get all detail
+    if(!id){
         fetchFarmers(1, rowsPerPage)
+    }
+    else{
+      fetchById(id)
+    }
     }, [])
 
   return (
