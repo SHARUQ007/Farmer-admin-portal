@@ -14,7 +14,7 @@ import Dropdown from './Dropdown';
 const states = {
   approved: "success",
   pending: "warning",
-  declined: "secondary",
+  declined: "error",
 };
 
 export default function TableComponent({data,updateFarmer}) {
@@ -33,21 +33,21 @@ export default function TableComponent({data,updateFarmer}) {
             </TableRow>
           </TableHead>
           <TableBody >
-            {data.map(({ id, name, mobile, address, aadhaar, date, land, status }) => (
+            {data.map(({ id, name, phone, address, aadhar, landCapacity, status ,date}) => (
               <TableRow key={id} >
                 <TableCell className="pl-3 fw-normal">{name}</TableCell>
-                <TableCell>{mobile}</TableCell>
+                <TableCell>{phone}</TableCell>
+                <TableCell>{aadhar}</TableCell>
                 <TableCell>{address}</TableCell>
-                <TableCell>{aadhaar}</TableCell>
-                <TableCell>{date}</TableCell>
-                <TableCell>{land}</TableCell>
+                <TableCell>{landCapacity}</TableCell>
+                
                 <TableCell>
                 <Dropdown statusprop={status} 
                           updateFarmer={updateFarmer} 
                           id={id} 
-                          farmerData={{ id, name, mobile, address, aadhaar, date, land, status }}/>  
+                          farmerData={{ id, name, phone, address, aadhar, landCapacity,  status,date }}/>  
                 </TableCell>
-             
+                <TableCell>{date}</TableCell>
               </TableRow>
             ))}
           </TableBody>

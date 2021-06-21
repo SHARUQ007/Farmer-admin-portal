@@ -31,7 +31,7 @@ const structure = [
   { id: 3, label: "Transporter", link: "/admin/map", icon: <LocalShippingIcon /> },
   { id: 1, label: "Admin Users", link: "/admin/user", icon: <BusinessIcon /> },
   { id: 2, label: "Farmer dev", link: "/admin/usercontext", icon: <EcoIcon /> },
-  {id: 7, label: "Farmer2", link: "/admin/orders", icon: <PersonPinCircleIcon /> },
+  {id: 7, label: "Stem Availability Data", link: "/admin/orders", icon: <PersonPinCircleIcon /> },
   { id: 4, type: "divider" },
   { id: 5, type: "title", label: "Details" },
   { id: 6, label: "Documents", link: "", icon: <LibraryIcon /> },

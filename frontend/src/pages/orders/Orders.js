@@ -28,7 +28,7 @@ import { OrdersContext ,OrdersProvider} from "./context/OrdersContext";
 
   return (
     <>
-      <PageTitle title="Orders Dashboard" button="Latest Reports" />
+      <PageTitle title="Stem Availability Data Dashboard" button="Latest Reports" />
       <Grid container spacing={4}>
        
         <Grid item xs={12}>
@@ -41,7 +41,7 @@ import { OrdersContext ,OrdersProvider} from "./context/OrdersContext";
                   color="text"
                   colorBrightness="secondary"
                 >
-                  Orders Registration Details
+                  Stem Availability Data
                 </Typography>
               </div>
             }

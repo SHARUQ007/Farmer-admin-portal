@@ -33,19 +33,21 @@ export default function TableComponent({data,updateOrders}) {
             </TableRow>
           </TableHead>
           <TableBody >
-            {data.map(({ id, name, phone, noOfStems, variety, farming, status }) => (
+            {data.map(({ id, name, phone, noOfStems, farming,variety, status }) => (
               <TableRow key={id} >
                 <TableCell className="pl-3 fw-normal">{name}</TableCell>
                 <TableCell>{phone}</TableCell>
                 <TableCell>{noOfStems}</TableCell>
-                <TableCell>{variety}</TableCell>
-                <TableCell>{farming}</TableCell>
-                <TableCell>
+                 <TableCell>
                 <Dropdown statusprop={status} 
                           updateOrders={updateOrders} 
                           id={id} 
-                          farmerData={{ id, name, phone, noOfStems, variety, farming, status }}/>  
+                          farmerData={{ id, name, phone, noOfStems, farming,variety,  status }}/>  
                 </TableCell>
+                <TableCell>{farming}</TableCell>
+                <TableCell>{variety}</TableCell>
+                
+               
              
               </TableRow>
             ))}
