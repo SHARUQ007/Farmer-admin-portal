@@ -5,7 +5,7 @@ let FarmerContext;
 const { Provider, Consumer } = (FarmerContext = React.createContext());
 
 class FarmerProvider extends React.PureComponent {
-  
+
     state = {
         farmers: [],
         meta : {
