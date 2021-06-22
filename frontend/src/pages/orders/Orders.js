@@ -18,7 +18,7 @@ import Table from "./components/Table/Table";
 import { OrdersContext ,OrdersProvider} from "./context/OrdersContext";
 
  function Orders(props) {
-  let { name,phone} = useParams();
+  const { name,phone} = useParams();
   const { orders,meta,fetchOrders,updateOrders,fetchPagination,fetchById } = useContext(OrdersContext)
 
   const [page, setPage] = useState(0)

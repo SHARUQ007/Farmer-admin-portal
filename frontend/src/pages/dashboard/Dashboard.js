@@ -20,23 +20,36 @@ import Table from "./components/Table/Table";
 import { FarmerContext } from "./context/FarmerContext";
 
  function Dashboard(props) {
-  let {phone, name} = useParams();
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const { farmers,fetchFarmers,updateFarmer,fetchById} = useContext(FarmerContext)
+  const {phone, name} = useParams();
+  const {farmers,meta,fetchPagination,updateFarmer,fetchById} = useContext(FarmerContext)
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
   var classes = useStyles();
   
   
   useEffect(() => {
      //if we dont have (phone && name) in params just get all detail
     if(!(phone && name)){
-        fetchFarmers(1, rowsPerPage)
+        fetchPagination(1, rowsPerPage);
     }
     else{
       fetchById(name,phone)
     }
     }, [])
 
+  const handleChangePage = async (event, newPage) => {
+        await setPage(newPage);
+        fetchPagination(newPage + 1, rowsPerPage)
+    };
+
+    const handleChangeRowsPerPage = async (event) => {
+        if (event.target.value){
+            const val = parseInt(event.target.value, 10)
+            await setRowsPerPage(val);
+            await setPage(0);
+            fetchPagination(1, val)
+        }
+    };
   return (
     <>
       <PageTitle title="Farmer Dashboard" button="Latest Reports" />
@@ -68,7 +81,14 @@ import { FarmerContext } from "./context/FarmerContext";
             noBodyPadding
             bodyClass={classes.tableWidget}
           >
-            <Table data={farmers}  updateFarmer={updateFarmer}/>
+            <Table data={farmers}  
+                   meta={meta}
+                   page={page}
+                   updateFarmer={updateFarmer}
+                   rowsPerPage={rowsPerPage}
+                   fetchPagination={fetchPagination} 
+                   handleChangePage={handleChangePage}
+                   handleChangeRowsPerPage={handleChangeRowsPerPage}/>
           </Widget>
         </Grid>
       </Grid>

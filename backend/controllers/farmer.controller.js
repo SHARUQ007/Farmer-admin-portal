@@ -27,22 +27,9 @@ exports.findAll =  (req, res) => {
 
 // Retrieve data with pagination
 exports.findPagination = async (req, res) => {
-    const { page = 1, limit = 4, name = "", category = "all" } = req.query;
+    const { page = 1, limit = 4} = req.query;
 
     let query = {}
-    if (category && category.toLowerCase() !== "all") {
-        query =  { category : category }
-        
-        if (name && name.trim() !== "") {
-            query = {
-                $and: [ { category : category } , { name: new RegExp(`${name}+`, "i") } ]
-            }
-        }
-    }
-    else if (name && name.trim() !== "") {
-        query = { name: new RegExp(`${name}+`, "i") }
-    }
-
     const paginated = await Farmer.paginate(
         query,
         {
@@ -55,7 +42,6 @@ exports.findPagination = async (req, res) => {
     
     const { docs } = paginated;
     const farmers = await Promise.all(docs.map(farmersSerializer));
-
     delete paginated["docs"];
     const meta = paginated
 
