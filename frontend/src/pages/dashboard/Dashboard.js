@@ -20,7 +20,7 @@ import Table from "./components/Table/Table";
 import { FarmerContext } from "./context/FarmerContext";
 
  function Dashboard(props) {
-  let {id} = useParams();
+  let {phone, name} = useParams();
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const { farmers,fetchFarmers,updateFarmer,fetchById} = useContext(FarmerContext)
@@ -28,12 +28,12 @@ import { FarmerContext } from "./context/FarmerContext";
   
   
   useEffect(() => {
-     //if we dont have id in params just get all detail
-    if(!id){
+     //if we dont have (phone && name) in params just get all detail
+    if(!(phone && name)){
         fetchFarmers(1, rowsPerPage)
     }
     else{
-      fetchById(id)
+      fetchById(name,phone)
     }
     }, [])
 

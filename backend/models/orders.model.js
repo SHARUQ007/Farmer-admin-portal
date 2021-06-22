@@ -1,14 +1,8 @@
 const { Schema, model } =require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 
-const {ObjectId} = Schema.Types;
-
 // Create Schema
 const OrdersSchema = new Schema({
-  farmerId:{
-    type:ObjectId,
-    ref:"user"
-  },
   name: {
     type: String,
     required: true

@@ -18,7 +18,7 @@ import Table from "./components/Table/Table";
 import { OrdersContext ,OrdersProvider} from "./context/OrdersContext";
 
  function Orders(props) {
-  let { id} = useParams();
+  let { name,phone} = useParams();
   const { orders,meta,fetchOrders,updateOrders,fetchPagination,fetchById } = useContext(OrdersContext)
 
   const [page, setPage] = useState(0)
@@ -27,12 +27,12 @@ import { OrdersContext ,OrdersProvider} from "./context/OrdersContext";
   
   
   useEffect(() => {
-    //if we dont have id in params just get all``
-    if(!id){
+    //if we dont have (phone && name) in params just get all``
+    if(!(phone && name)){
         fetchPagination(1, rowsPerPage);
     }
     else{
-      fetchById(id)
+      fetchById(name,phone)
     }
     }, [])
 

@@ -63,7 +63,7 @@ exports.findPagination = async (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-    Farmer.findById(req.params.id)
+    Farmer.find({name:req.query.name,phone:req.query.phone})
         .then(async data => {
             if(!data) {
                 return res.status(404).send({

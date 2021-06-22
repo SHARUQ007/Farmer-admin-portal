@@ -34,8 +34,8 @@ class OrdersProvider extends React.PureComponent {
         .catch(err => console.log(err))
     }
 
-    fetchById = async (id, onSuccess) => {
-      API.orders().fetchById(id)
+    fetchById = async (name,phone, onSuccess) => {
+      API.orders().fetchById(name,phone)
         .then(res =>{
             this.setState ({
               orders: res.data

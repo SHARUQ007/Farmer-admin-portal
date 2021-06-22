@@ -26,9 +26,6 @@ export default function TableComponent({data,updateOrders,fetchPagination,handle
       var keys = Object.keys(data[0]).map(i => i.toUpperCase());
       keys.shift(); // delete "id" key
 
-    data.map(({ id, name, phone, noOfStems, farming,variety,status }) => {
-      console.log(farming,"s")
-    });
       return (
         <Table className="mb-0">
           <TableHead>
@@ -43,7 +40,7 @@ export default function TableComponent({data,updateOrders,fetchPagination,handle
             {data.map(({ id, name, phone,orderId, noOfStems, farming,variety,status }) => (
               <TableRow key={id} >
                 <TableCell className="pl-3 fw-normal">
-                  <Link to={"/admin/dashboard/"+id}>
+                  <Link to={"/admin/dashboard/"+name+"/"+phone}>
                       {name}
                   </Link>
                 </TableCell>

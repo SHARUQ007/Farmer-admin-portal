@@ -36,7 +36,7 @@ export default function TableComponent({data,updateFarmer}) {
             {data.map(({ id, name, phone, address, aadhar, landCapacity, status ,date}) => (
               <TableRow key={id} >
                 <TableCell className="pl-3 fw-normal">
-                  <Link to={"/admin/orders/"+id}>
+                  <Link to={"/admin/orders/"+name+"/"+phone}>
                     {name}
                   </Link>
                 </TableCell>

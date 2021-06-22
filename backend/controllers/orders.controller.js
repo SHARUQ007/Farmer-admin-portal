@@ -48,8 +48,9 @@ exports.findPagination = async (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-    Orders.findById(req.params.id)
+    Orders.find({name:req.query.name,phone:req.query.phone})
         .then(async data => {
+            console.log(data,"data",{name:req.query.name,phone:req.query.phone})
             if(!data) {
                 return res.status(404).send({
                     message: "orders not found with id " + req.params.id
