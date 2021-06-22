@@ -10,7 +10,7 @@ farmerRouter.get('/list', jwt, farmerController.findAll);
 farmerRouter.get('/', jwt, farmerController.findPagination);
 
 // Find one by ID
-farmerRouter.get('/:id', jwt, farmerController.findOne);
+farmerRouter.get('/get/', jwt, farmerController.findOne);
 
 // Create
 farmerRouter.post('/', jwt, farmerController.create);

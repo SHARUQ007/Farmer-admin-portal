@@ -5,11 +5,13 @@ import {
   TableHead,
   TableBody,
   TableCell,
+  TableFooter
 } from "@material-ui/core";
-
+import {Link} from "react-router-dom";
 // components
 import { Button } from "../../../../components/Wrappers";
 import Dropdown from './Dropdown';
+import Pagination from './Pagination'
 
 const states = {
   approved: "success",
@@ -17,7 +19,7 @@ const states = {
   declined: "error",
 };
 
-export default function TableComponent({data,updateFarmer}) {
+export default function TableComponent({data,updateFarmer,fetchPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
   if(data.length>0){
       var keys = Object.keys(data[0]).map(i => i.toUpperCase());
       keys.shift(); // delete "id" key
@@ -35,7 +37,11 @@ export default function TableComponent({data,updateFarmer}) {
           <TableBody >
             {data.map(({ id, name, phone, address, aadhar, landCapacity, status ,date}) => (
               <TableRow key={id} >
-                <TableCell className="pl-3 fw-normal">{name}</TableCell>
+                <TableCell className="pl-3 fw-normal">
+                  <Link to={"/admin/orders/"+name+"/"+phone}>
+                    {name}
+                  </Link>
+                </TableCell>
                 <TableCell>{phone}</TableCell>
                 <TableCell>{aadhar}</TableCell>
                 <TableCell>{address}</TableCell>
@@ -51,6 +57,17 @@ export default function TableComponent({data,updateFarmer}) {
               </TableRow>
             ))}
           </TableBody>
+          <TableFooter>
+                    <TableRow>
+                        <Pagination 
+                            handleChangePage={handleChangePage} 
+                            handleChangeRowsPerPage={handleChangeRowsPerPage} 
+                            count={meta.totalDocs || 0}
+                            page={page}
+                            rowsPerPage={rowsPerPage}
+                        />
+                    </TableRow>
+                </TableFooter>
         </Table>
       );
     }

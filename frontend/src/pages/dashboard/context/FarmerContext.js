@@ -24,13 +24,23 @@ class FarmerProvider extends React.PureComponent {
         .catch(err => console.log(err))
     }
 
-    fetchById = async (id, onSuccess) => {
-      API.farmer().fetchById(id)
+    fetchPagination = async (page, rowsPerPage = 5, name = null, email = null) => {
+      API.farmer().fetchPagination(page,rowsPerPage)
+        .then(res => {
+          this.setState ({
+            farmers : res.data.farmers,
+            meta:res.data.meta
+          })
+        })
+        .catch(err => console.log(err))
+    }
+    fetchById = async (name,phone,onSuccess) => {
+      API.farmer().fetchById(name,phone)
         .then(res =>{
             this.setState ({
-              selectedFarmer : res.data
+              farmers: res.data
             })
-            onSuccess(this.state.selectedFarmer)
+            onSuccess()
         })
         .catch(err => console.log(err))
     }
@@ -70,6 +80,7 @@ class FarmerProvider extends React.PureComponent {
           value={{
               ...this.state,
               fetchFarmers : this.fetchFarmers,
+              fetchPagination:this.fetchPagination,
               fetchById : this.fetchById,
               createFarmer : this.createFarmer,
               updateFarmer : this.updateFarmer,

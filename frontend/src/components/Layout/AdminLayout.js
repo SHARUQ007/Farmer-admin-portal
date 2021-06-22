@@ -59,7 +59,10 @@ function AdminLayout(props) {
               <Switch>
               <FarmerProvider>
                 <Route  exact path="/admin/dashboard" component={Dashboard} />
+                <Route  exact path="/admin/dashboard/:name/:phone" component={Dashboard} />
+
                 <Route  exact path="/admin/orders" component={Orders} />
+                <Route  exact path="/admin/orders/:name/:phone" component={Orders} />
 
                 <Route exact path="/admin/map" component={Map} />
                 <Route exact path="/admin/map/add" component={AddForm} />

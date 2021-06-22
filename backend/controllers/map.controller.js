@@ -40,7 +40,6 @@ exports.findPagination = async (req, res) => {
     else if (name && name.trim() !== "") {
         query = { name: new RegExp(`${name}+`, "i") }
     }
-
     const paginated = await Map.paginate(
         query,
         {
