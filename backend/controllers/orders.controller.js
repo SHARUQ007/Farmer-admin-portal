@@ -13,7 +13,6 @@ const ordersSerializer = data => ({
 
 // Retrieve all data
 exports.findAll =  (req, res) => {
-    console.log("jai")
     Orders.find()
     .then(async data => {
         const orders = await Promise.all(data.map(ordersSerializer));
@@ -40,6 +39,7 @@ exports.findPagination = async (req, res) => {
     )
     
     const { docs } = paginated;
+
     const orders = await Promise.all(docs.map(ordersSerializer));
     delete paginated["docs"];
     const meta = paginated
@@ -50,7 +50,6 @@ exports.findPagination = async (req, res) => {
 exports.findOne = (req, res) => {
     Orders.find({name:req.query.name,phone:req.query.phone})
         .then(async data => {
-            console.log(data,"data",{name:req.query.name,phone:req.query.phone})
             if(!data) {
                 return res.status(404).send({
                     message: "orders not found with id " + req.params.id
@@ -154,3 +153,31 @@ exports.delete = (req, res) => {
          });
      });
 };
+
+exports.getScheduledStem=async (req,res)=>{
+     try{
+        const { page = 1, limit = 4} = req.query;
+        //return collection that has scheduled stems greater then zero
+        let query={scheduledStems:{$gt:0}}
+        const paginated = await Orders.paginate(
+            query,
+            {
+                page,
+                limit,
+                lean: true,
+                sort: { updatedAt: "desc" }
+            }
+        )
+        const { docs } = paginated;
+        const orders = await Promise.all(docs.map(ordersSerializer));
+        delete paginated["docs"];
+        const meta = paginated
+        res.json({ meta, orders });
+    }
+    catch(err){
+        res.status(500).send({
+                message: "Error while getting scheduled Stems " 
+            });
+    }
+
+}
