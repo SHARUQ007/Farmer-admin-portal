@@ -46,7 +46,8 @@ export default function DialogSelect(props) {
 
   const handleClose = () => {
     props.farmerData.status=status; 
-    props.updateOrders(props.id,props.farmerData,done)
+    console.log(props,"ss")
+    props.updateScheduledStem(props.id,props.farmerData,done)
     setOpen(false);
   };
 
