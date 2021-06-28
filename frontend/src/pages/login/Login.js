@@ -16,7 +16,8 @@ import classnames from "classnames";
 import useStyles from "./styles";
 
 // logo
-import logo from "./logo.svg";
+import gencrestLogo from "./gencrestLogo.svg";
+
 import google from "../../images/google.svg";
 
 // context
@@ -67,8 +68,8 @@ function Login(props) {
   return (
     <Grid container className={classes.container}>
       <div className={classes.logotypeContainer}>
-        {/* <img src={logo} alt="logo" className={classes.logotypeImage} /> */}
-        <Typography className={classes.logotypeText}>Gencrest Admin</Typography>
+        <img src={gencrestLogo} alt="logo" className={classes.logotypeImage} />
+        <Typography className={classes.logotypeText}>Gencrest Admin </Typography>
       </div>
       <div className={classes.formContainer}>
         <div className={classes.form}>

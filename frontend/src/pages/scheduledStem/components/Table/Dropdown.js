@@ -24,9 +24,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DialogSelect(props) {
     const states = {
-        approved: "success",
-        pending: "warning",
-        declined: "secondary",
+        confirmed: "success",
+        scheduled: "warning",
+        rescheduled: "error",
       };
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -77,9 +77,9 @@ export default function DialogSelect(props) {
                 onChange={handleChange}
                 input={<Input />}
               >
-                <MenuItem value={"Pending"}>Pending</MenuItem>
-                <MenuItem value={"Approved"}>Approved</MenuItem>
-                <MenuItem value={"Declined"}>Declined</MenuItem>
+                <MenuItem value={"Scheduled"}>Scheduled</MenuItem>
+                <MenuItem value={"Confirmed"}>Confirmed</MenuItem>
+                <MenuItem value={"Rescheduled"}>Rescheduled</MenuItem>
               </Select>
             </FormControl>
           </form>

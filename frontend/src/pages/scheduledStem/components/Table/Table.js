@@ -16,9 +16,9 @@ import Pagination from './Pagination'
 import PopUpCard from "../PopUpCard/PopUpCard"
 
 const states = {
-  approved: "success",
-  pending: "warning",
-  declined: "secondary",
+  confirmed: "success",
+  scheduled: "warning",
+  rescheduled: "error",
 };
 
 export default function TableComponent({data,updateScheduledStem,fetchPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {

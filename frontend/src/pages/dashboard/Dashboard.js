@@ -52,7 +52,7 @@ import { FarmerContext } from "./context/FarmerContext";
     };
   return (
     <>
-      <PageTitle title="Farmer Dashboard" button="Latest Reports" />
+      <PageTitle title="Admin Dashboard - Farmer Details" button="Latest Reports" />
       <Grid container spacing={4}>
        
         <Grid item xs={12}>

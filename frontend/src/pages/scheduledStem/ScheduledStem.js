@@ -50,7 +50,7 @@ import { ScheduledStemContext ,ScheduledStemProvider} from "./context/ScheduledS
     };
   return (
     <>
-      <PageTitle title="Sheduled Stem Availability Data Dashboard" button="Latest Reports" />
+      <PageTitle title="Admin Dashboard - Scheduled Stem Availability Data" button="Latest Reports" />
       <Grid container spacing={4}>
        
         <Grid item xs={12}>

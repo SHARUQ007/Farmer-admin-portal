@@ -14,7 +14,7 @@ const styles = theme => ({
 const Map = ({ classes, ...props }) => {
     return (
         <React.Fragment>
-            <PageTitle title="Transporter Dashboard" />
+            <PageTitle title="Admin Dashboard - Transporter Details" />
             <Grid container spacing={4}>
                 <DataTable />
             </Grid>
