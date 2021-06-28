@@ -26,7 +26,7 @@ export default function DialogSelect(props) {
     const states = {
         approved: "success",
         pending: "warning",
-        declined: "secondary",
+        declined: "error",
       };
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);

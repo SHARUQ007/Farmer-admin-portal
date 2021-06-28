@@ -18,7 +18,7 @@ import Pagination from './Pagination'
 const states = {
   approved: "success",
   pending: "warning",
-  declined: "secondary",
+  declined: "error",
 };
 
 export default function TableComponent({data,updateOrders,fetchPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
@@ -34,6 +34,7 @@ export default function TableComponent({data,updateOrders,fetchPagination,handle
                 <TableCell style={{fontWeight:'600'}}
                  key={key}>{key}</TableCell>
               ))}
+              {/* <TableCell style={{fontWeight:'600'}}>SCHEDULE</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody >
@@ -55,6 +56,14 @@ export default function TableComponent({data,updateOrders,fetchPagination,handle
                 </TableCell>
                 <TableCell>{farming}</TableCell>
                 <TableCell>{variety}</TableCell>
+                {/* <TableCell>
+                   <Button
+                   color="secondary"
+                   size="small"
+                className="px-1"
+                variant="contained">
+                 Schedule </Button>  
+                 </TableCell> */}
               </TableRow>
             ))}
           </TableBody>
