@@ -16,8 +16,8 @@ import Pagination from './Pagination'
 
 
 const states = {
-  approved: "success",
-  pending: "warning",
+  recieved: "success",
+  placed: "warning",
   declined: "error",
 };
 

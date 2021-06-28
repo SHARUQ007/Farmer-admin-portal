@@ -24,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DialogSelect(props) {
     const states = {
-        approved: "success",
-        pending: "warning",
+        recieved: "success",
+       placed: "warning",
         declined: "error",
       };
   const classes = useStyles();
@@ -76,8 +76,8 @@ export default function DialogSelect(props) {
                 onChange={handleChange}
                 input={<Input />}
               >
-                <MenuItem value={"Pending"}>Pending</MenuItem>
-                <MenuItem value={"Approved"}>Approved</MenuItem>
+                <MenuItem value={"Placed"}>Placed</MenuItem>
+                <MenuItem value={"Recieved"}>Recieved</MenuItem>
                 <MenuItem value={"Declined"}>Declined</MenuItem>
               </Select>
             </FormControl>
