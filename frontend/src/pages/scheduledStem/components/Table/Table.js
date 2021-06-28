@@ -13,7 +13,7 @@ import {Link} from "react-router-dom";
 import { Button } from "../../../../components/Wrappers";
 import Dropdown from './Dropdown';
 import Pagination from './Pagination'
-
+import PopUpCard from "../PopUpCard/PopUpCard"
 
 const states = {
   approved: "success",
@@ -22,11 +22,17 @@ const states = {
 };
 
 export default function TableComponent({data,updateScheduledStem,fetchPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
+  const [id,setId]=React.useState(null);
+
   if(data.length>0){
       var keys = Object.keys(data[0]).map(i => i.toUpperCase());
       keys.shift(); // delete "id" key
-
+  function closePopUp(){
+    setId(null);
+  }
       return (
+        <>
+        <PopUpCard id={id} data={data} closePopUp={closePopUp}/>
         <Table className="mb-0">
           <TableHead>
             <TableRow>
@@ -39,10 +45,8 @@ export default function TableComponent({data,updateScheduledStem,fetchPagination
           <TableBody >
             {data.map(({ id, name, phone,orderId, noOfStems, farming,variety,status }) => (
               <TableRow key={id} >
-                <TableCell className="pl-3 fw-normal">
-                  <Link to={"/admin/dashboard/"+name+"/"+phone}>
+                <TableCell className="pl-3 fw-normal cursor-pointer" id={id} onClick={(e)=>{setId(e.target.id)}}>
                       {name}
-                  </Link>
                 </TableCell>
                 <TableCell>{phone}</TableCell>
                 <TableCell>{orderId}</TableCell>
@@ -70,6 +74,7 @@ export default function TableComponent({data,updateScheduledStem,fetchPagination
                     </TableRow>
                 </TableFooter>
         </Table>
+        </>
       );
     }
     else{
