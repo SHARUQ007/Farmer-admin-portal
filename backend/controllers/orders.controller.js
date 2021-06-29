@@ -9,6 +9,19 @@ const ordersSerializer = data => ({
     status: data.status,
     farming: data.farming,
     variety: data.variety,
+    expected:data.expected
+});
+const popupOrdersSerializer = data => ({
+    id: data.id,
+    active: data.active,
+    landCapacity: data.landCapacity,
+    pincode: data.pincode,
+    scheduledStems: data.scheduledStems,
+    scheduledDate: data.scheduledDate,
+    TruckId: data.TruckId,
+    StemsLoadedforTruck: data.StemsLoadedforTruck,
+    ArrivalTimeofTrucks: data.ArrivalTimeofTrucks,
+    StemLoadingTimeforTrucks:data.StemLoadingTimeforTrucks
 });
 
 // Retrieve all data
@@ -105,13 +118,7 @@ exports.update = (req, res) => {
     }
 
     Orders.findByIdAndUpdate(req.params.id, {
-        // name:req.body.name.trim(),
-        // phone:req.body.phone.trim(),
-        // orderId:req.body.orderId.trim(),
-        // noOfStems:req.body.noOfStems.trim(),
         status:req.body.status.trim(),
-        // farming:req.body.farming.trim(),
-        // variety:req.body.variety.trim(),       
     }, {new: true})
     .then(data => {
         if(!data) {
@@ -120,7 +127,7 @@ exports.update = (req, res) => {
             });
         }
         const orders = ordersSerializer(data)
-        res.send(orders);
+        res.send({status:"success"});
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
@@ -170,9 +177,11 @@ exports.getScheduledStem=async (req,res)=>{
         )
         const { docs } = paginated;
         const orders = await Promise.all(docs.map(ordersSerializer));
+        //Serializing the data that need to show in frontend on popup
+        const popupData = await Promise.all(docs.map(popupOrdersSerializer));
         delete paginated["docs"];
-        const meta = paginated
-        res.json({ meta, orders });
+        const meta = paginated  
+        res.json({ meta, orders ,popupData});
     }
     catch(err){
         res.status(500).send({
@@ -181,3 +190,35 @@ exports.getScheduledStem=async (req,res)=>{
     }
 
 }
+
+exports.updateScheduledDate=async (req,res)=>{
+    console.log(req.body,"body")
+     if(!req.body.id) {
+        return res.status(400).send({
+            message: "Orders id can not be empty"
+        });
+    }
+    Orders.findByIdAndUpdate({_id:req.body.id}, {
+        scheduledDate:new Date(req.body.date),
+        status:"Rescheduled",    
+    }, {new: true})
+    .then(data => {
+        if(!data) {
+            return res.status(404).send({
+                message: "Orders not found with id " + req.params.id
+            });
+        }
+        const orders = ordersSerializer(data);
+        const popupData = popupOrdersSerializer(data);
+        res.json({status:"success"});
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Orders not found with id " + req.params.id
+            });
+        }
+        return res.status(500).send({
+            message: "Error updating orders with id " + req.params.id
+        });
+    });
+};

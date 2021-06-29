@@ -19,7 +19,7 @@ import { ScheduledStemContext ,ScheduledStemProvider} from "./context/ScheduledS
 
  function ScheduledStem(props) {
   const { name,phone} = useParams();
-  const { orders,meta,fetchPagination,updateScheduledStem,fetchById } = useContext(ScheduledStemContext)
+  const { orders,popupData,meta,fetchPagination,updateScheduledStem,fetchById ,updateScheduledDate} = useContext(ScheduledStemContext)
   console.log(updateScheduledStem)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -79,9 +79,11 @@ import { ScheduledStemContext ,ScheduledStemProvider} from "./context/ScheduledS
             bodyClass={classes.tableWidget}
           >
             <Table data={orders}  
+                    popupData={popupData}
                     meta={meta}
                     page={page}
                     rowsPerPage={rowsPerPage}
+                    updateScheduledDate={updateScheduledDate}
                     updateScheduledStem={updateScheduledStem} 
                     fetchPagination={fetchPagination} 
                     handleChangePage={handleChangePage}
