@@ -33,6 +33,12 @@ export default function DialogSelect(props) {
   const [status, setStatus] = React.useState(props.statusprop);
   const [color, setColor] = React.useState(props.statusprop.toLowerCase());
 
+  //this will run when the props change to set rescheduled
+  React.useEffect(()=>{
+    setStatus(props.statusprop);
+     setColor(String(props.statusprop).toLowerCase());
+  },[props])
+
   const handleChange = (event) => {
     setStatus(String(event.target.value) || "");
     setColor(String(event.target.value).toLowerCase() || "");
@@ -45,12 +51,14 @@ export default function DialogSelect(props) {
   };
 
   const handleClose = () => {
-    props.farmerData.status=status; 
-    console.log(props,"ss")
-    props.updateScheduledStem(props.id,props.farmerData,done)
     setOpen(false);
   };
 
+  const updateStatus=()=>{
+    props.farmerData.status=status; 
+    props.updateScheduledStem(props.id,props.farmerData,done)
+    setOpen(false);
+  }
   return (
     <div>
       <Button onClick={handleClickOpen}
@@ -88,7 +96,7 @@ export default function DialogSelect(props) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={updateStatus} color="primary">
             Ok
           </Button>
         </DialogActions>

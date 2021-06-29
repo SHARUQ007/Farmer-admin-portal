@@ -2,6 +2,7 @@
 /*  POPUP */
 .popupContainer{
   height: 100vh;
+  margin-top: 50px;
   position: fixed;
   background-color: rgba(0, 0, 0, 0.6);
   width: 100vw;
@@ -31,18 +32,21 @@
 .popupText {
   font-size: 14px;
 }
-.popUpData{
-    width: 190px;
+.popupData{
     display: flex;
     justify-content: space-between;
 }
-.popUpKey{
+.popupKey{
   font-weight: bold;
-  width: 150px;
+  margin: 0.3rem;
 }
-
-.popUpValue{
-  width: 150px;
+.popupValue{
+  margin: 0.3rem;
+}
+.popupDate{
+    height: 20px;
+    width: 120px;
+    margin: 10px;
 }
 .popupButton {
   display: block;

@@ -8,6 +8,7 @@ class ScheduledStemProvider extends React.PureComponent {
 
     state = {
         orders: [],
+        popupData:[],
         meta : {
           totalDocs : 0
         },
@@ -19,6 +20,7 @@ class ScheduledStemProvider extends React.PureComponent {
         .then(res => {
           this.setState ({
             orders : res.data.orders,
+            popupData:res.data.popupData,
             meta:res.data.meta
           })
         })
@@ -40,7 +42,7 @@ class ScheduledStemProvider extends React.PureComponent {
       API.orders().create(data)
         .then(res =>{
             this.setState ({
-              selectedScheduledStem : res.data
+              orders : res.data.orders
             })
             onSuccess()
         })
@@ -50,21 +52,60 @@ class ScheduledStemProvider extends React.PureComponent {
     updateScheduledStem = (id, data, onSuccess) => {
       API.orders().update(id, data)
         .then(res =>{
-            this.setState ({
-              selectedScheduledStem : res.data
-            })
+             if(res.data.status==="success"){
+             //instead of getting data from server we manuly changing the data it save the bandwidth
+             let tempOrders=[...this.state.orders];
+             for(let i=0;i<this.state.orders.length;i++){
+                    if(tempOrders[i].id===id){
+                      tempOrders[i].status=data.status;
+                      //if ordered find break this 
+                      break;
+                    }
+              }
+              let obj={
+                  ...this.state,
+                  orders:tempOrders,
+                 }
+              this.setState({...obj})
+            }
             onSuccess()
         })
         .catch(err => console.log(err))
     }
     
-    deleteScheduledStem = (id, onSuccess) => {
-      API.orders().delete(id)
+    updateScheduledDate = (id, date) => {
+      API.orders().updateDate(id, date)
         .then(res =>{
-
-          onSuccess()
+            if(res.data.status==="success"){
+                let isfind=false
+                //instead of getting data from server we manuly changing the data it save the bandwidth
+                let tempOrders=[...this.state.orders];
+                let tempPopupData=[...this.state.popupData];
+                 for(let i=0;i<this.state.popupData.length;i++){
+                    if(tempPopupData[i].id===id){
+                      tempPopupData[i].scheduledDate=date;
+                      //if popupData is find change break this 
+                      break
+                    }
+                  }
+                 for(let i=0;i<this.state.orders.length;i++){
+                    if(tempOrders[i].id===id){
+                      tempOrders[i].status="Rescheduled";
+                      //if ordered is find  break this 
+                      break;
+                    }
+                 }
+                 let obj={
+                  ...this.state,
+                  orders:tempOrders,
+                  popupData:tempPopupData
+                 }
+                 this.setState({...obj})
+            }
         })
+        .catch(err => console.log(err))
     }
+    
     render() {
       return (
         <Provider
@@ -75,6 +116,7 @@ class ScheduledStemProvider extends React.PureComponent {
               fetchPagination:this.fetchPagination,
               createScheduledStem : this.createScheduledStem,
               updateScheduledStem : this.updateScheduledStem,
+               updateScheduledDate: this. updateScheduledDate,
               deleteScheduledStem : this.deleteScheduledStem
           }}
         >

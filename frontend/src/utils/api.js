@@ -82,6 +82,7 @@ orders(url = 'orders') {
           create: newRecord => http.post(url, newRecord, config),
           getScheduledStem: (page, limit) => http.get(url + "/scheduledStem?page=" + page +"&limit=" + limit, config),
           update: (id, updatedRecord) => http.put(url + "/" + id, updatedRecord, config),
+          updateDate:(id,date) => http.post(url + "/scheduleDate" ,{id,date},config),
           delete: id => http.delete(url + "/" + id, config)
       }
   }

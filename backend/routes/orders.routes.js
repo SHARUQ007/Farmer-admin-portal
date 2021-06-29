@@ -13,15 +13,18 @@ ordersRouter.get('/', jwt, ordersController.findPagination);
 //not dont change the order of route
 ordersRouter.get('/scheduledStem', jwt, ordersController.getScheduledStem);
 
+ordersRouter.post('/scheduleDate', jwt, ordersController.updateScheduledDate);
+
 // Find one by ID
 ordersRouter.get('/:id', jwt, ordersController.findOne);
-
 
 // Create
 ordersRouter.post('/', jwt, ordersController.create);
 
+
 // Update
 ordersRouter.put('/:id', jwt, ordersController.update);
+
 
 // Delete
 ordersRouter.delete('/:id', jwt, ordersController.delete);
