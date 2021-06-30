@@ -15,8 +15,20 @@ class ScheduledStemProvider extends React.PureComponent {
         selectedScheduledStem: null,
     };
    
-    fetchPagination = async (page, rowsPerPage = 5, name = null, email = null) => {
+    fetchPagination = async (page, rowsPerPage = 5) => {
       API.orders().getScheduledStem(page,rowsPerPage)
+        .then(res => {
+          this.setState ({
+            orders : res.data.orders,
+            popupData:res.data.popupData,
+            meta:res.data.meta
+          })
+        })
+        .catch(err => console.log(err))
+    }
+
+    fetchFilteredPagination = async (page, rowsPerPage = 5,status=null,date=null) => {
+      API.orders().getFilteredScheduledStem(page,rowsPerPage,status,date)
         .then(res => {
           this.setState ({
             orders : res.data.orders,
@@ -90,7 +102,7 @@ class ScheduledStemProvider extends React.PureComponent {
                   }
                  for(let i=0;i<this.state.orders.length;i++){
                     if(tempOrders[i].id===id){
-                      tempOrders[i].status="Rescheduled";
+                      tempOrders[i].status="Scheduled";
                       //if ordered is find  break this 
                       break;
                     }
@@ -114,6 +126,7 @@ class ScheduledStemProvider extends React.PureComponent {
               fetchScheduledStem : this.fetchScheduledStem,
               fetchById : this.fetchById,
               fetchPagination:this.fetchPagination,
+              fetchFilteredPagination:this.fetchFilteredPagination,
               createScheduledStem : this.createScheduledStem,
               updateScheduledStem : this.updateScheduledStem,
                updateScheduledDate: this. updateScheduledDate,

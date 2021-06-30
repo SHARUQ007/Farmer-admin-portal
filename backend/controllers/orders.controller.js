@@ -190,9 +190,53 @@ exports.getScheduledStem=async (req,res)=>{
     }
 
 }
+exports.getFilteredStem=async (req,res)=>{
+     try{
+        const { page = 1, limit = 4} = req.query;
+        let query={}
+        //if we want scheduled stems
+        if(req.body.isScheduledStems){
+              query["scheduledStems"]={$gt:0}
+
+        }
+        //if admin set status for fillter
+        if(req.body.status){
+            query["status"]=req.body.status;
+        }
+        //if admin set date for fillter
+        if(req.body.date){
+            query["scheduledDate"]=req.body.date;
+        }
+        console.log(query,"query",req.body.date)
+
+        const paginated = await Orders.paginate(
+            query,
+            {
+                page,
+                limit,
+                lean: true,
+                sort: { updatedAt: "desc" }
+            }
+        )
+        const { docs } = paginated;
+        const orders = await Promise.all(docs.map(ordersSerializer));
+        //Serializing the data that need to show in frontend on popup
+        const popupData = await Promise.all(docs.map(popupOrdersSerializer));
+        // console.log(popupData,"s",orders)
+        delete paginated["docs"];
+        const meta = paginated  
+        res.json({ meta, orders ,popupData});
+    }
+    catch(err){
+        console.log(err.message)
+        res.status(500).send({
+                message: "Error while getting scheduled Stems " 
+            });
+    }
+
+}
 
 exports.updateScheduledDate=async (req,res)=>{
-    console.log(req.body,"body")
      if(!req.body.id) {
         return res.status(400).send({
             message: "Orders id can not be empty"
@@ -200,7 +244,7 @@ exports.updateScheduledDate=async (req,res)=>{
     }
     Orders.findByIdAndUpdate({_id:req.body.id}, {
         scheduledDate:new Date(req.body.date),
-        status:"Rescheduled",    
+        status:"Scheduled",    
     }, {new: true})
     .then(data => {
         if(!data) {

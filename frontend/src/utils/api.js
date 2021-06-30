@@ -81,6 +81,8 @@ orders(url = 'orders') {
           fetchById: (name,phone) => http.get(url + "/get"+"?name="+name+"&phone="+phone, config),
           create: newRecord => http.post(url, newRecord, config),
           getScheduledStem: (page, limit) => http.get(url + "/scheduledStem?page=" + page +"&limit=" + limit, config),
+          getFilteredStem: (page, limit,status,date) => http.post(url + "/scheduledStem?page=" + page +"&limit=" + limit,{status,date},config),
+          getFilteredScheduledStem: (page, limit,status,date) => http.post(url + "/scheduledStem?page=" + page +"&limit=" + limit,{status,date,isScheduledStems:true},config),
           update: (id, updatedRecord) => http.put(url + "/" + id, updatedRecord, config),
           updateDate:(id,date) => http.post(url + "/scheduleDate" ,{id,date},config),
           delete: id => http.delete(url + "/" + id, config)

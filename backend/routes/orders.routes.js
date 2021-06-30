@@ -13,6 +13,11 @@ ordersRouter.get('/', jwt, ordersController.findPagination);
 //not dont change the order of route
 ordersRouter.get('/scheduledStem', jwt, ordersController.getScheduledStem);
 
+//to get filtered stem data
+
+ordersRouter.post('/scheduledStem', jwt, ordersController.getFilteredStem);
+
+
 ordersRouter.post('/scheduleDate', jwt, ordersController.updateScheduledDate);
 
 // Find one by ID
