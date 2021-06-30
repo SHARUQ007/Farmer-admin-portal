@@ -190,6 +190,7 @@ exports.getScheduledStem=async (req,res)=>{
     }
 
 }
+function formatDate(){}
 exports.getFilteredStem=async (req,res)=>{
      try{
         const { page = 1, limit = 4} = req.query;
@@ -197,17 +198,29 @@ exports.getFilteredStem=async (req,res)=>{
         //if we want scheduled stems
         if(req.body.isScheduledStems){
               query["scheduledStems"]={$gt:0}
-
         }
         //if admin set status for fillter
         if(req.body.status){
             query["status"]=req.body.status;
         }
-        //if admin set date for fillter
-        if(req.body.date){
-            query["scheduledDate"]=req.body.date;
+        //if it has date and it is scheduled stem use scheduled date to filter
+        if(req.body.date && req.body.isScheduledStems){
+            //for time 
+            let timeStrig="T00:00:00.000Z"
+            let nextDay=new Date(req.body.date)
+            nextDay.setDate(nextDay.getDate()+1)
+            //filtering using today to nextday 
+            query["scheduledDate"]={$gte:new Date(req.body.date+timeStrig),$lt:nextDay};
         }
-        console.log(query,"query",req.body.date)
+        //if it has date and it is order use expected date to filter
+        if(req.body.date && !req.body.isScheduledStems){
+            //for time 
+            let timeStrig="T00:00:00.000Z"
+            let nextDay=new Date(req.body.date)
+            nextDay.setDate(nextDay.getDate()+1)
+            //filtering using today to nextday 
+            query["expected"]={$gte:new Date(req.body.date+timeStrig),$lt:nextDay};
+        }
 
         const paginated = await Orders.paginate(
             query,
@@ -220,12 +233,21 @@ exports.getFilteredStem=async (req,res)=>{
         )
         const { docs } = paginated;
         const orders = await Promise.all(docs.map(ordersSerializer));
-        //Serializing the data that need to show in frontend on popup
-        const popupData = await Promise.all(docs.map(popupOrdersSerializer));
-        // console.log(popupData,"s",orders)
+        //if it scheduled stem only send popUp data else don't
+        if(req.body.isScheduledStems){
+            //Serializing the data that need to show in frontend on popup 
+            //dont chnage this var to const it cause error
+             var popupData = await Promise.all(docs.map(popupOrdersSerializer));
+        }
         delete paginated["docs"];
-        const meta = paginated  
-        res.json({ meta, orders ,popupData});
+        const meta = paginated  ;
+        //if it scheduled stem only send popUp data else don't
+        if(req.body.isScheduledStems){
+            return res.json({ meta, orders ,popupData});
+        }else{
+            return res.json({ meta,orders});
+
+        }
     }
     catch(err){
         console.log(err.message)

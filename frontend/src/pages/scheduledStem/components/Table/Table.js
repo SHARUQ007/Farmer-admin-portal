@@ -8,13 +8,13 @@ import {
   TableFooter,TextField
 } from "@material-ui/core";
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {Link} from "react-router-dom";
 
 
 // components
-import { Button } from "../../../../components/Wrappers";
 import Dropdown from './Dropdown';
 import FilteredDropdown from './FilteredDropdown';
 
@@ -78,33 +78,52 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
 
   const searchChange = async (event) => {
     const { value } = event.target
-    await setFilteredDate(value)
-    fetchFilteredPagination(1,5,filteredStatus,filteredDate)
+    setFilteredDate(value)
+    fetchFilteredPagination(1,5,filteredStatus,value)
     }
+  const resetFilter=()=>{
+    //reduce unwanted rerender
+    if(!filteredStatus){
+      setFilteredStatus("");
+    }
+    //reduce unwanted rerender
+    if(!filteredDate){
+      setFilteredDate("");
+    }
+    //reduce unwanted fetch     
+    if(!filteredDate && filteredStatus){
+      fetchPagination(1,5);
+    }
+  }
   if(data.length>0){
       var keys = Object.keys(data[0])
       keys.shift(); // delete "id" key
       return (
         <>
          <div className="table-header" >
-                <div className="table-filter" >
-                      <TextField
-                            id="date"
-                            value={filteredDate}
-                            onChange={searchChange}
-                            label="Filter By Date"
-                            type="date"
-                            InputLabelProps={{
-                                    shrink: true,
-                            }}
-                       />
-                       <FilteredDropdown 
-                        filteredDate={filteredDate}
-                        filteredStatus={filteredStatus}
-                        setFilteredStatus={setFilteredStatus} 
-                        fetchFilteredPagination={fetchFilteredPagination}/>
-                       
-                </div>
+            <div className="table-filter" >
+              <TextField
+                    id="date"
+                    value={filteredDate}
+                    onChange={searchChange}
+                    label="Scheduled Date"
+                    type="date"
+                    InputLabelProps={{
+                            shrink: true,
+                    }}
+               />
+                <div>
+                      <FilteredDropdown 
+                      filteredDate={filteredDate}
+                      filteredStatus={filteredStatus}
+                      setFilteredStatus={setFilteredStatus} 
+                      fetchFilteredPagination={fetchFilteredPagination}/>
+
+                      <Button variant="contained" color="primary" onClick={resetFilter} style={{marginTop:"auto",height:"35px"}} size="large">
+                         Clear
+                      </Button>
+              </div>
+            </div>
             </div>
         <PopupCard id={id} popupData={filteredData} date={date} setDate={setDate} closePopup={closePopup} updateScheduledDate={updateScheduledDate}/>
         
@@ -158,26 +177,30 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
     else{
       return(
         <>
-        <div className="table-header" >
-                <div className="table-filter" >
-                      <TextField
-                            id="date"
-                            value={filteredDate}
-                            onChange={searchChange}
-                            label="Filter By Date"
-                            type="date"
-                            InputLabelProps={{
-                                    shrink: true,
-                            }}
-                       />
-                       <FilteredDropdown 
-                        filteredDate={filteredDate}
-                        filteredStatus={filteredStatus}
-                        setFilteredStatus={setFilteredStatus} 
-                        fetchFilteredPagination={fetchFilteredPagination}/>
-                       
-                </div>
+       <div className="table-header" >
+            <div className="table-filter" >
+              <TextField
+                    id="date"
+                    value={filteredDate}
+                    onChange={searchChange}
+                    label="Scheduled Date"
+                    type="date"
+                    InputLabelProps={{
+                            shrink: true,
+                    }}
+               />
+                <div>
+                      <FilteredDropdown 
+                      filteredDate={filteredDate}
+                      filteredStatus={filteredStatus}
+                      setFilteredStatus={setFilteredStatus} 
+                      fetchFilteredPagination={fetchFilteredPagination}/>
 
+                      <Button variant="contained" color="primary" onClick={resetFilter} style={{marginTop:"auto",height:"35px"}} size="large">
+                         Clear
+                      </Button>
+              </div>
+            </div>
             </div>
             <div className={classes.root}>
                 <Typography variant="h3" component="h3"  style={{margin:"1rem"}}>
