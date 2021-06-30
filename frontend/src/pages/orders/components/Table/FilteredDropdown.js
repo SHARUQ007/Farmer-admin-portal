@@ -38,7 +38,7 @@ export default function FilteredDropdown({filteredStatus,filteredDate,setFiltere
     <div>
       
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-controlled-open-select-label">Status</InputLabel>
+        <InputLabel id="demo-controlled-open-select-label">Filter By Status</InputLabel>
         <Select
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
@@ -54,7 +54,7 @@ export default function FilteredDropdown({filteredStatus,filteredDate,setFiltere
             <MenuItem value={"Scheduled"}  >Scheduled</MenuItem>
             <MenuItem value={"Confirmed"}>Confirmed</MenuItem>
             <MenuItem value={"Rescheduled"}>Rescheduled</MenuItem>
-            <MenuItem value={"Ordered Recevied"}>Ordered Recevied</MenuItem>
+            <MenuItem value={"Order Recevied"}>Order Recevied</MenuItem>
 
         </Select>
       </FormControl>
