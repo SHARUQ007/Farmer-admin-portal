@@ -12,6 +12,8 @@ import { withRouter } from "react-router-dom";
 import classNames from "classnames";
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import EcoIcon from '@material-ui/icons/Eco';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import AdjustIcon from '@material-ui/icons/Adjust';
 // styles
 import useStyles from "./styles";
 import "./scrollbar.css";
@@ -29,11 +31,11 @@ import {
 const structure = [
   { id: 0, label: "Farmer", link: "/admin/dashboard", icon: <PersonPinCircleIcon /> },
   { id: 3, label: "Transporter", link: "/admin/map", icon: <LocalShippingIcon /> },
-  { id: 1, label: "Admin Users", link: "/admin/user", icon: <BusinessIcon /> },
-  { id: 2, label: "Farmer dev", link: "/admin/usercontext", icon: <EcoIcon /> },
-  {id: 7, label: "Stem Availability Data", link: "/admin/orders", icon: <PersonPinCircleIcon /> },
-  {id: 9, label: "Scheduler", link: "/admin/usercontext", icon: <PersonPinCircleIcon /> },
-  {id: 8, label: "Scheduled stem ", link: "/admin/scheduledStem", icon: <PersonPinCircleIcon /> },
+  // { id: 1, label: "Admin Users", link: "/admin/user", icon: <BusinessIcon /> },
+  { id: 2, label: "Admin User", link: "/admin/usercontext", icon: <BusinessIcon />  },
+  {id: 7, label: "Stem Availability Data", link: "/admin/orders", icon: <EcoIcon />  },
+  {id: 8, label: "Scheduled stem ", link: "/admin/scheduledStem", icon: <CheckCircleOutlineIcon /> },
+  {id: 9, label: "Scheduler", link: "/admin/usercontext", icon: <AdjustIcon /> },
   { id: 4, type: "divider" },
   { id: 5, type: "title", label: "Details" },
   { id: 6, label: "Documents", link: "", icon: <LibraryIcon /> },

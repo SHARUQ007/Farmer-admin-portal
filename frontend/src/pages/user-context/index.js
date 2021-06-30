@@ -14,7 +14,7 @@ const styles = theme => ({
 const UserWithContext = ({ classes, ...props }) => {
     return (
         <React.Fragment>
-            <PageTitle title="User (using context)" />
+            <PageTitle title="Admin Dashboard - Admin Users" />
             <Grid container spacing={4}>
                 <DataTable />
             </Grid>
