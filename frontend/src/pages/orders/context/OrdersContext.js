@@ -34,6 +34,18 @@ class OrdersProvider extends React.PureComponent {
         .catch(err => console.log(err))
     }
 
+    fetchFilteredPagination = async (page, rowsPerPage = 5,status=null,date=null) => {
+      API.orders().getFilteredStem(page,rowsPerPage,status,date)
+        .then(res => {
+          this.setState ({
+            orders : res.data.orders,
+            popupData:res.data.popupData,
+            meta:res.data.meta
+          })
+        })
+        .catch(err => console.log(err))
+    }
+
     fetchById = async (name,phone, onSuccess) => {
       API.orders().fetchById(name,phone)
         .then(res =>{
@@ -59,9 +71,22 @@ class OrdersProvider extends React.PureComponent {
     updateOrders = (id, data, onSuccess) => {
       API.orders().update(id, data)
         .then(res =>{
-            this.setState ({
-              selectedOrders : res.data
-            })
+             if(res.data.status==="success"){
+             //instead of getting data from server we manuly changing the data it save the bandwidth
+             let tempOrders=[...this.state.orders];
+             for(let i=0;i<this.state.orders.length;i++){
+                    if(tempOrders[i].id===id){
+                      tempOrders[i].status=data.status;
+                      //if ordered find break this 
+                      break;
+                    }
+              }
+              let obj={
+                  ...this.state,
+                  orders:tempOrders,
+                 }
+              this.setState({...obj})
+            }
             onSuccess()
         })
         .catch(err => console.log(err))
@@ -82,6 +107,7 @@ class OrdersProvider extends React.PureComponent {
               fetchOrders : this.fetchOrders,
               fetchById : this.fetchById,
               fetchPagination:this.fetchPagination,
+              fetchFilteredPagination:this.fetchFilteredPagination,
               createOrders : this.createOrders,
               updateOrders : this.updateOrders,
               deleteOrders : this.deleteOrders

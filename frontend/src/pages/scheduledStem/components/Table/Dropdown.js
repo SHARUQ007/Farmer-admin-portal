@@ -37,7 +37,7 @@ export default function DialogSelect(props) {
   React.useEffect(()=>{
     setStatus(props.statusprop);
      setColor(String(props.statusprop).toLowerCase());
-  },[props])
+  },[props.statusprop])
 
   const handleChange = (event) => {
     setStatus(String(event.target.value) || "");

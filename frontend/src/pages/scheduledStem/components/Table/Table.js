@@ -5,13 +5,19 @@ import {
   TableHead,
   TableBody,
   TableCell,
-  TableFooter
+  TableFooter,TextField
 } from "@material-ui/core";
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+
 import {Link} from "react-router-dom";
+
 
 // components
 import { Button } from "../../../../components/Wrappers";
 import Dropdown from './Dropdown';
+import FilteredDropdown from './FilteredDropdown';
+
 import Pagination from './Pagination'
 import PopupCard from "../PopupCard/PopupCard"
 
@@ -20,19 +26,26 @@ const states = {
   scheduled: "warning",
   rescheduled: "error",
 };
+const useStyles = makeStyles({
+      root: {
+        width: '100%',
+        textTransform:"uppercase",
+        textAlign:"center",
+      },
+  });
 
-export default function TableComponent({data,popupData,updateScheduledDate,updateScheduledStem,fetchPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
+export default function TableComponent({data,popupData,updateScheduledDate,updateScheduledStem,fetchPagination,fetchFilteredPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
   const [id,setId]=React.useState(null);
   const [filteredData,setFilteredData]=React.useState([]);
   const [date,setDate]=React.useState()
+  const [filteredDate,setFilteredDate]=React.useState("")
 
-  if(data.length>0){
-      var keys = Object.keys(data[0])
-      keys.shift(); // delete "id" key
+  const [filteredStatus,setFilteredStatus]=React.useState("")
+  
+  const classes = useStyles();
   function closePopup(){
     setId(null);
   }
-  console.log(data,"data")
 
   function formatDate(date){
     if(date){
@@ -62,10 +75,41 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
     setFilteredData(temp);
 
   }
+
+  const searchChange = async (event) => {
+    const { value } = event.target
+    await setFilteredDate(value)
+    fetchFilteredPagination(1,5,filteredStatus,filteredDate)
+    }
+  if(data.length>0){
+      var keys = Object.keys(data[0])
+      keys.shift(); // delete "id" key
       return (
         <>
+         <div className="table-header" >
+                <div className="table-filter" >
+                      <TextField
+                            id="date"
+                            value={filteredDate}
+                            onChange={searchChange}
+                            label="Filter By Date"
+                            type="date"
+                            InputLabelProps={{
+                                    shrink: true,
+                            }}
+                       />
+                       <FilteredDropdown 
+                        filteredDate={filteredDate}
+                        filteredStatus={filteredStatus}
+                        setFilteredStatus={setFilteredStatus} 
+                        fetchFilteredPagination={fetchFilteredPagination}/>
+                       
+                </div>
+            </div>
         <PopupCard id={id} popupData={filteredData} date={date} setDate={setDate} closePopup={closePopup} updateScheduledDate={updateScheduledDate}/>
+        
         <Table className="mb-0">
+    
           <TableHead>
             <TableRow>
               {keys.map(key => (
@@ -112,7 +156,37 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
       );
     }
     else{
-      return null;
+      return(
+        <>
+        <div className="table-header" >
+                <div className="table-filter" >
+                      <TextField
+                            id="date"
+                            value={filteredDate}
+                            onChange={searchChange}
+                            label="Filter By Date"
+                            type="date"
+                            InputLabelProps={{
+                                    shrink: true,
+                            }}
+                       />
+                       <FilteredDropdown 
+                        filteredDate={filteredDate}
+                        filteredStatus={filteredStatus}
+                        setFilteredStatus={setFilteredStatus} 
+                        fetchFilteredPagination={fetchFilteredPagination}/>
+                       
+                </div>
+
+            </div>
+            <div className={classes.root}>
+                <Typography variant="h3" component="h3"  style={{margin:"1rem"}}>
+                  No Results Found.
+                </Typography>
+            </div>
+        </>
+
+            )
     }
 }
 

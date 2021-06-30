@@ -19,8 +19,8 @@ import { ScheduledStemContext ,ScheduledStemProvider} from "./context/ScheduledS
 
  function ScheduledStem(props) {
   const { name,phone} = useParams();
-  const { orders,popupData,meta,fetchPagination,updateScheduledStem,fetchById ,updateScheduledDate} = useContext(ScheduledStemContext)
-  console.log(updateScheduledStem)
+  const { orders,popupData,meta,fetchPagination,fetchFilteredPagination,updateScheduledStem,fetchById ,updateScheduledDate} = useContext(ScheduledStemContext)
+
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   var classes = useStyles();
@@ -86,6 +86,7 @@ import { ScheduledStemContext ,ScheduledStemProvider} from "./context/ScheduledS
                     updateScheduledDate={updateScheduledDate}
                     updateScheduledStem={updateScheduledStem} 
                     fetchPagination={fetchPagination} 
+                    fetchFilteredPagination={fetchFilteredPagination}
                     handleChangePage={handleChangePage}
                     handleChangeRowsPerPage={handleChangeRowsPerPage}
                     />
