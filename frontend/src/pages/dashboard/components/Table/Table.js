@@ -19,6 +19,21 @@ const states = {
   declined: "error",
 };
 
+
+function formatDate(date){
+  if(date){
+    date=new Date(date);
+    let year=date.getFullYear();
+    let month=date.getMonth()+1;
+    month=month>10?month:"0"+month;
+    let day=date.getDate();
+    day=day>10?day:"0"+day;
+    date=year+"-"+month+"-"+day;
+    return date;
+  }
+  return ""
+}
+
 export default function TableComponent({data,updateFarmer,fetchPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
   if(data.length>0){
       var keys = Object.keys(data[0]).map(i => i.toUpperCase());
@@ -53,7 +68,7 @@ export default function TableComponent({data,updateFarmer,fetchPagination,handle
                           id={id} 
                           farmerData={{ id, name, phone, address, aadhar, landCapacity,  status,date }}/>  
                 </TableCell>
-                <TableCell>{date}</TableCell>
+                <TableCell>{new Date(date).toDateString()}</TableCell>
               </TableRow>
             ))}
           </TableBody>
