@@ -53,10 +53,23 @@ export default function TableComponent({data,updateOrders,fetchPagination,fetchF
 
   const searchChange = async (event) => {
     const { value } = event.target
-    await setFilteredDate(value)
-    fetchFilteredPagination(1,5,filteredStatus,filteredDate)
+    setFilteredDate(value)
+    fetchFilteredPagination(1,5,filteredStatus,value)
     }
-
+  const resetFilter=()=>{
+    //reduce unwanted rerender
+    if(!filteredStatus){
+      setFilteredStatus("");
+    }
+    //reduce unwanted rerender
+    if(!filteredDate){
+      setFilteredDate("");
+    }
+    //reduce unwanted fetch     
+    if(!filteredDate && filteredStatus){
+      fetchPagination(1,5);
+    }
+  }
   if(data.length>0){
       var keys = Object.keys(data[0]).map(i => i.toUpperCase());
       keys.shift(); // delete "id" key
@@ -69,17 +82,22 @@ export default function TableComponent({data,updateOrders,fetchPagination,fetchF
                             id="date"
                             value={filteredDate}
                             onChange={searchChange}
-                            label="Filter By Date"
+                            label="Expected Date"
                             type="date"
                             InputLabelProps={{
                                     shrink: true,
                             }}
                        />
+                    <div>
                        <FilteredDropdown 
                         filteredDate={filteredDate}
                         filteredStatus={filteredStatus}
                         setFilteredStatus={setFilteredStatus} 
                         fetchFilteredPagination={fetchFilteredPagination}/>
+                        <Button variant="contained" color="primary" onClick={resetFilter} style={{marginTop:"auto",height:"35px"}} size="large">
+                         Clear
+                      </Button>
+                    </div>
                        
                 </div>
             </div>
@@ -149,17 +167,23 @@ export default function TableComponent({data,updateOrders,fetchPagination,fetchF
                             id="date"
                             value={filteredDate}
                             onChange={searchChange}
-                            label="Filter By Date"
+                            label="Expected Date"
                             type="date"
                             InputLabelProps={{
                                     shrink: true,
                             }}
                        />
-                       <FilteredDropdown 
-                        filteredDate={filteredDate}
-                        filteredStatus={filteredStatus}
-                        setFilteredStatus={setFilteredStatus} 
-                        fetchFilteredPagination={fetchFilteredPagination}/>
+                       <div>
+                          <FilteredDropdown 
+                          filteredDate={filteredDate}
+                          filteredStatus={filteredStatus}
+                          setFilteredStatus={setFilteredStatus} 
+                          fetchFilteredPagination={fetchFilteredPagination}/>
+                        <Button variant="contained" color="primary" onClick={resetFilter} style={{marginTop:"auto",height:"35px"}} size="large">
+                         Clear
+                        </Button>
+                        </div>
+
                        
                 </div>
 

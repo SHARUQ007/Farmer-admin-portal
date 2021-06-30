@@ -51,10 +51,10 @@ export default function FilteredDropdown({filteredStatus,filteredDate,setFiltere
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-            <MenuItem value={"Scheduled"}  >Scheduled</MenuItem>
+            <MenuItem value={"Scheduled"}>Scheduled</MenuItem>
             <MenuItem value={"Confirmed"}>Confirmed</MenuItem>
             <MenuItem value={"Rescheduled"}>Rescheduled</MenuItem>
-            <MenuItem value={"Ordered Recevied"}>Ordered Recevied</MenuItem>
+            <MenuItem value={"Order Recevied"}>Order Recevied</MenuItem>
 
         </Select>
       </FormControl>
