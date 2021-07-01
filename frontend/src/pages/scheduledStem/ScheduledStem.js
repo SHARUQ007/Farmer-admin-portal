@@ -12,6 +12,7 @@ import useStyles from "./styles";
 import Widget from "../../components/Widget/Widget";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import { Typography } from "../../components/Wrappers/Wrappers";
+import Loader from "../../components/Loader/Loader";
 
 import Table from "./components/Table/Table";
 
@@ -19,7 +20,7 @@ import { ScheduledStemContext ,ScheduledStemProvider} from "./context/ScheduledS
 
  function ScheduledStem(props) {
   const { name,phone} = useParams();
-  const { orders,popupData,meta,fetchPagination,fetchFilteredPagination,updateScheduledStem,fetchById ,updateScheduledDate} = useContext(ScheduledStemContext)
+  const { orders,popupData,meta,loading,fetchPagination,fetchFilteredPagination,updateScheduledStem,fetchById ,updateScheduledDate} = useContext(ScheduledStemContext)
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -50,6 +51,7 @@ import { ScheduledStemContext ,ScheduledStemProvider} from "./context/ScheduledS
     };
   return (
     <>
+    <Loader isOpen={loading}/>
       <PageTitle title="Admin Dashboard - Scheduled Stem Availability Data" button="Latest Reports" />
       <Grid container spacing={4}>
        
@@ -81,6 +83,7 @@ import { ScheduledStemContext ,ScheduledStemProvider} from "./context/ScheduledS
             <Table data={orders}  
                     popupData={popupData}
                     meta={meta}
+                    isLoading={loading}
                     page={page}
                     rowsPerPage={rowsPerPage}
                     updateScheduledDate={updateScheduledDate}
@@ -94,8 +97,10 @@ import { ScheduledStemContext ,ScheduledStemProvider} from "./context/ScheduledS
         </Grid>
       </Grid>
     </>
+
   );
 }
+
 
 function ContextWrapper(){
   return(

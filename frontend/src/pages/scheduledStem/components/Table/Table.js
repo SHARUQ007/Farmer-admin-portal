@@ -35,7 +35,7 @@ const useStyles = makeStyles({
       },
   });
 
-export default function TableComponent({data,popupData,updateScheduledDate,updateScheduledStem,fetchPagination,fetchFilteredPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
+export default function TableComponent({data,popupData,isLoading,updateScheduledDate,updateScheduledStem,fetchPagination,fetchFilteredPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
   const [id,setId]=React.useState(null);
   const [filteredData,setFilteredData]=React.useState([]);
   const [date,setDate]=React.useState()
@@ -44,6 +44,7 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
   const [filteredStatus,setFilteredStatus]=React.useState("")
   
   const classes = useStyles();
+  
   function closePopup(){
     setId(null);
   }
@@ -188,7 +189,8 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
         </>
       );
     }
-    else{
+    //if loaded sucessfully and has no data mean render it 
+    else if(!isLoading){
       return(
         <>
        <div className="table-header" >
@@ -224,6 +226,10 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
         </>
 
             )
+    }
+    //if it loading simply return null
+    else{
+      return null;
     }
 }
 

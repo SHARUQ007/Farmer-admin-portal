@@ -12,63 +12,90 @@ class OrdersProvider extends React.PureComponent {
           totalDocs : 0
         },
         selectedOrders: null,
+        loading:true
     };
    
     fetchOrders = async () => {
+      this.setState({...this.state,loading:true});
       API.orders(). fetchAll()
         .then(res => {
           this.setState ({
             orders : res.data,
+            loading:false
           })
         })
-        .catch(err => console.log(err))
+       .catch(err => {
+          this.setState({...this.state,loading:false})
+          console.log(err)
+        })
     }
     fetchPagination = async (page, rowsPerPage = 5, name = null, email = null) => {
+      this.setState({...this.state,loading:true});
       API.orders().fetchPagination(page,rowsPerPage)
         .then(res => {
           this.setState ({
             orders : res.data.orders,
-            meta:res.data.meta
+            meta:res.data.meta,
+            loading:false
           })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          this.setState({...this.state,loading:false})
+          console.log(err)
+        })
     }
 
     fetchFilteredPagination = async (page, rowsPerPage = 5,status=null,date=null) => {
+      this.setState({...this.state,loading:true});
       API.orders().getFilteredStem(page,rowsPerPage,status,date)
         .then(res => {
           this.setState ({
             orders : res.data.orders,
             popupData:res.data.popupData,
-            meta:res.data.meta
+            meta:res.data.meta,
+            loading:false
           })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          this.setState({...this.state,loading:false})
+          console.log(err)
+        })
     }
 
     fetchById = async (name,phone, onSuccess) => {
+      this.setState({...this.state,loading:true});
       API.orders().fetchById(name,phone)
         .then(res =>{
             this.setState ({
-              orders: res.data
+              orders: res.data,
+              loading:false
             })
             onSuccess()
         })
-        .catch(err => console.log(err))
+       .catch(err => {
+          this.setState({...this.state,loading:false})
+          console.log(err)
+        })
     }
     
     createOrders = (data, onSuccess)  => {
+      this.setState({...this.state,loading:true});
       API.orders().create(data)
         .then(res =>{
             this.setState ({
-              selectedOrders : res.data
+              selectedOrders : res.data,
+              loading:false
             })
             onSuccess()
         })
-        .catch(err => console.log(err))
+       .catch(err => {
+          this.setState({...this.state,loading:false})
+          console.log(err)
+        })
     }
     
     updateOrders = (id, data, onSuccess) => {
+      this.setState({...this.state,loading:true});
       API.orders().update(id, data)
         .then(res =>{
              if(res.data.status==="success"){
@@ -84,6 +111,7 @@ class OrdersProvider extends React.PureComponent {
               let obj={
                   ...this.state,
                   orders:tempOrders,
+                  loading:false
                  }
               this.setState({...obj})
             }
@@ -94,13 +122,7 @@ class OrdersProvider extends React.PureComponent {
           console.log(err)})
     }
     
-    deleteOrders = (id, onSuccess) => {
-      API.orders().delete(id)
-        .then(res =>{
-
-          onSuccess()
-        })
-    }
+  
     render() {
       return (
         <Provider
@@ -112,7 +134,6 @@ class OrdersProvider extends React.PureComponent {
               fetchFilteredPagination:this.fetchFilteredPagination,
               createOrders : this.createOrders,
               updateOrders : this.updateOrders,
-              deleteOrders : this.deleteOrders
           }}
         >
           {this.props.children}
