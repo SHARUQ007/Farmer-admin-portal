@@ -76,7 +76,7 @@ import { OrdersContext ,OrdersProvider} from "./context/OrdersContext";
      
         <Grid item xs={12}>
           <Widget
-            title="Account Access to Login (to be Approved here)"
+            title="List of all Transactions"
             upperTitle
             noBodyPadding
             bodyClass={classes.tableWidget}

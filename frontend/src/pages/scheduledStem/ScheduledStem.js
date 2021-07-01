@@ -73,7 +73,7 @@ import { ScheduledStemContext ,ScheduledStemProvider} from "./context/ScheduledS
      
         <Grid item xs={12}>
           <Widget
-            title="Account Access to Login (to be Approved here)"
+            title="List of all Transactions which are scheduled"
             upperTitle
             noBodyPadding
             bodyClass={classes.tableWidget}
