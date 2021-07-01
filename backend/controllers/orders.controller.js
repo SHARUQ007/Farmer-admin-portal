@@ -190,7 +190,6 @@ exports.getScheduledStem=async (req,res)=>{
     }
 
 }
-function formatDate(){}
 exports.getFilteredStem=async (req,res)=>{
      try{
         const { page = 1, limit = 4} = req.query;
@@ -264,6 +263,7 @@ exports.updateScheduledDate=async (req,res)=>{
             message: "Orders id can not be empty"
         });
     }
+    console.log(req.body,new Date(req.body.date))
     Orders.findByIdAndUpdate({_id:req.body.id}, {
         scheduledDate:new Date(req.body.date),
         status:"Scheduled",    
@@ -274,8 +274,9 @@ exports.updateScheduledDate=async (req,res)=>{
                 message: "Orders not found with id " + req.params.id
             });
         }
-        const orders = ordersSerializer(data);
-        const popupData = popupOrdersSerializer(data);
+        console.log(data,"data")
+        // const orders = ordersSerializer(data);
+        // const popupData = popupOrdersSerializer(data);
         res.json({status:"success"});
     }).catch(err => {
         if(err.kind === 'ObjectId') {

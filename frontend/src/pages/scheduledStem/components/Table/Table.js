@@ -82,16 +82,16 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
     fetchFilteredPagination(1,5,filteredStatus,value)
     }
   const resetFilter=()=>{
-    //reduce unwanted rerender
-    if(!filteredStatus){
+    //reduce unwanted rerender set empty if it not empty
+    if(filteredStatus){
       setFilteredStatus("");
     }
-    //reduce unwanted rerender
-    if(!filteredDate){
+    //reduce unwanted rerender set empty if it not empty
+    if(filteredDate){
       setFilteredDate("");
     }
-    //reduce unwanted fetch     
-    if(!filteredDate && filteredStatus){
+    //reduce unwanted fetch 
+    if(!(filteredDate && filteredStatus)){
       fetchPagination(1,5);
     }
   }
@@ -112,14 +112,14 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
                             shrink: true,
                     }}
                />
-                <div>
+                <div style={{displa:"flex",alignItems:"flex-end"}}>
                       <FilteredDropdown 
                       filteredDate={filteredDate}
                       filteredStatus={filteredStatus}
                       setFilteredStatus={setFilteredStatus} 
                       fetchFilteredPagination={fetchFilteredPagination}/>
 
-                      <Button variant="contained" color="primary" onClick={resetFilter} style={{marginTop:"auto",height:"35px"}} size="large">
+                      <Button variant="contained" color="primary" onClick={resetFilter} style={{margin:"0.5rem 1rem 0rem 1rem",height:"35px"}} size="large">
                          Clear
                       </Button>
               </div>

@@ -1,5 +1,5 @@
 import React from "react";
-
+import {TextField} from "@material-ui/core";
 
 import "./style.css"
 function PopupCard({id,popupData,date,setDate,closePopup,updateScheduledDate}) {
@@ -16,7 +16,15 @@ function PopupCard({id,popupData,date,setDate,closePopup,updateScheduledDate}) {
 		if(key==="scheduledDate"){
 			return(<div key={popupData.key} className="popupData">
 						<p className="popupKey">{key}:</p>
-						<input type="date" className="popupDate" value={date} onChange={(e)=>{setDate(e.target.value)}}/>
+						  <TextField
+			                    id="date"
+			                    value={date}
+			                    onChange={(e)=>{setDate(e.target.value)}}
+			                    type="date"
+			                    InputLabelProps={{
+			                            shrink: true,
+			                    }}
+			               />
 				</div>)
 		}
 		else if(key!=="id" ){

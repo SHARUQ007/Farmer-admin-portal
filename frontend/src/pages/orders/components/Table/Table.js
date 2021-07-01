@@ -57,18 +57,20 @@ export default function TableComponent({data,updateOrders,fetchPagination,fetchF
     fetchFilteredPagination(1,5,filteredStatus,value)
     }
   const resetFilter=()=>{
+    //reduce unwanted fetch.only fetch if any one has value  because there is possiblity 
+    //that user can press simply clear but when there is no filtered is set 
+    if(filteredDate || filteredStatus){
+      fetchPagination(1,5);
+    }
     //reduce unwanted rerender
-    if(!filteredStatus){
+    if(filteredStatus){
       setFilteredStatus("");
     }
     //reduce unwanted rerender
-    if(!filteredDate){
+    if(filteredDate){
       setFilteredDate("");
     }
-    //reduce unwanted fetch     
-    if(!filteredDate && filteredStatus){
-      fetchPagination(1,5);
-    }
+    
   }
   if(data.length>0){
       var keys = Object.keys(data[0]).map(i => i.toUpperCase());
@@ -88,13 +90,13 @@ export default function TableComponent({data,updateOrders,fetchPagination,fetchF
                                     shrink: true,
                             }}
                        />
-                    <div>
+                    <div style={{displa:"flex",alignItems:"flex-end"}}>
                        <FilteredDropdown 
                         filteredDate={filteredDate}
                         filteredStatus={filteredStatus}
                         setFilteredStatus={setFilteredStatus} 
                         fetchFilteredPagination={fetchFilteredPagination}/>
-                        <Button variant="contained" color="primary" onClick={resetFilter} style={{marginTop:"auto",height:"35px"}} size="large">
+                        <Button variant="contained" color="primary" onClick={resetFilter} style={{margin:"0.5rem 1rem 0rem 1rem",height:"35px"}} size="large">
                          Clear
                       </Button>
                     </div>
@@ -179,7 +181,7 @@ export default function TableComponent({data,updateOrders,fetchPagination,fetchF
                           filteredStatus={filteredStatus}
                           setFilteredStatus={setFilteredStatus} 
                           fetchFilteredPagination={fetchFilteredPagination}/>
-                        <Button variant="contained" color="primary" onClick={resetFilter} style={{marginTop:"auto",height:"35px"}} size="large">
+                        <Button variant="contained" color="primary" onClick={resetFilter} style={{margin:"auto 0",height:"35px"}} size="large">
                          Clear
                         </Button>
                         </div>

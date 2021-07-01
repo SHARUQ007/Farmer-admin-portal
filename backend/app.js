@@ -37,6 +37,12 @@ mongoose
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
 
+/*Mongoose's findOneAndUpdate() long pre-dates the MongoDB driver's findOneAndUpdate() 
+  function,so it uses the MongoDB driver's findAndModify() function instead.
+  You can opt in to using the MongoDB driver's findOneAndUpdate() function
+  using the useFindAndModify global option.*/
+  
+mongoose.set('useFindAndModify', false);
 // Use Routes
 app.use('/api/map', mapRouter);
 app.use('/api/auth', authRouter);
