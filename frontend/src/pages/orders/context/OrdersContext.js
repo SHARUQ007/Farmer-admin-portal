@@ -87,9 +87,11 @@ class OrdersProvider extends React.PureComponent {
                  }
               this.setState({...obj})
             }
-            onSuccess()
+            onSuccess("Status Updated Sucessfully")
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          onSuccess("Sorry Something Went Wrong",true)
+          console.log(err)})
     }
     
     deleteOrders = (id, onSuccess) => {

@@ -1,5 +1,6 @@
 import React from "react";
 import {TextField} from "@material-ui/core";
+import { toast } from 'react-toastify';
 
 import "./style.css"
 function PopupCard({id,popupData,date,setDate,closePopup,updateScheduledDate}) {
@@ -7,11 +8,35 @@ function PopupCard({id,popupData,date,setDate,closePopup,updateScheduledDate}) {
 	var style={display:id?"flex":"none"};
 	function scheduleDate(){
 		if(date){
-			updateScheduledDate(id,date);
+			updateScheduledDate(id,date,done);
 		}
 		closePopup();
 	}
-
+	function done(msg,isError){
+    //if sucess
+    if(!isError){
+     toast.success(msg, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
+   }
+   else{
+    toast.error(msg,{
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          });
+   }
+  }
 	var keys = Object.keys(popupData).map((key)=>{
 		if(key==="scheduledDate"){
 			return(<div key={popupData.key} className="popupData">

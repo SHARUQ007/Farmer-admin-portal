@@ -9,8 +9,8 @@ import {
 } from "@material-ui/core";
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-
 import {Link} from "react-router-dom";
+ import { ToastContainer} from 'react-toastify';
 
 // components
 import { Button } from "../../../../components/Wrappers";
@@ -78,6 +78,17 @@ export default function TableComponent({data,updateOrders,fetchPagination,fetchF
 
       return (
         <>
+        <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
         <div className="table-header" >
                 <div className="table-filter" >
                       <TextField

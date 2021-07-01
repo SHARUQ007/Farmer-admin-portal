@@ -10,6 +10,7 @@ import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { toast }  from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -43,9 +44,32 @@ export default function DialogSelect(props) {
     setStatus(String(event.target.value) || "");
     setColor(String(event.target.value).toLowerCase() || "");
   };
-  const done=()=>{
-    alert("done")
+  function done(msg,isError){
+      //if sucess
+      if(!isError){
+       toast.success(msg, {
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  });
+     }
+     else{
+      toast.error(msg,{
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            });
+     }
   }
+  
   const handleClickOpen = () => {
     setOpen(true);
   };

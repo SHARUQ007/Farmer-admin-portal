@@ -10,6 +10,7 @@ import {
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import{ ToastContainer }  from 'react-toastify';
 
 import {Link} from "react-router-dom";
 
@@ -82,6 +83,7 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
     fetchFilteredPagination(1,5,filteredStatus,value)
     }
   const resetFilter=()=>{
+
     //reduce unwanted rerender set empty if it not empty
     if(filteredStatus){
       setFilteredStatus("");
@@ -99,7 +101,19 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
       var keys = Object.keys(data[0])
       keys.shift(); // delete "id" key
       return (
+
         <>
+        <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss={true}
+        draggable={false}
+        pauseOnHover={false}
+      />
          <div className="table-header" >
             <div className="table-filter" >
               <TextField

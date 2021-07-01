@@ -80,12 +80,17 @@ class ScheduledStemProvider extends React.PureComponent {
                  }
               this.setState({...obj})
             }
-            onSuccess()
+            onSuccess("Status Updated Sucessfully")
+            
         })
-        .catch(err => console.log(err))
+        .catch(err =>{
+          onSuccess("Sorry Something Went Wrong",true)
+         console.log(err)
+        }
+         )
     }
     
-    updateScheduledDate = (id, date) => {
+    updateScheduledDate = (id, date,onSuccess) => {
       API.orders().updateDate(id, date)
         .then(res =>{
             if(res.data.status==="success"){
@@ -113,9 +118,14 @@ class ScheduledStemProvider extends React.PureComponent {
                   popupData:tempPopupData
                  }
                  this.setState({...obj})
+                 onSuccess("successfully Updated The Scheduled Date And Status")
             }
         })
-        .catch(err => console.log(err))
+        .catch(err =>{
+          onSuccess("Sorry Something Went Wrong",true)
+
+         console.log(err)}
+         )
     }
     
     render() {
