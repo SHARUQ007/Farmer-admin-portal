@@ -1,8 +1,6 @@
 import React, { useState, Dropdown, useEffect, useContext} from "react";
 import {useParams} from "react-router-dom";
-import {
-  Grid,
-} from "@material-ui/core";
+import {Grid} from "@material-ui/core";
 
 
 import useStyles from "./styles";
@@ -12,6 +10,7 @@ import useStyles from "./styles";
 import Widget from "../../components/Widget/Widget";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import { Typography } from "../../components/Wrappers/Wrappers";
+import Loader from "../../components/Loader/Loader";
 
 import Table from "./components/Table/Table";
 
@@ -20,7 +19,7 @@ import { OrdersContext ,OrdersProvider} from "./context/OrdersContext";
  function Orders(props) {
   const { name,phone} = useParams();
 
-  const { orders,meta,fetchOrders,updateOrders,fetchPagination,fetchFilteredPagination,fetchById } = useContext(OrdersContext)
+  const { orders,meta,loading,fetchOrders,updateOrders,fetchPagination,fetchFilteredPagination,fetchById } = useContext(OrdersContext)
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -52,6 +51,7 @@ import { OrdersContext ,OrdersProvider} from "./context/OrdersContext";
     };
   return (
     <>
+    <Loader isOpen={loading}/>
       <PageTitle title="Admin Dashboard - Stem Availability Data " button="Latest Reports" />
       <Grid container spacing={4}>
        
@@ -83,6 +83,7 @@ import { OrdersContext ,OrdersProvider} from "./context/OrdersContext";
           >
             <Table data={orders}  
                     meta={meta}
+                    isLoading={loading}
                     page={page}
                     rowsPerPage={rowsPerPage}
                     updateOrders={updateOrders} 

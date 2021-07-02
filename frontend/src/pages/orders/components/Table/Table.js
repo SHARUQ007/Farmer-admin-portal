@@ -9,8 +9,8 @@ import {
 } from "@material-ui/core";
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-
 import {Link} from "react-router-dom";
+ import { ToastContainer} from 'react-toastify';
 
 // components
 import { Button } from "../../../../components/Wrappers";
@@ -31,7 +31,7 @@ const useStyles = makeStyles({
         textAlign:"center",
       },
   });
-export default function TableComponent({data,updateOrders,fetchPagination,fetchFilteredPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
+export default function TableComponent({data,isLoading,updateOrders,fetchPagination,fetchFilteredPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
    
    const [filteredDate,setFilteredDate]=React.useState("")
    const [filteredStatus,setFilteredStatus]=React.useState("")
@@ -57,18 +57,20 @@ export default function TableComponent({data,updateOrders,fetchPagination,fetchF
     fetchFilteredPagination(1,5,filteredStatus,value)
     }
   const resetFilter=()=>{
+    //reduce unwanted fetch.only fetch if any one has value  because there is possiblity 
+    //that user can press simply clear but when there is no filtered is set 
+    if(filteredDate || filteredStatus){
+      fetchPagination(1,5);
+    }
     //reduce unwanted rerender
-    if(!filteredStatus){
+    if(filteredStatus){
       setFilteredStatus("");
     }
     //reduce unwanted rerender
-    if(!filteredDate){
+    if(filteredDate){
       setFilteredDate("");
     }
-    //reduce unwanted fetch     
-    if(!filteredDate && filteredStatus){
-      fetchPagination(1,5);
-    }
+    
   }
   if(data.length>0){
       var keys = Object.keys(data[0]).map(i => i.toUpperCase());
@@ -76,6 +78,17 @@ export default function TableComponent({data,updateOrders,fetchPagination,fetchF
 
       return (
         <>
+        <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
         <div className="table-header" >
                 <div className="table-filter" >
                       <TextField
@@ -88,13 +101,13 @@ export default function TableComponent({data,updateOrders,fetchPagination,fetchF
                                     shrink: true,
                             }}
                        />
-                    <div>
+                    <div style={{displa:"flex",alignItems:"flex-end"}}>
                        <FilteredDropdown 
                         filteredDate={filteredDate}
                         filteredStatus={filteredStatus}
                         setFilteredStatus={setFilteredStatus} 
                         fetchFilteredPagination={fetchFilteredPagination}/>
-                        <Button variant="contained" color="primary" onClick={resetFilter} style={{marginTop:"auto",height:"35px"}} size="large">
+                        <Button variant="contained" color="primary" onClick={resetFilter} style={{margin:"0.5rem 1rem 0rem 1rem",height:"35px"}} size="large">
                          Clear
                       </Button>
                     </div>
@@ -158,7 +171,8 @@ export default function TableComponent({data,updateOrders,fetchPagination,fetchF
         </>
       );
     }
-    else{
+    //if loaded sucessfully and has no data mean render it 
+    else if(!isLoading){
        return(
         <>
         <div className="table-header" >
@@ -179,7 +193,7 @@ export default function TableComponent({data,updateOrders,fetchPagination,fetchF
                           filteredStatus={filteredStatus}
                           setFilteredStatus={setFilteredStatus} 
                           fetchFilteredPagination={fetchFilteredPagination}/>
-                        <Button variant="contained" color="primary" onClick={resetFilter} style={{marginTop:"auto",height:"35px"}} size="large">
+                        <Button variant="contained" color="primary" onClick={resetFilter} style={{margin:"auto 0",height:"35px"}} size="large">
                          Clear
                         </Button>
                         </div>
@@ -195,6 +209,10 @@ export default function TableComponent({data,updateOrders,fetchPagination,fetchF
             </div>
         </>
             )
+    }
+    //if it loading simply return null
+    else{
+      return null;
     }
 }
 

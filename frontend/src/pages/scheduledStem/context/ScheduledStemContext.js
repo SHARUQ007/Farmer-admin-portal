@@ -13,55 +13,77 @@ class ScheduledStemProvider extends React.PureComponent {
           totalDocs : 0
         },
         selectedScheduledStem: null,
+        loading:true
     };
    
     fetchPagination = async (page, rowsPerPage = 5) => {
+      this.setState({...this.state,loading:true});
       API.orders().getScheduledStem(page,rowsPerPage)
         .then(res => {
           this.setState ({
             orders : res.data.orders,
             popupData:res.data.popupData,
-            meta:res.data.meta
+            meta:res.data.meta,
+            loading:false
           })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          this.setState({...this.state,loading:false})
+          console.log(err)
+        })
     }
 
     fetchFilteredPagination = async (page, rowsPerPage = 5,status=null,date=null) => {
+      this.setState({...this.state,loading:true});
       API.orders().getFilteredScheduledStem(page,rowsPerPage,status,date)
         .then(res => {
           this.setState ({
             orders : res.data.orders,
             popupData:res.data.popupData,
-            meta:res.data.meta
+            meta:res.data.meta,
+            loading:false
           })
         })
-        .catch(err => console.log(err))
+         .catch(err => {
+          this.setState({...this.state,loading:false})
+          console.log(err)
+        })
     }
 
     fetchById = async (name,phone, onSuccess) => {
+      this.setState({...this.state,loading:true});
       API.orders().fetchById(name,phone)
         .then(res =>{
             this.setState ({
-              orders: res.data
+              orders: res.data,
+              loading:false
             })
             onSuccess()
         })
-        .catch(err => console.log(err))
+         .catch(err => {
+          this.setState({...this.state,loading:false})
+          console.log(err)
+        })
     }
     
     createScheduledStem = (data, onSuccess)  => {
+      this.setState({...this.state,loading:true});
       API.orders().create(data)
         .then(res =>{
             this.setState ({
-              orders : res.data.orders
+              orders : res.data.orders,
+              loading:true
             })
             onSuccess()
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          this.setState({...this.state,loading:false})
+          console.log(err)
+        })
     }
     
     updateScheduledStem = (id, data, onSuccess) => {
+      this.setState({...this.state,loading:true});
       API.orders().update(id, data)
         .then(res =>{
              if(res.data.status==="success"){
@@ -77,15 +99,23 @@ class ScheduledStemProvider extends React.PureComponent {
               let obj={
                   ...this.state,
                   orders:tempOrders,
+                  loading:false
                  }
               this.setState({...obj})
             }
-            onSuccess()
+            onSuccess("Status Updated Sucessfully")
+            
         })
-        .catch(err => console.log(err))
+        .catch(err =>{
+          this.setState({...this.state,loading:false})
+          onSuccess("Sorry Something Went Wrong",true)
+         console.log(err)
+        }
+         )
     }
     
-    updateScheduledDate = (id, date) => {
+    updateScheduledDate = (id, date,onSuccess) => {
+      this.setState({...this.state,loading:true});
       API.orders().updateDate(id, date)
         .then(res =>{
             if(res.data.status==="success"){
@@ -110,12 +140,18 @@ class ScheduledStemProvider extends React.PureComponent {
                  let obj={
                   ...this.state,
                   orders:tempOrders,
-                  popupData:tempPopupData
+                  popupData:tempPopupData,
+                  loading:false
                  }
                  this.setState({...obj})
+                 onSuccess("successfully Updated The Scheduled Date And Status")
             }
         })
-        .catch(err => console.log(err))
+        .catch(err =>{
+          this.setState({...this.state,loading:false})
+          onSuccess("Sorry Something Went Wrong",true)
+          console.log(err)}
+         )
     }
     
     render() {

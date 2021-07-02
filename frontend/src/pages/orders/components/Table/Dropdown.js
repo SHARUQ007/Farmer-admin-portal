@@ -10,7 +10,7 @@ import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-
+ import { toast } from 'react-toastify';
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
@@ -37,8 +37,30 @@ export default function DialogSelect(props) {
     setStatus(String(event.target.value) || "");
     setColor(String(event.target.value).toLowerCase() || "");
   };
-  const done=()=>{
-    alert("done")
+  const done=(msg,isError)=>{
+    //if sucess
+    if(!isError){
+     toast.success(msg, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
+   }
+   else{
+    toast.error(msg,{
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          });
+   }
   }
   const handleClickOpen = () => {
     setOpen(true);
@@ -46,6 +68,7 @@ export default function DialogSelect(props) {
 
   const handleClose = () => {
     props.farmerData.status=status; 
+    //update the status 
     props.updateOrders(props.id,props.farmerData,done)
     setOpen(false);
   };

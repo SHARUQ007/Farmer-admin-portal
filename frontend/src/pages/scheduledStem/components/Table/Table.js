@@ -10,6 +10,7 @@ import {
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import{ ToastContainer }  from 'react-toastify';
 
 import {Link} from "react-router-dom";
 
@@ -34,7 +35,7 @@ const useStyles = makeStyles({
       },
   });
 
-export default function TableComponent({data,popupData,updateScheduledDate,updateScheduledStem,fetchPagination,fetchFilteredPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
+export default function TableComponent({data,popupData,isLoading,updateScheduledDate,updateScheduledStem,fetchPagination,fetchFilteredPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
   const [id,setId]=React.useState(null);
   const [filteredData,setFilteredData]=React.useState([]);
   const [date,setDate]=React.useState()
@@ -43,6 +44,7 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
   const [filteredStatus,setFilteredStatus]=React.useState("")
   
   const classes = useStyles();
+  
   function closePopup(){
     setId(null);
   }
@@ -82,16 +84,17 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
     fetchFilteredPagination(1,5,filteredStatus,value)
     }
   const resetFilter=()=>{
-    //reduce unwanted rerender
-    if(!filteredStatus){
+
+    //reduce unwanted rerender set empty if it not empty
+    if(filteredStatus){
       setFilteredStatus("");
     }
-    //reduce unwanted rerender
-    if(!filteredDate){
+    //reduce unwanted rerender set empty if it not empty
+    if(filteredDate){
       setFilteredDate("");
     }
-    //reduce unwanted fetch     
-    if(!filteredDate && filteredStatus){
+    //reduce unwanted fetch 
+    if(!(filteredDate && filteredStatus)){
       fetchPagination(1,5);
     }
   }
@@ -99,7 +102,19 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
       var keys = Object.keys(data[0])
       keys.shift(); // delete "id" key
       return (
+
         <>
+        <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss={true}
+        draggable={false}
+        pauseOnHover={false}
+      />
          <div className="table-header" >
             <div className="table-filter" >
               <TextField
@@ -112,14 +127,14 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
                             shrink: true,
                     }}
                />
-                <div>
+                <div style={{displa:"flex",alignItems:"flex-end"}}>
                       <FilteredDropdown 
                       filteredDate={filteredDate}
                       filteredStatus={filteredStatus}
                       setFilteredStatus={setFilteredStatus} 
                       fetchFilteredPagination={fetchFilteredPagination}/>
 
-                      <Button variant="contained" color="primary" onClick={resetFilter} style={{marginTop:"auto",height:"35px"}} size="large">
+                      <Button variant="contained" color="primary" onClick={resetFilter} style={{margin:"0.5rem 1rem 0rem 1rem",height:"35px"}} size="large">
                          Clear
                       </Button>
               </div>
@@ -174,7 +189,8 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
         </>
       );
     }
-    else{
+    //if loaded sucessfully and has no data mean render it 
+    else if(!isLoading){
       return(
         <>
        <div className="table-header" >
@@ -210,6 +226,10 @@ export default function TableComponent({data,popupData,updateScheduledDate,updat
         </>
 
             )
+    }
+    //if it loading simply return null
+    else{
+      return null;
     }
 }
 

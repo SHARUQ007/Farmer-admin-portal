@@ -190,7 +190,6 @@ exports.getScheduledStem=async (req,res)=>{
     }
 
 }
-function formatDate(){}
 exports.getFilteredStem=async (req,res)=>{
      try{
         const { page = 1, limit = 4} = req.query;
@@ -274,8 +273,8 @@ exports.updateScheduledDate=async (req,res)=>{
                 message: "Orders not found with id " + req.params.id
             });
         }
-        const orders = ordersSerializer(data);
-        const popupData = popupOrdersSerializer(data);
+        // const orders = ordersSerializer(data);
+        // const popupData = popupOrdersSerializer(data);
         res.json({status:"success"});
     }).catch(err => {
         if(err.kind === 'ObjectId') {

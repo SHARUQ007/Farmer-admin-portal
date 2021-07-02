@@ -31,7 +31,10 @@ const OrdersSchema = new Schema({
   variety: {
     type: String,
     required:true
-  }
+  },
+   scheduledDate:{
+    type:Date
+   },
 }, {
   timestamps: true
 });

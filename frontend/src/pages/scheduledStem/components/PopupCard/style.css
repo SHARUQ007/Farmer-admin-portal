@@ -43,17 +43,14 @@
 .popupValue{
   margin: 0.3rem;
 }
-.popupDate{
-    height: 20px;
-    width: 120px;
-    margin: 10px;
-}
+
 .popupButton {
   display: block;
   margin: auto;
   background-color: #398e3d;
   color: white;
   height: 30px;
+  margin: 0.8rem auto;
   width: 60px;
   outline: none;
   border-radius: 2px;

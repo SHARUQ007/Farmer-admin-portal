@@ -38,7 +38,7 @@ export default function FilteredDropdown({filteredStatus,filteredDate,setFiltere
     <div>
       
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-controlled-open-select-label">Filter By Status</InputLabel>
+        <InputLabel id="demo-controlled-open-select-label">Status</InputLabel>
         <Select
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
