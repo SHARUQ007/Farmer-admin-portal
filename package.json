@@ -32,6 +32,6 @@
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "morgan": "^1.9.1",
-    "nodemon": "^1.17.5"
+    "nodemon": "^2.0.9"
   }
 }
