@@ -17,6 +17,11 @@ const { MONGO_URI, MONGO_DB_NAME } = config;
 
 const app = express();
 
+// Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("frontend/build"));
+
+}
 // CORS Middleware
 app.use(cors());
 // Logger Middleware
