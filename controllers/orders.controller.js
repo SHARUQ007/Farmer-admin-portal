@@ -26,6 +26,8 @@ const popupOrdersSerializer = data => ({
 
 // Retrieve all data
 exports.findAll =  (req, res) => {
+    console.log("haiii")
+
     Orders.find()
     .then(async data => {
         const orders = await Promise.all(data.map(ordersSerializer));
@@ -39,6 +41,7 @@ exports.findAll =  (req, res) => {
 
 // Retrieve data with pagination
 exports.findPagination = async (req, res) => {
+    console.log("haiiiiiiiiiiiiiiii")
     const { page = 1, limit = 4} = req.query;
     let query={}
     const paginated = await Orders.paginate(
@@ -162,6 +165,8 @@ exports.delete = (req, res) => {
 };
 
 exports.getScheduledStem=async (req,res)=>{
+    console.log("haiii")
+    
      try{
         const { page = 1, limit = 4} = req.query;
         //return collection that has scheduled stems greater then zero

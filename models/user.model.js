@@ -19,6 +19,9 @@ const UserSchema = new Schema({
   register_date: {
     type: Date,
     default: Date.now
+  },
+  admin_type:{
+    type:Number
   }
 }, {
   timestamps: true

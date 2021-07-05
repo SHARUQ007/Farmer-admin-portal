@@ -103,17 +103,14 @@ exports.create = (req, res) => {
 
 exports.update = (req, res) => {
     console.log(req.body,"hxhh")
-    if(!req.body.name) {
+    if(!req.body.status) {
         return res.status(400).send({
-            message: "Farmer name can not be empty"
+            message: "Farmer status can not be empty"
         });
     }
 
-    Farmer.findByIdAndUpdate(req.params.id, {
-       
+    Farmer.findByIdAndUpdate({_id:req.params.id}, {
         status: req.body.status.trim()
-     
-       
     }, {new: true})
     .then(data => {
         if(!data) {
