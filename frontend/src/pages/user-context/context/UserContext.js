@@ -53,9 +53,17 @@ class UserProvider extends React.PureComponent {
             this.setState ({
               selectedUser : res.data
             })
-            onSuccess()
+            onSuccess('Data succesfully updated');
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          if(err.response.status===401){
+            onSuccess("unauthorized Access",true);
+          }
+          else{
+             onSuccess("Sorry Something Went Wrong",true);
+           }
+          console.log(err,"error")
+        })
     }
     
     deleteUser = (id, onSuccess) => {

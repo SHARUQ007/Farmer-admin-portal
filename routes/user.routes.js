@@ -1,24 +1,24 @@
-const {isAuthenticatedAdmin} =require('../middleware/auth.js');
 const { Router } =require( "express");
 const userRouter = Router();
 const userController = require('../controllers/user.controller.js');
-
+const auth =require('../middleware/auth.js');
+const ROLES=require("../roles");
 // Retrieve All data
-userRouter.get('/list',isAuthenticatedAdmin, userController.findAll);
+userRouter.get('/list',auth.isAuthenticatedAdmin, userController.findAll);
 
 // Retrieve data with pagination
-userRouter.get('/', isAuthenticatedAdmin, userController.findPagination);
+userRouter.get('/', auth.isAuthenticatedAdmin, userController.findPagination);
 
 // Find one by ID
-userRouter.get('/:id', isAuthenticatedAdmin, userController.findOne);
+userRouter.get('/:id', auth.isAuthenticatedAdmin, userController.findOne);
 
 // Create
-userRouter.post('/', isAuthenticatedAdmin, userController.create);
+userRouter.post('/', auth.isAuthenticatedAdmin, userController.create);
 
 // Update
-userRouter.put('/:id', isAuthenticatedAdmin, userController.update);
+userRouter.put('/:id', auth.isAuthenticatedAdmin,auth.hasPermission(ROLES[2]), userController.update);
 
 // Delete
-userRouter.delete('/:id', isAuthenticatedAdmin, userController.delete);
+userRouter.delete('/:id', auth.isAuthenticatedAdmin, userController.delete);
 
 module.exports = userRouter;

@@ -4,6 +4,7 @@ const usersSerializer = data => ({
     id: data.id,
     name: data.name,
     email: data.email,
+    admin_type:data.admin_type,
     register_date: data.register_date
 });
 
@@ -113,6 +114,7 @@ exports.update = (req, res) => {
     User.findByIdAndUpdate(req.params.id, {
         name: req.body.name.trim(),
         email: req.body.email.trim(),
+        admin_type:req.body.admin_type.trim()
     }, {new: true})
     .then(data => {
         if(!data) {

@@ -108,7 +108,6 @@ exports.update = (req, res) => {
             message: "Farmer status can not be empty"
         });
     }
-
     Farmer.findByIdAndUpdate({_id:req.params.id}, {
         status: req.body.status.trim()
     }, {new: true})

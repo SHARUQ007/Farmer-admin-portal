@@ -1,1 +1,1 @@
-module.exports =["FARMER_APPROVE","RESCHEDULE_DATE"];
+module.exports =["FARMER_APPROVE","RESCHEDULE_DATE","CHANGE_ADMIN_TYPE"];

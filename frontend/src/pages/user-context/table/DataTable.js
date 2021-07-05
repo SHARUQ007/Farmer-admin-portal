@@ -24,7 +24,7 @@ const styles = theme => ({
 
 const DataTable = ({ classes, ...props }) => {
     const { users, meta, fetchUsers, deleteUser} = useContext(UserContext)
-
+    const adminType={ 0:"SUPER_ADMIN",1:"ADMIN_ONE",2:"ADMIN_TWO"}
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 	let [ name, setName ] = useState("")
@@ -79,6 +79,7 @@ const DataTable = ({ classes, ...props }) => {
                     <TableRow>
                         <TableCell style={{fontWeight:'600'}}>Name</TableCell>
                         <TableCell style={{fontWeight:'600'}}>Email</TableCell>
+                        <TableCell style={{fontWeight:'600'}}>Admin Type</TableCell>
                         <TableCell align="right" width="250"> 
                             <div className="cell-add">
                                 <Link to="/admin/usercontext/add">
@@ -98,6 +99,9 @@ const DataTable = ({ classes, ...props }) => {
                             </TableCell>
                             <TableCell component="th" scope="row">
                                 {row.email}
+                            </TableCell>
+                             <TableCell component="th" scope="row">
+                                {adminType[row.admin_type]}
                             </TableCell>
                             <TableCell align="right" width="250">
                                 <div className="cell-button">
