@@ -7,6 +7,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import { Link } from "react-router-dom";
 import ConfirmDelete from './ConfirmDelete'
 import { UserContext } from "../context/UserContext";
+import Loader from "../../../components/Loader/Loader";
+
 
 const styles = theme => ({
     paper: {
@@ -23,8 +25,8 @@ const styles = theme => ({
 })
 
 const DataTable = ({ classes, ...props }) => {
-    const { users, meta, fetchUsers, deleteUser} = useContext(UserContext)
-
+    const { users, meta,loading, fetchUsers, deleteUser} = useContext(UserContext)
+    const adminType={ 0:"SUPER_ADMIN",1:"ADMIN_ONE",2:"ADMIN_TWO"}
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 	let [ name, setName ] = useState("")
@@ -60,6 +62,8 @@ const DataTable = ({ classes, ...props }) => {
     }
 
     return (
+        <>
+        <Loader isOpen={loading}/>
         <TableContainer component={Paper} className={classes.paper} >
             <div className="table-header" >
                 <div className="table-filter" >
@@ -79,6 +83,7 @@ const DataTable = ({ classes, ...props }) => {
                     <TableRow>
                         <TableCell style={{fontWeight:'600'}}>Name</TableCell>
                         <TableCell style={{fontWeight:'600'}}>Email</TableCell>
+                        <TableCell style={{fontWeight:'600'}}>Admin Type</TableCell>
                         <TableCell align="right" width="250"> 
                             <div className="cell-add">
                                 <Link to="/admin/usercontext/add">
@@ -98,6 +103,9 @@ const DataTable = ({ classes, ...props }) => {
                             </TableCell>
                             <TableCell component="th" scope="row">
                                 {row.email}
+                            </TableCell>
+                             <TableCell component="th" scope="row">
+                                {adminType[row.admin_type]}
                             </TableCell>
                             <TableCell align="right" width="250">
                                 <div className="cell-button">
@@ -132,6 +140,7 @@ const DataTable = ({ classes, ...props }) => {
             </Table>
 
         </TableContainer>
+        </>
     );
 }
 

@@ -4,6 +4,7 @@ const usersSerializer = data => ({
     id: data.id,
     name: data.name,
     email: data.email,
+    admin_type:data.admin_type,
     register_date: data.register_date
 });
 
@@ -89,7 +90,8 @@ exports.create = (req, res) => {
     const user = new User({
         name: req.body.name.trim(),
         email: req.body.email.trim(),
-        password: req.body.password.trim()
+        password: req.body.password.trim(),
+        admin_type:Number(req.body.admin_type)
     });
 
     user.save()
@@ -104,6 +106,7 @@ exports.create = (req, res) => {
 };
 
 exports.update = (req, res) => {
+    console.log(req.body,"body")
     if(!req.body.name || !req.body.email ) {
         return res.status(400).send({
             message: "Name and Email can not be empty"
@@ -113,6 +116,7 @@ exports.update = (req, res) => {
     User.findByIdAndUpdate(req.params.id, {
         name: req.body.name.trim(),
         email: req.body.email.trim(),
+        admin_type:Number(req.body.admin_type)
     }, {new: true})
     .then(data => {
         if(!data) {

@@ -1,7 +1,7 @@
-const auth =require('../middleware/auth.js');
 const { Router } = require( "express");
 const ordersRouter = Router();
 const ordersController = require('../controllers/orders.controller.js');
+const auth =require('../middleware/auth.js');
 const ROLES=require("../roles");
 
 // Retrieve All data

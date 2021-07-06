@@ -57,7 +57,6 @@ class FarmerProvider extends React.PureComponent {
     }
     
     updateFarmer = (id, data, onSuccess) => {
-      
       API.farmer().update(id, {status:data.status})
         .then(res =>{
             this.setState ({

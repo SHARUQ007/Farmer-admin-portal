@@ -165,8 +165,6 @@ exports.delete = (req, res) => {
 };
 
 exports.getScheduledStem=async (req,res)=>{
-    console.log("haiii")
-    
      try{
         const { page = 1, limit = 4} = req.query;
         //return collection that has scheduled stems greater then zero

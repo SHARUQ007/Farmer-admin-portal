@@ -11,21 +11,28 @@ class UserProvider extends React.PureComponent {
         meta : {
           totalDocs : 0
         },
+        loading:true,
         selectedUser: null,
     };
 
     fetchUsers = async (page, rowsPerPage = 5, name = null, email = null) => {
+      this.setState({...this.state,loading:true});
       API.user().fetchPagination(page, rowsPerPage, name, email)
         .then(res => {
           this.setState ({
             users : res.data.users,
-            meta : res.data.meta
+            meta : res.data.meta,
+            loading:false
           })
         })
-        .catch(err => console.log(err))
+       .catch(err => {
+          this.setState({...this.state,loading:false})
+          console.log(err)
+        })
     }
 
     fetchById = async (id, onSuccess) => {
+      this.setState({...this.state,loading:true});
       API.user().fetchById(id)
         .then(res =>{
             this.setState ({
@@ -33,36 +40,69 @@ class UserProvider extends React.PureComponent {
             })
             onSuccess(this.state.selectedUser)
         })
-        .catch(err => console.log(err))
+       .catch(err => {
+          this.setState({...this.state,loading:false})
+           if(err.response.status===401){
+            // onSuccess("unauthorized Access",true);
+          }
+          console.log(err)
+        })
     }
     
     createUser = (data, onSuccess)  => {
+      this.setState({...this.state,loading:true});
       API.user().create(data)
         .then(res =>{
             this.setState ({
-              selectedUser : res.data
+              selectedUser : res.data,
+              loading:false
             })
-            onSuccess()
+            onSuccess("new user succesfully created")
         })
-        .catch(err => console.log(err))
+       .catch(err => {
+          this.setState({...this.state,loading:false})
+           if(err.response.status===401){
+            onSuccess("unauthorized Access",true);
+          }
+          console.log(err)
+        })
     }
     
     updateUser = (id, data, onSuccess) => {
+      this.setState({...this.state,loading:true});
       API.user().update(id, data)
         .then(res =>{
             this.setState ({
-              selectedUser : res.data
+              selectedUser : res.data,
+              loading:false
             })
-            onSuccess()
+            onSuccess('User data succesfully updated');
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          this.setState({...this.state,loading:false})
+          if(err.response.status===401){
+            onSuccess("unauthorized Access",true);
+          }
+          else{
+             onSuccess("Sorry Something Went Wrong",true);
+           }
+          console.log(err,"error")
+        })
     }
     
     deleteUser = (id, onSuccess) => {
+      this.setState({...this.state,loading:true});
       API.user().delete(id)
         .then(res =>{
-
-          onSuccess()
+          this.setState({...this.state,loading:false})
+          onSuccess("User succesfully deleted")
+        })
+        .catch(err => {
+          this.setState({...this.state,loading:false})
+           if(err.response.status===401){
+            onSuccess("unauthorized Access",true);
+          }
+          console.log(err)
         })
     }
     

@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react'
-import { TextField, withStyles, Button, Paper, Grid } from "@material-ui/core";
+import { TextField, withStyles, Button, Paper, Grid,FormControl ,InputLabel} from "@material-ui/core";
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import { toast } from 'react-toastify';
 import PageTitle from "../../../components/PageTitle/PageTitle";
 import { UserContext } from "../context/UserContext";
@@ -31,7 +33,8 @@ const initialFormState = {
 	id: null, 
 	name: "",
 	email: "",
-	password: ""
+	password: "",
+	admin_type:""
 }
 
 const AddUserForm = ({ classes, ...props }) => {
@@ -39,7 +42,7 @@ const AddUserForm = ({ classes, ...props }) => {
 
 	const [ user, setUser ] = useState(initialFormState)
 	const [ errors, setErrors ] = useState({})
-	
+	const adminType={0:"SUPER_ADMIN",1:"ADMIN_ONE",2:"ADMIN_TWO"}
 	const handleInputChange = event => {
 		const { name, value } = event.target
 		setUser({ ...user, [name]: value })
@@ -69,17 +72,38 @@ const AddUserForm = ({ classes, ...props }) => {
     }
 	
 	const handleSubmit = (e) => {
-		const onSuccess = () => {
-			props.history.push("/admin/usercontext")
-			toast.success('Data succesfully created');
-		}
         e.preventDefault();
-
         if(validate()){
-			createUser(user, onSuccess)
+			createUser(user,done)
         }
     }
-
+    
+    function done(msg,isError){
+      //if sucess
+      if(!isError){
+	   props.history.push("/admin/usercontext")
+       toast.success(msg, {
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  });
+     }
+     else{
+      toast.error(msg,{
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            });
+     }
+  }
 	return (
 		<React.Fragment>
             <PageTitle title="Add User" />
@@ -117,6 +141,20 @@ const AddUserForm = ({ classes, ...props }) => {
 						onChange={handleInputChange}
 						{...(errors.password && { error: true, helperText: errors.password })}
 					/>
+					<FormControl  fullWidth variant="outlined"   style={{margin:"24px"}}>
+					<InputLabel id="admin_types">Admin Type</InputLabel>
+						<Select
+						  name="admin_type"
+				          id="admin_type"
+				          value={Number(user.admin_type)}
+				          onChange={handleInputChange}
+				          style={{marginTop:"10px"}}
+				        >
+				          <MenuItem value={0}>{adminType[0]}</MenuItem>
+				          <MenuItem value={1}>{adminType[1]}</MenuItem>
+				          <MenuItem value={2}>{adminType[2]}</MenuItem>
+				        </Select>
+			        </FormControl>
 					<div className="form-button-container">
 						<Button
 							variant="contained"
