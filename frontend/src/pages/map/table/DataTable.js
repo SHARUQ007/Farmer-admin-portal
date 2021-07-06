@@ -8,6 +8,8 @@ import Pagination from './Pagination'
 import { toast } from 'react-toastify';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { Link } from "react-router-dom";
+import Loader from "../../../components/Loader/Loader";
+
 
 const styles = theme => ({
     paper: {
@@ -18,6 +20,7 @@ const styles = theme => ({
 })
 
 const DataTable = ({ classes, ...props }) => {
+    console.log(props,"propssssssssssssssssssssssssssssss   ")
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     let [ category, setCategory ] = useState("all")
@@ -57,9 +60,9 @@ const DataTable = ({ classes, ...props }) => {
 		props.fetchPagination(1, rowsPerPage,  value, category)
 	}
 
-
-
     return (
+         <>
+        <Loader isOpen={props.loading}/>
         <TableContainer component={Paper} className={classes.paper} >
             <div className="table-header" >
                 <div className="table-filter" > 
@@ -115,12 +118,14 @@ const DataTable = ({ classes, ...props }) => {
             </Table>
 
         </TableContainer>
+        </>
     );
 }
 
 const mapStateToProps = state => ({
     maps: state.map.maps,
-    meta: state.map.mapMeta
+    meta: state.map.mapMeta,
+    loading:state.map.loading
 })
 
 const mapActionToProps = {

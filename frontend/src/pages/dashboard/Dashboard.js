@@ -14,6 +14,7 @@ import mock from "./mock";
 import Widget from "../../components/Widget/Widget";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import { Typography } from "../../components/Wrappers/Wrappers";
+import Loader from "../../components/Loader/Loader";
 
 import Table from "./components/Table/Table";
 
@@ -21,7 +22,7 @@ import { FarmerContext } from "./context/FarmerContext";
 
  function Dashboard(props) {
   const {phone, name} = useParams();
-  const {farmers,meta,fetchPagination,updateFarmer,fetchById} = useContext(FarmerContext)
+  const {farmers,meta,loading,fetchPagination,updateFarmer,fetchById} = useContext(FarmerContext)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   var classes = useStyles();
@@ -52,6 +53,7 @@ import { FarmerContext } from "./context/FarmerContext";
     };
   return (
     <>
+    <Loader isOpen={loading}/>
       <PageTitle title="Admin Dashboard - Farmer Details" button="Latest Reports" />
       <Grid container spacing={4}>
        

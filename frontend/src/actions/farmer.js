@@ -6,7 +6,8 @@ export const ACTION_TYPES = {
     FARMER_DELETE: 'FARMER_DELETE',
     FARMER_FETCH: 'FARMER_FETCH',
     FARMER_FETCH_ALL: 'FARMER_FETCH_ALL',
-    FARMER_PAGINATION: 'FARMER_PAGINATION'
+    FARMER_PAGINATION: 'FARMER_PAGINATION',
+    FARMER_LOADING:"FARMER_LOADING"
 }
 
 const formatingInput = (input) => {
@@ -16,6 +17,10 @@ const formatingInput = (input) => {
 }
 
 export const fetchAll = () => dispatch => {
+    dispatch({
+                type: ACTION_TYPES.FARMER_LOADING,
+                payload: true
+            })
     API.farmer().fetchAll()
         .then(res => {
             dispatch({
@@ -23,10 +28,20 @@ export const fetchAll = () => dispatch => {
                 payload: res.data
             })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+                dispatch({
+                type: ACTION_TYPES.FARMER_LOADING,
+                payload: false
+            })
+            console.log(err)
+        })
 }
 
 export const Pagination = (page = 1, limit = 10, name = "", category = "all") => dispatch => {
+    dispatch({
+                type: ACTION_TYPES.FARMER_LOADING,
+                payload: true
+            })
     API.farmer().fetchPagination(page, Math.abs(limit), name, category)
         .then(res =>{
             dispatch({
@@ -34,10 +49,20 @@ export const Pagination = (page = 1, limit = 10, name = "", category = "all") =>
                 payload: res.data
             })
         })
-        .catch(err => console.log(err))
+       .catch(err => {
+                dispatch({
+                type: ACTION_TYPES.FARMER_LOADING,
+                payload: false
+            })
+            console.log(err)
+        })
 }
 
 export const fetchById = (id, onSuccess) => dispatch => {
+    dispatch({
+                type: ACTION_TYPES.FARMER_LOADING,
+                payload: true
+            })
     API.farmer().fetchById(id)
         .then(res =>{
             dispatch({
@@ -46,10 +71,20 @@ export const fetchById = (id, onSuccess) => dispatch => {
             })
             onSuccess(res.data)
         })
-        .catch(err => console.log(err))
+       .catch(err => {
+                dispatch({
+                type: ACTION_TYPES.FARMER_LOADING,
+                payload: false
+            })
+            console.log(err)
+        })
 }
 
 export const create = (input, onSuccess) => dispatch => {
+    dispatch({
+                type: ACTION_TYPES.FARMER_LOADING,
+                payload: true
+            })
     const formattedData = formatingInput(input)
     API.farmer().create(formattedData)
         .then(res =>{
@@ -59,10 +94,20 @@ export const create = (input, onSuccess) => dispatch => {
             })
             onSuccess()
         })
-        .catch(err => console.log(err))
+       .catch(err => {
+                dispatch({
+                type: ACTION_TYPES.FARMER_LOADING,
+                payload: false
+            })
+            console.log(err)
+        })
 }
 
 export const update = (id, input, onSuccess) => dispatch => {
+    dispatch({
+                type: ACTION_TYPES.FARMER_LOADING,
+                payload: true
+            })
     const formattedData = formatingInput(input)
     API.farmer().update(id, formattedData)
         .then(res =>{
@@ -72,10 +117,20 @@ export const update = (id, input, onSuccess) => dispatch => {
             })
             onSuccess()
         })
-        .catch(err => console.log(err))
+       .catch(err => {
+                dispatch({
+                type: ACTION_TYPES.FARMER_LOADING,
+                payload: false
+            })
+            console.log(err)
+        })
 }
 
 export const Delete = (id, onSuccess) => dispatch => {
+    dispatch({
+                type: ACTION_TYPES.FARMER_LOADING,
+                payload: true
+            })
     API.farmer().delete(id)
         .then(res =>{
             dispatch({
@@ -84,5 +139,11 @@ export const Delete = (id, onSuccess) => dispatch => {
             })
             onSuccess()
         })
-        .catch(err => console.log(err))
+       .catch(err => {
+                dispatch({
+                type: ACTION_TYPES.FARMER_LOADING,
+                payload: false
+            })
+            console.log(err)
+        })
 }
