@@ -33,7 +33,7 @@ const ROLE_AUTH={
 //     console.log(doc)
 //   })
 // })
-    User.findOneAndUpdate({_id:"60cc98c9e585c21d212ec082"},{admin_type:0}).then((doc)=>{console.log(doc)})
+    // User.findOneAndUpdate({_id:"60cc98c9e585c21d212ec082"},{admin_type:0}).then((doc)=>{console.log(doc)})
 
 const auth=
     {

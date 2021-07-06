@@ -37,10 +37,11 @@ const initialFormState = {
 }
 
 const EditUserForm = ({ classes, ...props }) => {
+
 	const [ user, setUser ] = useState(initialFormState)
 	const [ errors, setErrors ] = useState({})
 	const { fetchById, updateUser} = useContext(UserContext)
-    const adminType={ 0:"SUPER_ADMIN",1:"ADMIN_ONE",2:"ADMIN_TWO"}
+    const adminType={0:"SUPER_ADMIN",1:"ADMIN_ONE",2:"ADMIN_TWO"}
 
 	useEffect(() => {
 		const onSuccess = (user) => {
@@ -101,7 +102,6 @@ const EditUserForm = ({ classes, ...props }) => {
 	
 	const handleSubmit = (e) => {
         e.preventDefault();
-
         if(validate()){
 			updateUser(user.id, user, done)
         }
@@ -140,13 +140,13 @@ const EditUserForm = ({ classes, ...props }) => {
 						<Select
 						  name="admin_type"
 				          id="admin_type"
-				          value={String(user.admin_type)}
+				          value={Number(user.admin_type)}
 				          onChange={handleInputChange}
 				          style={{marginTop:"10px"}}
 				        >
-				          <MenuItem value="0">{adminType[0]}</MenuItem>
-				          <MenuItem value="1">{adminType[1]}</MenuItem>
-				          <MenuItem value="2">{adminType[2]}</MenuItem>
+				          <MenuItem value={0}>{adminType[0]}</MenuItem>
+				          <MenuItem value={1}>{adminType[1]}</MenuItem>
+				          <MenuItem value={2}>{adminType[2]}</MenuItem>
 				        </Select>
 			        </FormControl>
 					

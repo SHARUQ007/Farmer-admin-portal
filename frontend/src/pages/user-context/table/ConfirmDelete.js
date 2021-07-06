@@ -25,13 +25,36 @@ const ConfirmDelete = (props) => {
   const [open, setOpen] = useState(false);
 
   const handleSubmit = (e) => {
-    const onSuccess = () => {
-        refresh()
-        setOpen(false);
-        toast.success('Data succesfully deleted');
-    }
+   
     e.preventDefault();
-    deleteUser(props.id, onSuccess)
+    deleteUser(props.id, done)
+  }
+  function done(msg,isError){
+      //if sucess
+      if(!isError){
+       refresh()
+       setOpen(false);
+       toast.success(msg, {
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  });
+     }
+     else{
+      toast.error(msg,{
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            });
+     }
   }
 
   return (
