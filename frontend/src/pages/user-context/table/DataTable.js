@@ -4,11 +4,12 @@ import { Paper, withStyles, Table, TableBody, TableCell, TableContainer, TableHe
 import Pagination from './Pagination'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditIcon from '@material-ui/icons/Edit';
+import Typography from '@material-ui/core/Typography';
 import { Link } from "react-router-dom";
 import ConfirmDelete from './ConfirmDelete'
-import { UserContext } from "../context/UserContext";
 import Loader from "../../../components/Loader/Loader";
 
+import { UserContext ,UserProvider} from "../context/UserContext";
 
 const styles = theme => ({
     paper: {
@@ -25,7 +26,7 @@ const styles = theme => ({
 })
 
 const DataTable = ({ classes, ...props }) => {
-    const { users, meta,loading, fetchUsers, deleteUser} = useContext(UserContext)
+    const { users, meta,isLoading, fetchUsers, deleteUser} = useContext(UserContext)
     const adminType={ 0:"SUPER_ADMIN",1:"ADMIN_ONE",2:"ADMIN_TWO"}
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -60,10 +61,10 @@ const DataTable = ({ classes, ...props }) => {
         await setPage(0);
         fetchUsers(1, rowsPerPage)
     }
-
-    return (
+    if(users.length>0){
+     return (
         <>
-        <Loader isOpen={loading}/>
+        <Loader isOpen={isLoading}/>
         <TableContainer component={Paper} className={classes.paper} >
             <div className="table-header" >
                 <div className="table-filter" >
@@ -142,6 +143,33 @@ const DataTable = ({ classes, ...props }) => {
         </TableContainer>
         </>
     );
+    }
+    //if loaded sucessfully and has no data mean render it 
+    else if(!isLoading){
+      return(
+        <>
+        <TableContainer component={Paper} className={classes.paper} >
+            <div style={ {width: '100%',textTransform:"uppercase",textAlign:"center"}}>
+                <Typography variant="h3" component="h3"  style={{margin:"1rem"}}>
+                  No Results Found.
+                </Typography>
+            </div>
+        </TableContainer>
+        </>
+            )
+    }
+   //if it is loading return loading
+    else{
+        return (<Loader isOpen={isLoading}/>)
+    }
 }
 
-export default (withStyles(styles)(DataTable));
+function ContextWrapper(props){
+  return(
+    <UserProvider>
+      <DataTable {...props}/>
+    </UserProvider>
+    );
+}
+
+export default (withStyles(styles)(ContextWrapper));

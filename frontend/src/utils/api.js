@@ -61,7 +61,7 @@ export default {
         fetchAll: () => http.get(url + '/list', config),
         fetchPagination: (page, limit, name, category) => 
             http.get(url + "?page=" + page + "&limit=" + limit + "&name=" + name + "&category=" + category, config),
-        fetchById: (name,phone) => http.get(url + "/get"+"?name="+name+"&phone="+phone, config),
+        fetchById: (name,phone) => http.get(url + `/get?name=${name}&phone=${phone}`, config),
         create: newRecord => http.post(url, newRecord, config),
         update: (id, updatedRecord) => http.put(url + "/" + id, updatedRecord, config),
         delete: id => http.delete(url + "/" + id, config)
@@ -78,7 +78,7 @@ orders(url = 'orders') {
           fetchAll: () => http.get(url + '/list', config),
           fetchPagination: (page, limit, name, category) => 
               http.get(url + "?page=" + page + "&limit=" + limit + "&name=" + name + "&category=" + category, config),
-          fetchById: (name,phone) => http.get(url + "/get"+"?name="+name+"&phone="+phone, config),
+          fetchById: (name,phone) => http.get(url + `/get?name=${name}&phone=${phone}`, config),
           create: newRecord => http.post(url, newRecord, config),
           getScheduledStem: (page, limit) => http.get(url + "/scheduledStem?page=" + page +"&limit=" + limit, config),
           getFilteredStem: (page, limit,status,date) => http.post(url + "/scheduledStem?page=" + page +"&limit=" + limit,{status,date},config),

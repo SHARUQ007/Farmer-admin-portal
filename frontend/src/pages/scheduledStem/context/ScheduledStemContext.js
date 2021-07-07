@@ -119,7 +119,6 @@ class ScheduledStemProvider extends React.PureComponent {
       API.orders().updateDate(id, date)
         .then(res =>{
             if(res.data.status==="success"){
-                let isfind=false
                 //instead of getting data from server we manuly changing the data it save the bandwidth
                 let tempOrders=[...this.state.orders];
                 let tempPopupData=[...this.state.popupData];
@@ -165,7 +164,7 @@ class ScheduledStemProvider extends React.PureComponent {
               fetchFilteredPagination:this.fetchFilteredPagination,
               createScheduledStem : this.createScheduledStem,
               updateScheduledStem : this.updateScheduledStem,
-               updateScheduledDate: this. updateScheduledDate,
+               updateScheduledDate: this.updateScheduledDate,
               deleteScheduledStem : this.deleteScheduledStem
           }}
         >

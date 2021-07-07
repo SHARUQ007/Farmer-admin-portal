@@ -17,7 +17,7 @@ class OrdersProvider extends React.PureComponent {
    
     fetchOrders = async () => {
       this.setState({...this.state,loading:true});
-      API.orders(). fetchAll()
+      API.orders().fetchAll()
         .then(res => {
           this.setState ({
             orders : res.data,

@@ -3,7 +3,6 @@ import { Drawer, IconButton, List } from "@material-ui/core";
 import {
   LibraryBooks as LibraryIcon,
   ArrowBack as ArrowBackIcon,
-  Person as AccountIcon,
 } from "@material-ui/icons";
 import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
 import BusinessIcon from '@material-ui/icons/Business';

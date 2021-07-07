@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Paper, withStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableFooter, 
-            IconButton, TextField, MenuItem } from '@material-ui/core';
+            IconButton, TextField } from '@material-ui/core';
 import { connect } from "react-redux";
 import * as actions from "../../../actions/map";
 import CollapsibleRow from './CollapsibleRow'
 import Pagination from './Pagination'
+import Typography from '@material-ui/core/Typography';
 import { toast } from 'react-toastify';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { Link } from "react-router-dom";
+import Loader from "../../../components/Loader/Loader";
+
 
 const styles = theme => ({
     paper: {
@@ -56,71 +59,91 @@ const DataTable = ({ classes, ...props }) => {
 		await setName(value)
 		props.fetchPagination(1, rowsPerPage,  value, category)
 	}
-
-
-
-    return (
-        <TableContainer component={Paper} className={classes.paper} >
-            <div className="table-header" >
-                <div className="table-filter" > 
-                    <TextField
-                        name="name"
-                        variant="outlined"
-                        label="Search Name"
-                        value={name}
-                        onChange={nameChange}
-                        autoComplete="off"
-                    />
-                 
-                </div>
-            </div>
-
-            <Table aria-label="collapsible table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell />
-                        <TableCell style={{fontWeight:'600'}}>NAME</TableCell>
-                        <TableCell style={{fontWeight:'600'}}>MOBILE</TableCell>
-                        <TableCell align="right" width="250"> 
-                            <div className="cell-add">
-                                <Link to="/admin/map/add">
-                                    <IconButton color="primary">
-                                        <AddCircleIcon />
-                                    </IconButton>
-                                </Link>
+     if(props.maps.length>0){
+                return (
+                     <>
+                    <Loader isOpen={props.isLoading}/>
+                    <TableContainer component={Paper} className={classes.paper} >
+                        <div className="table-header" >
+                            <div className="table-filter" > 
+                                <TextField
+                                    name="name"
+                                    variant="outlined"
+                                    label="Search Name"
+                                    value={name}
+                                    onChange={nameChange}
+                                    autoComplete="off"
+                                />
+                             
                             </div>
-                        </TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody  style={{ height: "150px", overflow: "auto" }} >
-                    {props.maps.map((row, index) => (
-                        <CollapsibleRow 
-                            key={index} 
-                            row={row} 
-                            onDelete={onDelete} 
-                        />
-                    ))}    
-                </TableBody>
-                <TableFooter>
-                    <TableRow>
-                        <Pagination 
-                            handleChangePage={handleChangePage} 
-                            handleChangeRowsPerPage={handleChangeRowsPerPage} 
-                            count={props.meta.totalDocs || 0}
-                            page={page}
-                            rowsPerPage={rowsPerPage}
-                        />
-                    </TableRow>
-                </TableFooter>
-            </Table>
+                        </div>
 
-        </TableContainer>
-    );
+                        <Table aria-label="collapsible table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell />
+                                    <TableCell style={{fontWeight:'600'}}>NAME</TableCell>
+                                    <TableCell style={{fontWeight:'600'}}>MOBILE</TableCell>
+                                    <TableCell align="right" width="250"> 
+                                        <div className="cell-add">
+                                            <Link to="/admin/map/add">
+                                                <IconButton color="primary">
+                                                    <AddCircleIcon />
+                                                </IconButton>
+                                            </Link>
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody  style={{ height: "150px", overflow: "auto" }} >
+                                {props.maps.map((row, index) => (
+                                    <CollapsibleRow 
+                                        key={index} 
+                                        row={row} 
+                                        onDelete={onDelete} 
+                                    />
+                                ))}    
+                            </TableBody>
+                            <TableFooter>
+                                <TableRow>
+                                    <Pagination 
+                                        handleChangePage={handleChangePage} 
+                                        handleChangeRowsPerPage={handleChangeRowsPerPage} 
+                                        count={props.meta.totalDocs || 0}
+                                        page={page}
+                                        rowsPerPage={rowsPerPage}
+                                    />
+                                </TableRow>
+                            </TableFooter>
+                        </Table>
+
+                    </TableContainer>
+                    </>
+                );
+    }
+    //if loaded sucessfully and has no data mean render it 
+    else if(!props.isLoading){
+        return(
+    <TableContainer component={Paper} className={classes.paper} >
+          <div style={ {width: '100%',textTransform:"uppercase",textAlign:"center"}}>
+                <Typography variant="h3" component="h3"  style={{margin:"1rem"}}>
+                  No Results Found.
+                </Typography>
+            </div>
+     </TableContainer>
+        )
+    }
+    //if it is loading return loading
+    else{
+                    
+        return (<Loader isOpen={props.isLoading}/>)
+    }
 }
 
 const mapStateToProps = state => ({
     maps: state.map.maps,
-    meta: state.map.mapMeta
+    meta: state.map.mapMeta,
+    isLoading:state.map.isLoading
 })
 
 const mapActionToProps = {

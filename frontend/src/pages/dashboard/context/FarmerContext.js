@@ -12,65 +12,98 @@ class FarmerProvider extends React.PureComponent {
           totalDocs : 0
         },
         selectedFarmer: null,
+        isLoading:true
     };
    
     fetchFarmers = async (page, rowsPerPage = 5, name = null, email = null) => {
-      API.farmer(). fetchAll()
+      this.setState({...this.state,isLoading:true});
+      API.farmer().fetchAll()
         .then(res => {
           this.setState ({
             farmers : res.data,
+            isLoading:false
           })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          this.setState({...this.state,isLoading:false})
+          console.log(err)
+        })
     }
 
     fetchPagination = async (page, rowsPerPage = 5, name = null, email = null) => {
+      this.setState({...this.state,isLoading:true});
       API.farmer().fetchPagination(page,rowsPerPage)
         .then(res => {
           this.setState ({
             farmers : res.data.farmers,
-            meta:res.data.meta
+            meta:res.data.meta,
+            isLoading:false
+
           })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          this.setState({...this.state,isLoading:false})
+          console.log(err)
+        })
     }
     fetchById = async (name,phone,onSuccess) => {
+      this.setState({...this.state,isLoading:true});
       API.farmer().fetchById(name,phone)
         .then(res =>{
             this.setState ({
-              farmers: res.data
+              farmers: res.data,
+              isLoading:false
             })
             onSuccess()
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          this.setState({...this.state,isLoading:false})
+          console.log(err)
+        })
     }
     
     createFarmer = (data, onSuccess)  => {
+      this.setState({...this.state,isLoading:true});
       API.farmer().create(data)
         .then(res =>{
             this.setState ({
-              selectedFarmer : res.data
+              selectedFarmer : res.data,
+              isLoading:false
             })
             onSuccess()
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          this.setState({...this.state,isLoading:false})
+          console.log(err)
+        })
     }
     
     updateFarmer = (id, data, onSuccess) => {
+      this.setState({...this.state,isLoading:true});
       API.farmer().update(id, {status:data.status})
         .then(res =>{
             this.setState ({
-              selectedFarmer : res.data
+              selectedFarmer : res.data,
+              isLoading:false
+
             })
-            onSuccess()
+            onSuccess("Status updated succesfully")
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          this.setState({...this.state,isLoading:false})
+           if(err.response.status===401){
+           return onSuccess("unauthorized Access",true);
+          }
+          onSuccess("Sorry something went wrong",true);
+          console.log(err)
+        })
     }
     
     deleteFarmer = (id, onSuccess) => {
+      this.setState({...this.state,isLoading:true});
       API.farmer().delete(id)
         .then(res =>{
-
+            this.setState({...this.state,isLoading:false});
           onSuccess()
         })
     }
