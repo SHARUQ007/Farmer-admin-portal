@@ -1,4 +1,4 @@
-import React, { useState, Dropdown, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext} from "react";
 import {useParams} from "react-router-dom";
 import {
   Grid,
@@ -34,7 +34,7 @@ import { ScheduledStemContext ,ScheduledStemProvider} from "./context/ScheduledS
     else{
       fetchById(name,phone)
     }
-    }, [])
+    }, [phone,name] )
 
   const handleChangePage = async (event, newPage) => {
         await setPage(newPage);

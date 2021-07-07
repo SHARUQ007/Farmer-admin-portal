@@ -6,8 +6,10 @@ import "./style.css"
 function PopupCard({id,popupData,date,setDate,closePopup,updateScheduledDate}) {
 	//if we have id mean display none else flex because when user click the name the id passed here 
 	var style={display:id?"flex":"none"};
+
 	function scheduleDate(){
-		if(date){
+		//only update if he change the date 
+		if(popupData.scheduledDate!==date){
 			updateScheduledDate(id,date,done);
 		}
 		closePopup();
@@ -37,7 +39,7 @@ function PopupCard({id,popupData,date,setDate,closePopup,updateScheduledDate}) {
           });
    }
   }
-	var keys = Object.keys(popupData).map((key)=>{
+  var keys = Object.keys(popupData).map((key)=>{
 		if(key==="scheduledDate"){
 			return(<div key={popupData.key} className="popupData">
 						<p className="popupKey">{key}:</p>
@@ -57,6 +59,8 @@ function PopupCard({id,popupData,date,setDate,closePopup,updateScheduledDate}) {
 						<p className="popupKey">{key}:</p>
 						<p className="popupValue">{String(popupData[key])}</p>
 					</div>)
+		}else{
+			return null;
 		}
 	});
 

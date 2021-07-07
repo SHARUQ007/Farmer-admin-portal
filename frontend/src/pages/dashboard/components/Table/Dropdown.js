@@ -73,7 +73,7 @@ export default function DialogSelect(props) {
   };
    const handleOk = () => {
     //change only if the user change the status 
-    if(status!=props.farmerData.status){
+    if(status!==props.farmerData.status){
       props.farmerData.status=status; 
       props.updateFarmer(props.id,props.farmerData,done)
     }

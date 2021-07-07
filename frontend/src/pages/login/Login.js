@@ -10,7 +10,7 @@ import {
   Fade,
 } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-import classnames from "classnames";
+// import classnames from "classnames";
 
 // styles
 import useStyles from "./styles";
@@ -18,7 +18,7 @@ import useStyles from "./styles";
 // logo
 import gencrestLogo from "./gencrestLogo.svg";
 
-import google from "../../images/google.svg";
+// import google from "../../images/google.svg";
 
 // context
 // import { useUserDispatch, loginUser, registerUser } from "../../context/AuthContext";

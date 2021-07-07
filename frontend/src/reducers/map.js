@@ -3,7 +3,7 @@ import { ACTION_TYPES } from "../actions/map";
 const initialState = {
     maps: [],
     mapMeta: {},
-    loading:true
+    isLoading:true
 }
 
 export const map = (state = initialState, action) => {
@@ -12,37 +12,37 @@ export const map = (state = initialState, action) => {
             return {
                 ...state,
                 maps: [...action.payload],
-                loading:false
+                isLoading:false
             }
         case ACTION_TYPES.MAP_CREATE:
             return {
                 ...state,
                 maps: [...state.maps, action.payload],
-                loading:false
+                isLoading:false
             }
         case ACTION_TYPES.MAP_UPDATE:
             return {
                 ...state,
                 maps: state.maps.map(x => x.id === action.payload.id ? action.payload : x),
-                loading:false
+                isLoading:false
             }
         case ACTION_TYPES.MAP_DELETE:
             return {
                 ...state,
                 maps:state.maps.filter(x => x.id !== action.payload),
-                loading:false
+                isLoading:false
             }
         case ACTION_TYPES.MAP_PAGINATION:
             return {
                 ...state,
                 maps: [...action.payload.maps],
                 mapMeta: action.payload.meta,
-                loading:false
+                isLoading:false
             }
         case ACTION_TYPES.MAP_LOADING:
             return {
                 ...state,
-                loading:action.payload
+                isLoading:action.payload
             }
         default:
             return state;

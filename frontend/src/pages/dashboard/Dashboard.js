@@ -1,16 +1,13 @@
-import React, { useState, Dropdown, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext} from "react";
 import {
   Grid,
 } from "@material-ui/core";
 import {useParams} from "react-router-dom";
 
 
-
 import useStyles from "./styles";
 
 // components
-import mock from "./mock";
-
 import Widget from "../../components/Widget/Widget";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import { Typography } from "../../components/Wrappers/Wrappers";
@@ -22,7 +19,7 @@ import { FarmerContext } from "./context/FarmerContext";
 
  function Dashboard(props) {
   const {phone, name} = useParams();
-  const {farmers,meta,loading,fetchPagination,updateFarmer,fetchById} = useContext(FarmerContext)
+  const {farmers,meta,isLoading,fetchPagination,updateFarmer,fetchById} = useContext(FarmerContext)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   var classes = useStyles();
@@ -53,7 +50,7 @@ import { FarmerContext } from "./context/FarmerContext";
     };
   return (
     <>
-    <Loader isOpen={loading}/>
+    <Loader isOpen={isLoading}/>
       <PageTitle title="Admin Dashboard - Farmer Details" button="Latest Reports" />
       <Grid container spacing={4}>
        
@@ -85,6 +82,7 @@ import { FarmerContext } from "./context/FarmerContext";
           >
             <Table data={farmers}  
                    meta={meta}
+                   isLoading={isLoading}
                    page={page}
                    updateFarmer={updateFarmer}
                    rowsPerPage={rowsPerPage}
@@ -100,7 +98,6 @@ import { FarmerContext } from "./context/FarmerContext";
 
 
 export default Dashboard;
-// #######################################################################
 
 
   

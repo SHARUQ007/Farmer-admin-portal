@@ -12,7 +12,6 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import{ ToastContainer }  from 'react-toastify';
 
-import {Link} from "react-router-dom";
 
 
 // components
@@ -22,11 +21,11 @@ import FilteredDropdown from './FilteredDropdown';
 import Pagination from './Pagination'
 import PopupCard from "../PopupCard/PopupCard"
 
-const states = {
-  confirmed: "success",
-  scheduled: "warning",
-  rescheduled: "error",
-};
+// const states = {
+//   confirmed: "success",
+//   scheduled: "warning",
+//   rescheduled: "error",
+// };
 const useStyles = makeStyles({
       root: {
         width: '100%',
@@ -218,7 +217,7 @@ export default function TableComponent({data,popupData,isLoading,updateScheduled
               </div>
             </div>
             </div>
-            <div className={classes.root}>
+            <div style={ {width: '100%',textTransform:"uppercase",textAlign:"center"}}>
                 <Typography variant="h3" component="h3"  style={{margin:"1rem"}}>
                   No Results Found.
                 </Typography>

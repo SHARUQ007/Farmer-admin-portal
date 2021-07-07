@@ -12,85 +12,85 @@ class FarmerProvider extends React.PureComponent {
           totalDocs : 0
         },
         selectedFarmer: null,
-        loading:true
+        isLoading:true
     };
    
     fetchFarmers = async (page, rowsPerPage = 5, name = null, email = null) => {
-      this.setState({...this.state,loading:true});
-      API.farmer(). fetchAll()
+      this.setState({...this.state,isLoading:true});
+      API.farmer().fetchAll()
         .then(res => {
           this.setState ({
             farmers : res.data,
-            loading:false
+            isLoading:false
           })
         })
         .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false})
           console.log(err)
         })
     }
 
     fetchPagination = async (page, rowsPerPage = 5, name = null, email = null) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.farmer().fetchPagination(page,rowsPerPage)
         .then(res => {
           this.setState ({
             farmers : res.data.farmers,
             meta:res.data.meta,
-            loading:false
+            isLoading:false
 
           })
         })
         .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false})
           console.log(err)
         })
     }
     fetchById = async (name,phone,onSuccess) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.farmer().fetchById(name,phone)
         .then(res =>{
             this.setState ({
               farmers: res.data,
-              loading:false
+              isLoading:false
             })
             onSuccess()
         })
         .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false})
           console.log(err)
         })
     }
     
     createFarmer = (data, onSuccess)  => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.farmer().create(data)
         .then(res =>{
             this.setState ({
               selectedFarmer : res.data,
-              loading:false
+              isLoading:false
             })
             onSuccess()
         })
         .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false})
           console.log(err)
         })
     }
     
     updateFarmer = (id, data, onSuccess) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.farmer().update(id, {status:data.status})
         .then(res =>{
             this.setState ({
               selectedFarmer : res.data,
-              loading:false
+              isLoading:false
 
             })
             onSuccess("Status updated succesfully")
         })
         .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false})
            if(err.response.status===401){
            return onSuccess("unauthorized Access",true);
           }
@@ -100,10 +100,10 @@ class FarmerProvider extends React.PureComponent {
     }
     
     deleteFarmer = (id, onSuccess) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.farmer().delete(id)
         .then(res =>{
-            this.setState({...this.state,loading:false});
+            this.setState({...this.state,isLoading:false});
           onSuccess()
         })
     }

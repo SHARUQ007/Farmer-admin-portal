@@ -1,4 +1,4 @@
-import React, { useState, Dropdown, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext} from "react";
 import {useParams} from "react-router-dom";
 import {Grid} from "@material-ui/core";
 
@@ -19,7 +19,7 @@ import { OrdersContext ,OrdersProvider} from "./context/OrdersContext";
  function Orders(props) {
   const { name,phone} = useParams();
 
-  const { orders,meta,loading,fetchOrders,updateOrders,fetchPagination,fetchFilteredPagination,fetchById } = useContext(OrdersContext)
+  const { orders,meta,loading,updateOrders,fetchPagination,fetchFilteredPagination,fetchById } = useContext(OrdersContext)
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -34,7 +34,7 @@ import { OrdersContext ,OrdersProvider} from "./context/OrdersContext";
     else{
       fetchById(name,phone)
     }
-    }, [])
+    }, [name,phone])
 
   const handleChangePage = async (event, newPage) => {
         await setPage(newPage);

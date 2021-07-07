@@ -19,11 +19,11 @@ import Pagination from './Pagination'
 import FilteredDropdown from './FilteredDropdown';
 
 
-const states = {
-  recieved: "success",
-  placed: "warning",
-  declined: "error",
-};
+// const states = {
+//   recieved: "success",
+//   placed: "warning",
+//   declined: "error",
+// };
 const useStyles = makeStyles({
       root: {
         width: '100%',
@@ -36,20 +36,6 @@ export default function TableComponent({data,isLoading,updateOrders,fetchPaginat
    const [filteredDate,setFilteredDate]=React.useState("")
    const [filteredStatus,setFilteredStatus]=React.useState("")
    const classes = useStyles();
-
-   function formatDate(date){
-    if(date){
-      date=new Date(date);
-      let year=date.getFullYear();
-      let month=date.getMonth()+1;
-      month=month>10?month:"0"+month;
-      let day=date.getDate();
-      day=day>10?day:"0"+day;
-      date=year+"-"+month+"-"+day;
-      return date;
-    }
-    return ""
-  }
 
   const searchChange = async (event) => {
     const { value } = event.target

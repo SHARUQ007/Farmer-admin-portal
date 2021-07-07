@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { TextField, withStyles, Button, MenuItem, Paper, Grid } from "@material-ui/core";
+import { TextField, withStyles, Button, Paper, Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import { toast } from 'react-toastify';
 import * as actions from "../../../actions/map";

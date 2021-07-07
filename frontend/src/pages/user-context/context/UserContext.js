@@ -11,28 +11,28 @@ class UserProvider extends React.PureComponent {
         meta : {
           totalDocs : 0
         },
-        loading:true,
+        isLoading:true,
         selectedUser: null,
     };
 
     fetchUsers = async (page, rowsPerPage = 5, name = null, email = null) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.user().fetchPagination(page, rowsPerPage, name, email)
         .then(res => {
           this.setState ({
             users : res.data.users,
             meta : res.data.meta,
-            loading:false
+            isLoading:false
           })
         })
        .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false})
           console.log(err)
         })
     }
 
     fetchById = async (id, onSuccess) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.user().fetchById(id)
         .then(res =>{
             this.setState ({
@@ -41,7 +41,7 @@ class UserProvider extends React.PureComponent {
             onSuccess(this.state.selectedUser)
         })
        .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false})
            if(err.response.status===401){
             // onSuccess("unauthorized Access",true);
           }
@@ -50,17 +50,17 @@ class UserProvider extends React.PureComponent {
     }
     
     createUser = (data, onSuccess)  => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.user().create(data)
         .then(res =>{
             this.setState ({
               selectedUser : res.data,
-              loading:false
+              isLoading:false
             })
             onSuccess("new user succesfully created")
         })
        .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false})
            if(err.response.status===401){
             onSuccess("unauthorized Access",true);
           }
@@ -69,17 +69,17 @@ class UserProvider extends React.PureComponent {
     }
     
     updateUser = (id, data, onSuccess) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.user().update(id, data)
         .then(res =>{
             this.setState ({
               selectedUser : res.data,
-              loading:false
+              isLoading:false
             })
             onSuccess('User data succesfully updated');
         })
         .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false})
           if(err.response.status===401){
             onSuccess("unauthorized Access",true);
           }
@@ -91,14 +91,14 @@ class UserProvider extends React.PureComponent {
     }
     
     deleteUser = (id, onSuccess) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.user().delete(id)
         .then(res =>{
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false})
           onSuccess("User succesfully deleted")
         })
         .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false})
            if(err.response.status===401){
             onSuccess("unauthorized Access",true);
           }
