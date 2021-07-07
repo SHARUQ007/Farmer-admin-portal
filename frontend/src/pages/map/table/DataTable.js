@@ -133,8 +133,10 @@ const DataTable = ({ classes, ...props }) => {
      </TableContainer>
         )
     }
+    //if it is loading return loading
     else{
-        return null
+                    
+        return (<Loader isOpen={props.isLoading}/>)
     }
 }
 
