@@ -36,8 +36,6 @@ import EditUserForm from "../../pages/user-context/form/EditUserForm";
 
 // context
 import { useLayoutState } from "../../context/LayoutContext";
-import { UserProvider } from "../../pages/user-context/context/UserContext";
-import { FarmerProvider } from "../../pages/dashboard/context/FarmerContext";
 
   
 function AdminLayout(props) {
@@ -58,7 +56,6 @@ function AdminLayout(props) {
           >
             <div className={classes.fakeToolbar} />
               <Switch>
-              <FarmerProvider>
                 <Route  exact path="/admin/dashboard" component={Dashboard} />
                 <Route  exact path="/admin/dashboard/:name/:phone" component={Dashboard} />
 
@@ -72,13 +69,10 @@ function AdminLayout(props) {
                 <Route exact path="/admin/map/edit/:id" component={EditForm} />
 
                 <Route exact path="/admin/user/" component={User} />
-
-                <UserProvider>
-                  <Route exact path="/admin/usercontext" component={UserWithContext} />
-                  <Route exact path="/admin/usercontext/add" component={AddUserForm} />
-                  <Route  exact path="/admin/usercontext/edit/:id" component={EditUserForm} />
-                </UserProvider>
-              </FarmerProvider>
+              
+                <Route exact path="/admin/usercontext" component={UserWithContext} />
+                <Route exact path="/admin/usercontext/add" component={AddUserForm} />
+                <Route  exact path="/admin/usercontext/edit/:id" component={EditUserForm} />
               </Switch>
           </div>
         </>

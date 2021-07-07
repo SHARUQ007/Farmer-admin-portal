@@ -15,7 +15,7 @@ import Loader from "../../components/Loader/Loader";
 
 import Table from "./components/Table/Table";
 
-import { FarmerContext } from "./context/FarmerContext";
+import {FarmerProvider, FarmerContext } from "./context/FarmerContext";
 
  function Dashboard(props) {
   const {phone, name} = useParams();
@@ -97,7 +97,14 @@ import { FarmerContext } from "./context/FarmerContext";
 }
 
 
-export default Dashboard;
+function ContextWrapper(){
+  return(
+    <FarmerProvider>
+      < Dashboard/>
+    </FarmerProvider>
+    );
+}
+export default ContextWrapper;
 
 
   

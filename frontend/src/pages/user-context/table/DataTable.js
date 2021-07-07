@@ -7,9 +7,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import Typography from '@material-ui/core/Typography';
 import { Link } from "react-router-dom";
 import ConfirmDelete from './ConfirmDelete'
-import { UserContext } from "../context/UserContext";
 import Loader from "../../../components/Loader/Loader";
 
+import { UserContext ,UserProvider} from "../context/UserContext";
 
 const styles = theme => ({
     paper: {
@@ -160,9 +160,16 @@ const DataTable = ({ classes, ...props }) => {
     }
    //if it is loading return loading
     else{
-                    
         return (<Loader isOpen={isLoading}/>)
     }
 }
 
-export default (withStyles(styles)(DataTable));
+function ContextWrapper(props){
+  return(
+    <UserProvider>
+      <DataTable {...props}/>
+    </UserProvider>
+    );
+}
+
+export default (withStyles(styles)(ContextWrapper));
