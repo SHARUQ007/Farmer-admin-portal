@@ -155,7 +155,7 @@ export default function TableComponent({data,popupData,isLoading,updateScheduled
           <TableBody >
             {data.map(({ id, name, phone,orderId, noOfStems, farming,variety,status,expected }) => (
               <TableRow key={id} >
-                <TableCell className="pl-3 fw-normal cursor-pointer" id={id} onClick={(e)=>{openPopup(e.target.id)}}>
+                <TableCell className="pl-3 fw-normal" style={{cursor:"pointer",color:"blue"}} id={id} onClick={(e)=>{openPopup(e.target.id)}}>
                       {name}
                 </TableCell>
                 <TableCell>{phone}</TableCell>

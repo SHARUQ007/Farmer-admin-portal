@@ -11,8 +11,6 @@ export const ACTION_TYPES = {
 }
 
 const formatingInput = (input) => {
-
-
     return input
 }
 
