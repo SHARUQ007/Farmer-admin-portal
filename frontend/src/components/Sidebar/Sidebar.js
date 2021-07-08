@@ -45,7 +45,10 @@ function Sidebar({ location }) {
   let { isSuperAdmin } = useContext(AuthContext);
   //if he is not super admin dont show user 
   if(!isSuperAdmin()){
+    //only remove if it is admin user else dont 
+    if(structure[2].label==="Admin User"){
     structure.splice(2,1)
+    }
   }
   
   var classes = useStyles();
