@@ -90,6 +90,10 @@ class OrdersProvider extends React.PureComponent {
         })
        .catch(err => {
           this.setState({...this.state,loading:false})
+          if(err.response.status===401){
+           return onSuccess("unauthorized Access",true);
+          }
+          onSuccess("Sorry something went wrong",true);
           console.log(err)
         })
     }
@@ -118,7 +122,10 @@ class OrdersProvider extends React.PureComponent {
             onSuccess("Status Updated Sucessfully")
         })
         .catch(err => {
-          onSuccess("Sorry Something Went Wrong",true)
+          if(err.response.status===401){
+           return onSuccess("unauthorized Access",true);
+          }
+          onSuccess("Sorry something went wrong",true);
           console.log(err)})
     }
     

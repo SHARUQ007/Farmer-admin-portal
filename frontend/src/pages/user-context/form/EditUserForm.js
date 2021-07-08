@@ -4,7 +4,8 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { toast } from 'react-toastify';
 import PageTitle from "../../../components/PageTitle/PageTitle";
-import { UserContext } from "../context/UserContext";
+import { UserContext ,UserProvider} from "../context/UserContext";
+import MultipleCheckBox from "./MultipleCheckBox";
 import '../style.css';
 
 const styles = theme => ({
@@ -33,19 +34,33 @@ const initialFormState = {
 	id: null, 
 	name: "",
 	email: "",
-	admin_type:""
+	admin_roles:[]
 }
-
+const initialRoleState ={
+        SUPER_ROLES:false,
+        TRANSPORTER_ROLES:false,
+        STEM_ROLES:false,
+        SCHEDULED_STEM_ROLES:false,
+        FARMER_ROLES:false
+}
 const EditUserForm = ({ classes, ...props }) => {
 
 	const [ user, setUser ] = useState(initialFormState)
+	const [roles, setRoles] = useState(initialRoleState);
+
 	const [ errors, setErrors ] = useState({})
 	const { fetchById, updateUser} = useContext(UserContext)
-    const adminType={0:"SUPER_ADMIN",1:"ADMIN_ONE",2:"ADMIN_TWO"}
 
 	useEffect(() => {
 		const onSuccess = (user) => {
             setUser(user)
+            let adminRoles={}
+            if(user.admin_roles.length>0){
+		      user.admin_roles.forEach(role=>{
+		        adminRoles[role]=true
+		      })
+		     setRoles({...adminRoles})
+		  }
 		}
 		const id = props.match.params.id
 		fetchById(id, onSuccess)
@@ -101,12 +116,20 @@ const EditUserForm = ({ classes, ...props }) => {
     }
 	
 	const handleSubmit = (e) => {
+		
+	   let tempRoles=[]
+		for (const role in roles) {
+ 			 if(roles[role]){
+ 			 	tempRoles.push(role)
+ 			 }
+		}
+		user.admin_roles=tempRoles;
         e.preventDefault();
         if(validate()){
 			updateUser(user.id, user, done)
         }
     }
-
+    console.log(user,"kk")
 	return (
 		<React.Fragment>
             <PageTitle title="Edit User" />
@@ -135,21 +158,8 @@ const EditUserForm = ({ classes, ...props }) => {
 						onChange={handleInputChange}
 						{...(errors.email && { error: true, helperText: errors.email })}
 					/>
-					<FormControl  fullWidth variant="outlined"   style={{margin:"24px"}}>
-					<InputLabel id="admin_types">Admin Type</InputLabel>
-						<Select
-						  name="admin_type"
-				          id="admin_type"
-				          value={Number(user.admin_type)}
-				          onChange={handleInputChange}
-				          style={{marginTop:"10px"}}
-				        >
-				          <MenuItem value={0}>{adminType[0]}</MenuItem>
-				          <MenuItem value={1}>{adminType[1]}</MenuItem>
-				          <MenuItem value={2}>{adminType[2]}</MenuItem>
-				        </Select>
-			        </FormControl>
 					
+			        <MultipleCheckBox roles={roles} setRoles={setRoles}/>
 					<div className="form-button-container">
 						<Button
 							variant="contained"
@@ -173,4 +183,13 @@ const EditUserForm = ({ classes, ...props }) => {
     );
 }
 
-export default (withStyles(styles)(EditUserForm));
+function ContextWrapper(props){
+  return(
+    <UserProvider>
+      <EditUserForm {...props}/>
+    </UserProvider>
+    );
+}
+
+
+export default (withStyles(styles)(ContextWrapper));

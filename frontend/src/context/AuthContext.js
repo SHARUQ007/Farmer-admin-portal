@@ -15,10 +15,10 @@ class AuthProvider extends React.PureComponent {
     };
 
     isAuthenticated = () => {
-      const tken = this.state.token ? this.state.token : localStorage.getItem("token")
-      if (!tken) return false
+      const token = this.state.token ? this.state.token : localStorage.getItem("token")
+      if (!token) return false
 
-      const decoded = jwt(tken); 
+      const decoded = jwt(token); 
 
       if (Date.now() / 1000 > decoded.exp - 5) {
         localStorage.clear();
@@ -27,7 +27,18 @@ class AuthProvider extends React.PureComponent {
       }
       return true
     }
+    isSuperAdmin = () => {
+     const usr = this.state.authUser ? this.state.authUser : localStorage.getItem("authUser")
+      if (!usr) return null
 
+      try {
+        const parsed = JSON.parse(usr)
+        return parsed.admin_roles.includes("SUPER_ROLES")
+      }
+      catch(err) {
+        return false;
+      }
+    }
     getAuthUser = () => {
       const usr = this.state.authUser ? this.state.authUser : localStorage.getItem("authUser")
       if (!usr) return null
@@ -143,6 +154,7 @@ class AuthProvider extends React.PureComponent {
               register : this.register,
               logout : this.logout,
               isAuthenticated : this.isAuthenticated,
+              isSuperAdmin:this.isSuperAdmin,
               getAuthUser : this.getAuthUser
           }}
         >

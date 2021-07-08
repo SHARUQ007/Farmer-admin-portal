@@ -17,9 +17,8 @@ exports.login =  async (req, res) => {
       // Check for existing user
       const user = await User.findOne({ email });
       if (!user) throw Error('User does not exist');
-
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) throw Error('Invalid credentials');
+      console.log(user.checkPassword(password))
+      if (!user.checkPassword(password)) throw Error('Invalid credentials');
 
       const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: 3600 });
       if (!token) throw Error('Couldnt sign the token');
@@ -29,7 +28,8 @@ exports.login =  async (req, res) => {
         user: {
           id: user._id,
           name: user.name,
-          email: user.email
+          email: user.email,
+          admin_roles:user.admin_roles
         }
       });
 
@@ -49,16 +49,10 @@ exports.register =  async (req, res) => {
       const user = await User.findOne({ email });
       if (user) throw Error('User already exists');
 
-      const salt = await bcrypt.genSalt(10);
-      if (!salt) throw Error('Something went wrong with bcrypt');
-
-      const hash = await bcrypt.hash(password, salt);
-      if (!hash) throw Error('Something went wrong hashing the password');
-
       const newUser = new User({
         name,
         email,
-        password: hash
+        password
       });
 
       const savedUser = await newUser.save();

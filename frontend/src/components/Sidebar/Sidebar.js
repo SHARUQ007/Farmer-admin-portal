@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useContext } from "react";
 import { Drawer, IconButton, List } from "@material-ui/core";
 import {
   LibraryBooks as LibraryIcon,
@@ -26,21 +26,28 @@ import {
   useLayoutDispatch,
   toggleSidebar,
 } from "../../context/LayoutContext";
+import { AuthContext } from "../../context/AuthContext";
 
-const structure = [
-  { id: 0, label: "Farmer", link: "/admin/dashboard", icon: <PersonPinCircleIcon /> },
-  { id: 3, label: "Transporter", link: "/admin/map", icon: <LocalShippingIcon /> },
-  // { id: 1, label: "Admin Users", link: "/admin/user", icon: <BusinessIcon /> },
-  { id: 2, label: "Admin User", link: "/admin/usercontext", icon: <BusinessIcon />  },
-  {id: 7, label: "Stem Availability Data", link: "/admin/orders", icon: <EcoIcon />  },
-  {id: 8, label: "Scheduled stem ", link: "/admin/scheduledStem", icon: <CheckCircleOutlineIcon /> },
-  {id: 9, label: "Scheduler", link: "/admin/usercontext", icon: <AdjustIcon /> },
-  { id: 4, type: "divider" },
-  { id: 5, type: "title", label: "Details" },
-  { id: 6, label: "Documents", link: "", icon: <LibraryIcon /> },
-];
+var structure = [
+      { id: 0, label: "Farmer", link: "/admin/dashboard", icon: <PersonPinCircleIcon /> },
+      { id: 3, label: "Transporter", link: "/admin/map", icon: <LocalShippingIcon /> },
+      // { id: 1, label: "Admin Users", link: "/admin/user", icon: <BusinessIcon /> },
+      { id: 2, label: "Admin User", link: "/admin/usercontext", icon: <BusinessIcon />  },
+      {id: 7, label: "Stem Availability Data", link: "/admin/orders", icon: <EcoIcon />  },
+      {id: 8, label: "Scheduled stem ", link: "/admin/scheduledStem", icon: <CheckCircleOutlineIcon /> },
+      {id: 9, label: "Scheduler", link: "/admin/usercontext", icon: <AdjustIcon /> },
+      { id: 4, type: "divider" },
+      { id: 5, type: "title", label: "Details" },
+      { id: 6, label: "Documents", link: "", icon: <LibraryIcon /> },
+    ];
 
 function Sidebar({ location }) {
+  let { isSuperAdmin } = useContext(AuthContext);
+  //if he is not super admin dont show user 
+  if(!isSuperAdmin()){
+    structure.splice(2,1)
+  }
+  
   var classes = useStyles();
   var theme = useTheme();
 

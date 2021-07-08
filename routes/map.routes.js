@@ -1,24 +1,25 @@
-const {isAuthenticatedAdmin} =require('../middleware/auth.js');
 const { Router } = require( "express");
 const mapRouter = Router();
 const mapController = require('../controllers/map.controller.js');
+const auth =require('../middleware/auth.js');
+const ROLES="TRANSPORTER_ROLES"
 
 // Retrieve All data
-mapRouter.get('/list', isAuthenticatedAdmin, mapController.findAll);
+mapRouter.get('/list', auth.isAuthenticatedAdmin, mapController.findAll);
 
 // Retrieve data with pagination
-mapRouter.get('/', isAuthenticatedAdmin, mapController.findPagination);
+mapRouter.get('/', auth.isAuthenticatedAdmin, mapController.findPagination);
 
 // Find one by ID
-mapRouter.get('/:id', isAuthenticatedAdmin, mapController.findOne);
+mapRouter.get('/:id', auth.isAuthenticatedAdmin, mapController.findOne);
 
 // Create
-mapRouter.post('/', isAuthenticatedAdmin, mapController.create);
+mapRouter.post('/', auth.isAuthenticatedAdmin, auth.hasPermission(ROLES),mapController.create);
 
 // Update
-mapRouter.put('/:id', isAuthenticatedAdmin, mapController.update);
+mapRouter.put('/:id', auth.isAuthenticatedAdmin,auth.hasPermission(ROLES), mapController.update);
 
 // Delete
-mapRouter.delete('/:id', isAuthenticatedAdmin, mapController.delete);
+mapRouter.delete('/:id', auth.isAuthenticatedAdmin, auth.hasPermission(ROLES),mapController.delete);
 
 module.exports = mapRouter;

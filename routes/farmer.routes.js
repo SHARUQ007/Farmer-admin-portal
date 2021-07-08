@@ -2,7 +2,7 @@ const { Router } =require("express");
 const farmerRouter = Router();
 const farmerController = require('../controllers/farmer.controller.js');
 const auth =require('../middleware/auth.js');
-const ROLES=require("../roles");
+const ROLES="FARMER_ROLES"
 
 
 // Retrieve All data
@@ -15,12 +15,12 @@ farmerRouter.get('/', auth.isAuthenticatedAdmin, farmerController.findPagination
 farmerRouter.get('/get/', auth.isAuthenticatedAdmin, farmerController.findOne);
 
 // Create
-farmerRouter.post('/', auth.isAuthenticatedAdmin, farmerController.create);
+farmerRouter.post('/', auth.isAuthenticatedAdmin,auth.hasPermission(ROLES),farmerController.create);
 
 // Update status
-farmerRouter.put('/:id', auth.isAuthenticatedAdmin, auth.hasPermission(ROLES[0]),farmerController.update);
+farmerRouter.put('/:id', auth.isAuthenticatedAdmin, auth.hasPermission(ROLES),farmerController.update);
 
 // Delete
-farmerRouter.delete('/:id', auth.isAuthenticatedAdmin, farmerController.delete);
+farmerRouter.delete('/:id', auth.isAuthenticatedAdmin,  auth.hasPermission(ROLES),farmerController.delete);
 
 module.exports = farmerRouter;

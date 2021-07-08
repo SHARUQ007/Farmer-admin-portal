@@ -217,7 +217,7 @@ export default function TableComponent({data,popupData,isLoading,updateScheduled
               </div>
             </div>
             </div>
-            <div style={ {width: '100%',textTransform:"uppercase",textAlign:"center"}}>
+            <div className={classes.root}>
                 <Typography variant="h3" component="h3"  style={{margin:"1rem"}}>
                   No Results Found.
                 </Typography>
