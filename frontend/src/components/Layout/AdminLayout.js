@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Route,
   Switch,
   withRouter,
-  
+  Redirect
 } from "react-router-dom";
 import classnames from "classnames";
 
@@ -36,6 +36,8 @@ import EditUserForm from "../../pages/user-context/form/EditUserForm";
 
 // context
 import { useLayoutState } from "../../context/LayoutContext";
+import { AuthContext } from "../../context/AuthContext";
+
 
   
 function AdminLayout(props) {
@@ -43,7 +45,8 @@ function AdminLayout(props) {
 
   // global
   var layoutState = useLayoutState();
-
+  let { isSuperAdmin } = useContext(AuthContext);
+  console.log(isSuperAdmin())
   return (
     <div className={classes.root}>
         <>
@@ -69,15 +72,19 @@ function AdminLayout(props) {
                 <Route exact path="/admin/map/edit/:id" component={EditForm} />
 
                 <Route exact path="/admin/user/" component={User} />
-              
-                <Route exact path="/admin/usercontext" component={UserWithContext} />
-                <Route exact path="/admin/usercontext/add" component={AddUserForm} />
-                <Route  exact path="/admin/usercontext/edit/:id" component={EditUserForm} />
+              {isSuperAdmin()&&   
+                <>
+                        <Route exact path="/admin/usercontext" component={UserWithContext} />
+                        <Route exact path="/admin/usercontext/add" component={AddUserForm} />
+                        <Route  exact path="/admin/usercontext/edit/:id" component={EditUserForm} />
+                </>
+              }
               </Switch>
           </div>
         </>
     </div>
   );
 }
+  
 
 export default withRouter(AdminLayout);

@@ -2,7 +2,7 @@ const { Router } =require( "express");
 const userRouter = Router();
 const userController = require('../controllers/user.controller.js');
 const auth =require('../middleware/auth.js');
-const ROLES=require("../roles");
+const ROLES="SUPER_ROLES";
 // Retrieve All data
 userRouter.get('/list',auth.isAuthenticatedAdmin, userController.findAll);
 
@@ -13,12 +13,12 @@ userRouter.get('/', auth.isAuthenticatedAdmin, userController.findPagination);
 userRouter.get('/:id', auth.isAuthenticatedAdmin, userController.findOne);
 
 // Create
-userRouter.post('/', auth.isAuthenticatedAdmin,auth.hasPermission(ROLES[4]), userController.create);
+userRouter.post('/', auth.isAuthenticatedAdmin,auth.hasPermission(ROLES), userController.create);
 
 // Update
-userRouter.put('/:id', auth.isAuthenticatedAdmin,auth.hasPermission(ROLES[2]), userController.update);
+userRouter.put('/:id', auth.isAuthenticatedAdmin,auth.hasPermission(ROLES), userController.update);
 
 // Delete
-userRouter.delete('/:id', auth.isAuthenticatedAdmin,auth.hasPermission(ROLES[3]), userController.delete);
+userRouter.delete('/:id', auth.isAuthenticatedAdmin,auth.hasPermission(ROLES), userController.delete);
 
 module.exports = userRouter;

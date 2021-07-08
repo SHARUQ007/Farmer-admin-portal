@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from "react-router-dom";
 import ConfirmDelete from './ConfirmDelete'
 import Loader from "../../../components/Loader/Loader";
+// import MultipleCheckBox from "../form/MultipleCheckBox";
 
 import { UserContext ,UserProvider} from "../context/UserContext";
 
@@ -32,6 +33,7 @@ const DataTable = ({ classes, ...props }) => {
     const [rowsPerPage, setRowsPerPage] = useState(5);
 	let [ name, setName ] = useState("")
     
+
     useEffect(() => {
         fetchUsers(1, rowsPerPage)
     }, [])
@@ -62,6 +64,7 @@ const DataTable = ({ classes, ...props }) => {
         fetchUsers(1, rowsPerPage)
     }
     if(users.length>0){
+    
      return (
         <>
         <Loader isOpen={isLoading}/>
@@ -84,7 +87,6 @@ const DataTable = ({ classes, ...props }) => {
                     <TableRow>
                         <TableCell style={{fontWeight:'600'}}>Name</TableCell>
                         <TableCell style={{fontWeight:'600'}}>Email</TableCell>
-                        <TableCell style={{fontWeight:'600'}}>Admin Type</TableCell>
                         <TableCell align="right" width="250"> 
                             <div className="cell-add">
                                 <Link to="/admin/usercontext/add">
@@ -105,9 +107,7 @@ const DataTable = ({ classes, ...props }) => {
                             <TableCell component="th" scope="row">
                                 {row.email}
                             </TableCell>
-                             <TableCell component="th" scope="row">
-                                {adminType[row.admin_type]}
-                            </TableCell>
+
                             <TableCell align="right" width="250">
                                 <div className="cell-button">
                                 <Link to={`/admin/usercontext/edit/${row.id}`}>

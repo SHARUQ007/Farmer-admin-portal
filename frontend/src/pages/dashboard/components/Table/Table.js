@@ -94,3 +94,4 @@ export default function TableComponent({data,isLoading,updateFarmer,fetchPaginat
 
 
 
+

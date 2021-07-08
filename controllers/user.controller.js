@@ -4,7 +4,7 @@ const usersSerializer = data => ({
     id: data.id,
     name: data.name,
     email: data.email,
-    admin_type:data.admin_type,
+    admin_roles:data.admin_roles,
     register_date: data.register_date
 });
 
@@ -81,20 +81,19 @@ exports.findOne = (req, res) => {
 };
 
 exports.create = (req, res) => {
+    console.log(req.body)
     if(!req.body.name || !req.body.email || !req.body.password) {
          return res.status(400).send({
              message: "Name, Email and Password can not be empty"
          });
     }
 
-    const user = new User({
+    User.create({
         name: req.body.name.trim(),
         email: req.body.email.trim(),
         password: req.body.password.trim(),
-        admin_type:Number(req.body.admin_type)
-    });
-
-    user.save()
+        admin_roles:req.body.admin_roles
+    })    
     .then(data => {
         const user = usersSerializer(data)
         res.send(user);
@@ -116,8 +115,8 @@ exports.update = (req, res) => {
     User.findByIdAndUpdate(req.params.id, {
         name: req.body.name.trim(),
         email: req.body.email.trim(),
-        admin_type:Number(req.body.admin_type)
-    }, {new: true})
+        admin_roles:req.body.admin_roles
+        }, {new: true})
     .then(data => {
         if(!data) {
             return res.status(404).send({

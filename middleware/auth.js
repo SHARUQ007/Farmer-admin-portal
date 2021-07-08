@@ -1,40 +1,35 @@
 const jwt =require('jsonwebtoken');
 const config= require('../config/index.js');
 const User =require( '../models/user.model.js') 
-const ROLES=require("../roles");
 
 const { JWT_SECRET } = config;
 
-const SUPER_ADMIN=0;
-const ADMIN_ONE=1;
-const ADMIN_TWO=2;
-//SUPER_ADMIN has all access
-const ROLE_AUTH={
-  [SUPER_ADMIN]:{
-    roles:{
-      "all":true
-    }
-  },
-  [ADMIN_ONE]:{
-    roles:{
-      [ROLES[0]]:true
-    }
-  },
-  [ADMIN_TWO]:{
-    roles:{
-      [ROLES[1]]:true
-    }
-  },
 
-}
 
 // User.find().then((data)=>{
 //   data.forEach((doc)=>{
-//     console.log(doc)
+//     if(doc.id==="60cc98c9e585c21d212ec082"){
+//       console.log(doc.admin_roles)}
+//     // User.findOneAndUpdate(
+//     //   {_id:doc._id},
+//     //   {
+//     //   $push:{admin_roles:{
+//     //                     $each:[ROLES[0],ROLES[1],ROLES[2],ROLES[3],ROLES[4]]
+//     //                     }
+//     //         }
+//     //   }
+//     // )
+//     // .then((doc)=>{console.log(doc)})
 //   })
 // })
-    // User.findOneAndUpdate({_id:"60cc98c9e585c21d212ec082"},{admin_type:0}).then((doc)=>{console.log(doc)})
 
+// User.findOneAndUpdate(
+//       {_id:"60cc98c9e585c21d212ec082"},
+//       {
+//       admin_roles:[]
+//       }
+//     )
+//     .then((doc)=>{console.log(doc)})
 const auth=
     {
       isAuthenticatedAdmin:function (req,res,next) {
@@ -60,8 +55,8 @@ const auth=
       hasPermission: function (role) {
           async function inner(req,res,next){
               const user = await User.findOne({_id:req.user.id});
-              console.log(role,'role',ROLE_AUTH[user.admin_type].roles[role])
-              if((user && ROLE_AUTH[user.admin_type].roles[role]) || ROLE_AUTH[user.admin_type].roles["all"]){
+              console.log(role,user.admin_roles.includes(role) ,user.admin_roles)
+              if(user && (user.admin_roles.includes(role) || user.admin_roles.includes("SUPER_ROLES")) ){
                 return next()
               }
               res.sendStatus(401) 
