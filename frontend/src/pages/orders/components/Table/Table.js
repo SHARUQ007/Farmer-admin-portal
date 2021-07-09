@@ -93,7 +93,7 @@ export default function TableComponent({data,isLoading,updateOrders,fetchPaginat
                         filteredStatus={filteredStatus}
                         setFilteredStatus={setFilteredStatus} 
                         fetchFilteredPagination={fetchFilteredPagination}/>
-                        <Button variant="contained" color="primary" onClick={resetFilter} style={{margin:"0.5rem 1rem 0rem 1rem",height:"35px"}} size="large">
+                        <Button variant="contained" color="primary" onClick={resetFilter} style={{margin:"0.5rem 1rem 0.5rem 1rem",height:"35px"}} size="large">
                          Clear
                       </Button>
                     </div>

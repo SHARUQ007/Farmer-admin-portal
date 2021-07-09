@@ -75,7 +75,7 @@ import {FarmerProvider, FarmerContext } from "./context/FarmerContext";
      
         <Grid item xs={12}>
           <Widget
-            title="Account Access to Login (to be Approved here)"
+            title="List of all farmers"
             upperTitle
             noBodyPadding
             bodyClass={classes.tableWidget}
