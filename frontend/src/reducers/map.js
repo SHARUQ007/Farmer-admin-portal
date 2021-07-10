@@ -3,7 +3,8 @@ import { ACTION_TYPES } from "../actions/map";
 const initialState = {
     maps: [],
     mapMeta: {},
-    isLoading:true
+    isLoading:true,
+    errorMsg:null
 }
 
 export const map = (state = initialState, action) => {
@@ -43,7 +44,14 @@ export const map = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading:action.payload
+            } 
+        case ACTION_TYPES.ERROR_MSG:
+            return {
+                ...state,
+                errorMsg:action.payload,
+                isLoading:false
             }
+
         default:
             return state;
     }

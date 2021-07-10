@@ -12,7 +12,8 @@ class FarmerProvider extends React.PureComponent {
           totalDocs : 0
         },
         selectedFarmer: null,
-        isLoading:true
+        isLoading:true,
+        errorMsg:null
     };
    
     fetchFarmers = async (page, rowsPerPage = 5, name = null, email = null) => {
@@ -25,7 +26,7 @@ class FarmerProvider extends React.PureComponent {
           })
         })
         .catch(err => {
-          this.setState({...this.state,isLoading:false})
+          this.setState({...this.state,isLoading:false,errorMsg:"Sorry something went wrong while fetching the farmer data try again later"})
           console.log(err)
         })
     }
@@ -42,7 +43,7 @@ class FarmerProvider extends React.PureComponent {
           })
         })
         .catch(err => {
-          this.setState({...this.state,isLoading:false})
+          this.setState({...this.state,isLoading:false,errorMsg:"Sorry something went wrong while fetching the farmer data try again later"})
           console.log(err)
         })
     }
@@ -57,7 +58,7 @@ class FarmerProvider extends React.PureComponent {
             onSuccess()
         })
         .catch(err => {
-          this.setState({...this.state,isLoading:false})
+          this.setState({...this.state,isLoading:false,errorMsg:"Sorry something went wrong while fetching the farmer data try again later"})
           console.log(err)
         })
     }
@@ -74,6 +75,7 @@ class FarmerProvider extends React.PureComponent {
         })
         .catch(err => {
           this.setState({...this.state,isLoading:false})
+          
           console.log(err)
         })
     }
