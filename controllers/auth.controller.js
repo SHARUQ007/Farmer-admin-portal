@@ -17,7 +17,6 @@ exports.login =  async (req, res) => {
       // Check for existing user
       const user = await User.findOne({ email });
       if (!user) throw Error('User does not exist');
-      console.log(user.checkPassword(password))
       if (!user.checkPassword(password)) throw Error('Invalid credentials');
 
       const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: 3600 });

@@ -21,7 +21,7 @@ import Pagination from './Pagination'
 
 
 
-export default function TableComponent({data,isLoading,updateFarmer,fetchPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
+export default function TableComponent({data,isLoading,errorMsg,updateFarmer,fetchPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
   if(data.length>0){
       var keys = Object.keys(data[0]).map(i => i.toUpperCase());
       keys.shift(); // delete "id" key
@@ -74,12 +74,23 @@ export default function TableComponent({data,isLoading,updateFarmer,fetchPaginat
       );
     }
    //if loaded sucessfully and has no data mean render it 
-    else if(!isLoading){
+    else if(!isLoading && !errorMsg){
       return (
           <Table className="mb-0">
                 <div style={ {width: '100%',textTransform:"uppercase",textAlign:"center"}}>
                   <Typography variant="h3" component="h3"  style={{margin:"1rem"}}>
                     No Results Found.
+                  </Typography>
+                </div>
+          </Table>
+          );
+    }
+    else if(errorMsg){
+      return (
+          <Table className="mb-0">
+                <div style={ {width: '100%',textTransform:"capitalize",textAlign:"center",color:"red",margin:"2rem 0"}}>
+                  <Typography variant="h3" component="h3"  style={{margin:"1rem"}}>
+                    {errorMsg}
                   </Typography>
                 </div>
           </Table>

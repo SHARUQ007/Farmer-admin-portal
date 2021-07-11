@@ -13,71 +13,72 @@ class ScheduledStemProvider extends React.PureComponent {
           totalDocs : 0
         },
         selectedScheduledStem: null,
-        loading:true
+        isLoading:true,
+        errorMsg:null
     };
    
     fetchPagination = async (page, rowsPerPage = 5) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.orders().getScheduledStem(page,rowsPerPage)
         .then(res => {
           this.setState ({
             orders : res.data.orders,
             popupData:res.data.popupData,
             meta:res.data.meta,
-            loading:false
+            isLoading:false
           })
         })
         .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false,errorMsg:"Sorry something went wrong while fetching the scheduled stem orders data try again later"})
           console.log(err)
         })
     }
 
     fetchFilteredPagination = async (page, rowsPerPage = 5,status=null,date=null) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.orders().getFilteredScheduledStem(page,rowsPerPage,status,date)
         .then(res => {
           this.setState ({
             orders : res.data.orders,
             popupData:res.data.popupData,
             meta:res.data.meta,
-            loading:false
+            isLoading:false
           })
         })
          .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false,errorMsg:"Sorry something went wrong while fetching the scheduled stem orders data try again later"})
           console.log(err)
         })
     }
 
     fetchById = async (name,phone, onSuccess) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.orders().fetchById(name,phone)
         .then(res =>{
             this.setState ({
               orders: res.data,
-              loading:false
+              isLoading:false
             })
             onSuccess()
         })
          .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false,errorMsg:"Sorry something went wrong while fetching the scheduled stem orders data try again later"})
           console.log(err)
         })
     }
     
     createScheduledStem = (data, onSuccess)  => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.orders().create(data)
         .then(res =>{
             this.setState ({
               orders : res.data.orders,
-              loading:true
+              isLoading:true
             })
             onSuccess()
         })
         .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false})
            if(err.response.status===401){
            return onSuccess("unauthorized Access",true);
           }
@@ -87,7 +88,7 @@ class ScheduledStemProvider extends React.PureComponent {
     }
     
     updateScheduledStem = (id, data, onSuccess) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.orders().update(id, data)
         .then(res =>{
              if(res.data.status==="success"){
@@ -103,7 +104,7 @@ class ScheduledStemProvider extends React.PureComponent {
               let obj={
                   ...this.state,
                   orders:tempOrders,
-                  loading:false
+                  isLoading:false
                  }
               this.setState({...obj})
             }
@@ -111,7 +112,10 @@ class ScheduledStemProvider extends React.PureComponent {
             
         })
         .catch(err =>{
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false})
+          if(err.response.status===401){
+           return onSuccess("unauthorized Access",true);
+          }
           onSuccess("Sorry Something Went Wrong",true)
          console.log(err)
         }
@@ -119,7 +123,7 @@ class ScheduledStemProvider extends React.PureComponent {
     }
     
     updateScheduledDate = (id, date,onSuccess) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.orders().updateDate(id, date)
         .then(res =>{
             if(res.data.status==="success"){
@@ -144,14 +148,14 @@ class ScheduledStemProvider extends React.PureComponent {
                   ...this.state,
                   orders:tempOrders,
                   popupData:tempPopupData,
-                  loading:false
+                  isLoading:false
                  }
                  this.setState({...obj})
                  onSuccess("successfully Updated The Scheduled Date And Status")
             }
         })
         .catch(err =>{
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false})
            if(err.response.status===401){
            return onSuccess("unauthorized Access",true);
           }

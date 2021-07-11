@@ -19,7 +19,7 @@ import {FarmerProvider, FarmerContext } from "./context/FarmerContext";
 
  function Dashboard(props) {
   const {phone, name} = useParams();
-  const {farmers,meta,isLoading,fetchPagination,updateFarmer,fetchById} = useContext(FarmerContext)
+  const {farmers,meta,isLoading,errorMsg,fetchPagination,updateFarmer,fetchById} = useContext(FarmerContext)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   var classes = useStyles();
@@ -75,7 +75,7 @@ import {FarmerProvider, FarmerContext } from "./context/FarmerContext";
      
         <Grid item xs={12}>
           <Widget
-            title="Account Access to Login (to be Approved here)"
+            title="List of all farmers"
             upperTitle
             noBodyPadding
             bodyClass={classes.tableWidget}
@@ -83,6 +83,7 @@ import {FarmerProvider, FarmerContext } from "./context/FarmerContext";
             <Table data={farmers}  
                    meta={meta}
                    isLoading={isLoading}
+                   errorMsg={errorMsg}
                    page={page}
                    updateFarmer={updateFarmer}
                    rowsPerPage={rowsPerPage}

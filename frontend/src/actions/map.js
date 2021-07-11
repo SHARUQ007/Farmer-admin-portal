@@ -7,7 +7,8 @@ export const ACTION_TYPES = {
     MAP_FETCH: 'MAP_FETCH',
     MAP_FETCH_ALL: 'MAP_FETCH_ALL',
     MAP_PAGINATION: 'MAP_PAGINATION',
-    MAP_LOADING:"MAP_LOADING"
+    MAP_LOADING:"MAP_LOADING",
+    ERROR_MSG:"ERROR_MSG"
 }
 
 const formatingInput = (input) => {
@@ -28,8 +29,8 @@ export const fetchAll = () => dispatch => {
         })
         .catch(err => {
                 dispatch({
-                type: ACTION_TYPES.MAP_LOADING,
-                payload: false
+                type: ACTION_TYPES.ERROR_MSG,
+                payload: "Sorry something went wrong while fetching the transporter data try again later"
             })
             console.log(err)
         })
@@ -49,8 +50,8 @@ export const Pagination = (page = 1, limit = 10, name = "", category = "all") =>
         })
         .catch(err => {
                 dispatch({
-                type: ACTION_TYPES.MAP_LOADING,
-                payload: false
+                type: ACTION_TYPES.ERROR_MSG,
+                payload: "Sorry something went wrong while fetching the transporter data try again later"
             })
             console.log(err)
         })
@@ -71,8 +72,8 @@ export const fetchById = (id, onSuccess) => dispatch => {
         })
         .catch(err => {
                 dispatch({
-                type: ACTION_TYPES.MAP_LOADING,
-                payload: false
+                type: ACTION_TYPES.ERROR_MSG,
+                payload: "Sorry something went wrong while fetching the transporter data try again later"
             })
             console.log(err)
         })

@@ -34,7 +34,7 @@ const useStyles = makeStyles({
       },
   });
 
-export default function TableComponent({data,popupData,isLoading,updateScheduledDate,updateScheduledStem,fetchPagination,fetchFilteredPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
+export default function TableComponent({data,popupData,isLoading,errorMsg,updateScheduledDate,updateScheduledStem,fetchPagination,fetchFilteredPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
   const [id,setId]=React.useState(null);
   const [filteredData,setFilteredData]=React.useState([]);
   const [date,setDate]=React.useState()
@@ -189,7 +189,7 @@ export default function TableComponent({data,popupData,isLoading,updateScheduled
       );
     }
     //if loaded sucessfully and has no data mean render it 
-    else if(!isLoading){
+    else if(!isLoading && !errorMsg){
       return(
         <>
        <div className="table-header" >
@@ -225,6 +225,15 @@ export default function TableComponent({data,popupData,isLoading,updateScheduled
         </>
 
             )
+    }
+    else if(errorMsg){
+      return (
+                <div style={ {width: '100%',textTransform:"capitalize",textAlign:"center",color:"red",margin:"2rem 0"}}>
+                  <Typography variant="h3" component="h3"  style={{margin:"1rem"}}>
+                    {errorMsg}
+                  </Typography>
+                </div>
+          );
     }
     //if it loading simply return null
     else{

@@ -27,7 +27,7 @@ const styles = theme => ({
 })
 
 const DataTable = ({ classes, ...props }) => {
-    const { users, meta,isLoading, fetchUsers, deleteUser} = useContext(UserContext)
+    const { users, meta,isLoading, errorMsg,fetchUsers, deleteUser} = useContext(UserContext)
     const adminType={ 0:"SUPER_ADMIN",1:"ADMIN_ONE",2:"ADMIN_TWO"}
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -145,7 +145,7 @@ const DataTable = ({ classes, ...props }) => {
     );
     }
     //if loaded sucessfully and has no data mean render it 
-    else if(!isLoading){
+    else if(!isLoading && !errorMsg){
       return(
         <>
         <TableContainer component={Paper} className={classes.paper} >
@@ -157,6 +157,17 @@ const DataTable = ({ classes, ...props }) => {
         </TableContainer>
         </>
             )
+    }
+    else if(errorMsg){
+      return (
+        <TableContainer component={Paper} className={classes.paper} >
+                <div style={ {width: '100%',textTransform:"capitalize",textAlign:"center",color:"red",margin:"2rem 0"}}>
+                  <Typography variant="h3" component="h3"  style={{margin:"1rem"}}>
+                    {errorMsg}
+                  </Typography>
+                </div>
+        </TableContainer>
+          );
     }
    //if it is loading return loading
     else{

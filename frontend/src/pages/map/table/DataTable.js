@@ -122,7 +122,7 @@ const DataTable = ({ classes, ...props }) => {
                 );
     }
     //if loaded sucessfully and has no data mean render it 
-    else if(!props.isLoading){
+    else if(!props.isLoading && !props.errorMsg){
         return(
     <TableContainer component={Paper} className={classes.paper} >
           <div style={ {width: '100%',textTransform:"uppercase",textAlign:"center"}}>
@@ -134,16 +134,31 @@ const DataTable = ({ classes, ...props }) => {
         )
     }
     //if it is loading return loading
-    else{
-                    
+    else if(props.isLoading){           
         return (<Loader isOpen={props.isLoading}/>)
+    }
+    else if(props.errorMsg){
+      return (
+            <TableContainer component={Paper} className={classes.paper} >
+                <div style={ {width: '100%',textTransform:"capitalize",textAlign:"center",color:"red",margin:"2rem 0"}}>
+                  <Typography variant="h3" component="h3"  style={{margin:"1rem"}}>
+                    {props.errorMsg}
+                  </Typography>
+                </div>
+            </TableContainer>
+
+          );
+    }
+    else{
+        return null;
     }
 }
 
 const mapStateToProps = state => ({
     maps: state.map.maps,
     meta: state.map.mapMeta,
-    isLoading:state.map.isLoading
+    isLoading:state.map.isLoading,
+    errorMsg:state.map.errorMsg
 })
 
 const mapActionToProps = {

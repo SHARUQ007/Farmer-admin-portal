@@ -12,84 +12,86 @@ class OrdersProvider extends React.PureComponent {
           totalDocs : 0
         },
         selectedOrders: null,
-        loading:true
+        isLoading:true
     };
    
     fetchOrders = async () => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.orders().fetchAll()
         .then(res => {
           this.setState ({
             orders : res.data,
-            loading:false
+            isLoading:false,
+            errorMsg:null
           })
         })
        .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false,errorMsg:"Sorry something went wrong while fetching the stem orders data try again later"})
           console.log(err)
         })
     }
+
     fetchPagination = async (page, rowsPerPage = 5, name = null, email = null) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.orders().fetchPagination(page,rowsPerPage)
         .then(res => {
           this.setState ({
             orders : res.data.orders,
             meta:res.data.meta,
-            loading:false
+            isLoading:false
           })
         })
         .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false,errorMsg:"Sorry something went wrong while fetching the stem orders data try again later"})
           console.log(err)
         })
     }
 
     fetchFilteredPagination = async (page, rowsPerPage = 5,status=null,date=null) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.orders().getFilteredStem(page,rowsPerPage,status,date)
         .then(res => {
           this.setState ({
             orders : res.data.orders,
             popupData:res.data.popupData,
             meta:res.data.meta,
-            loading:false
+            isLoading:false
           })
         })
         .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false})
           console.log(err)
         })
     }
 
     fetchById = async (name,phone, onSuccess) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.orders().fetchById(name,phone)
         .then(res =>{
             this.setState ({
               orders: res.data,
-              loading:false
+              isLoading:false
             })
             onSuccess()
         })
        .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false,errorMsg:"Sorry something went wrong while fetching the stem orders data try again later"})
           console.log(err)
         })
     }
     
     createOrders = (data, onSuccess)  => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.orders().create(data)
         .then(res =>{
             this.setState ({
               selectedOrders : res.data,
-              loading:false
+              isLoading:false
             })
             onSuccess()
         })
        .catch(err => {
-          this.setState({...this.state,loading:false})
+          this.setState({...this.state,isLoading:false})
           if(err.response.status===401){
            return onSuccess("unauthorized Access",true);
           }
@@ -99,7 +101,7 @@ class OrdersProvider extends React.PureComponent {
     }
     
     updateOrders = (id, data, onSuccess) => {
-      this.setState({...this.state,loading:true});
+      this.setState({...this.state,isLoading:true});
       API.orders().update(id, data)
         .then(res =>{
              if(res.data.status==="success"){
@@ -115,7 +117,7 @@ class OrdersProvider extends React.PureComponent {
               let obj={
                   ...this.state,
                   orders:tempOrders,
-                  loading:false
+                  isLoading:false
                  }
               this.setState({...obj})
             }

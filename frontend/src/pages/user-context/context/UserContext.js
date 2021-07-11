@@ -13,6 +13,7 @@ class UserProvider extends React.PureComponent {
         },
         isLoading:true,
         selectedUser: null,
+        errorMsg:null
     };
 
     fetchUsers = async (page, rowsPerPage = 5, name = null, email = null) => {
@@ -26,7 +27,7 @@ class UserProvider extends React.PureComponent {
           })
         })
        .catch(err => {
-          this.setState({...this.state,isLoading:false})
+          this.setState({...this.state,isLoading:false,errorMsg:"Sorry something went wrong while fetching the user data try again later"})
           console.log(err)
         })
     }
@@ -41,7 +42,7 @@ class UserProvider extends React.PureComponent {
             onSuccess(this.state.selectedUser)
         })
        .catch(err => {
-          this.setState({...this.state,isLoading:false})
+          this.setState({...this.state,isLoading:false,errorMsg:"Sorry something went wrong while fetching the user data try again later"})
            if(err.response.status===401){
             // onSuccess("unauthorized Access",true);
           }

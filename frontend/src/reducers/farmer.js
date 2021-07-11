@@ -3,7 +3,9 @@ import { ACTION_TYPES } from "../actions/farmer";
 const initialState = {
     farmers: [],
     farmerMeta: {},
-    loading:true
+    loading:true,
+    errorMsg:null
+
 }
 
 export const farmer = (state = initialState, action) => {

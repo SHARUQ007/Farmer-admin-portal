@@ -31,7 +31,7 @@ const useStyles = makeStyles({
         textAlign:"center",
       },
   });
-export default function TableComponent({data,isLoading,updateOrders,fetchPagination,fetchFilteredPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
+export default function TableComponent({data,isLoading,errorMsg,updateOrders,fetchPagination,fetchFilteredPagination,handleChangePage,handleChangeRowsPerPage,page,meta,rowsPerPage}) {
    
    const [filteredDate,setFilteredDate]=React.useState("")
    const [filteredStatus,setFilteredStatus]=React.useState("")
@@ -93,7 +93,7 @@ export default function TableComponent({data,isLoading,updateOrders,fetchPaginat
                         filteredStatus={filteredStatus}
                         setFilteredStatus={setFilteredStatus} 
                         fetchFilteredPagination={fetchFilteredPagination}/>
-                        <Button variant="contained" color="primary" onClick={resetFilter} style={{margin:"0.5rem 1rem 0rem 1rem",height:"35px"}} size="large">
+                        <Button variant="contained" color="primary" onClick={resetFilter} style={{margin:"0.5rem 1rem 0.5rem 1rem",height:"35px"}} size="large">
                          Clear
                       </Button>
                     </div>
@@ -157,8 +157,8 @@ export default function TableComponent({data,isLoading,updateOrders,fetchPaginat
         </>
       );
     }
-    //if loaded sucessfully and has no data mean render it 
-    else if(!isLoading){
+    //if loaded sucessfully and has no data  and no error mean render it 
+    else if(!isLoading && !errorMsg){
        return(
         <>
         <div className="table-header" >
@@ -195,6 +195,15 @@ export default function TableComponent({data,isLoading,updateOrders,fetchPaginat
             </div>
         </>
             )
+    }
+    else if(errorMsg){
+      return (
+                <div style={ {width: '100%',textTransform:"capitalize",textAlign:"center",color:"red",margin:"2rem 0"}}>
+                  <Typography variant="h3" component="h3"  style={{margin:"1rem"}}>
+                    {errorMsg}
+                  </Typography>
+                </div>
+          );
     }
     //if it loading simply return null
     else{

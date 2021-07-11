@@ -28,7 +28,11 @@ class AuthProvider extends React.PureComponent {
       return true
     }
     isSuperAdmin = () => {
-     const usr = this.state.authUser ? this.state.authUser : localStorage.getItem("authUser")
+      if(this.state.authUser){
+        return this.state.authUser.admin_roles.includes("SUPER_ROLES")
+      }
+      const usr = localStorage.getItem("authUser")
+     
       if (!usr) return null
 
       try {

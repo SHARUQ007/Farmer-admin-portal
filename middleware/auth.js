@@ -6,27 +6,19 @@ const { JWT_SECRET } = config;
 
 
 
-// User.find().then((data)=>{
-//   data.forEach((doc)=>{
-//     if(doc.id==="60cc98c9e585c21d212ec082"){
-//       console.log(doc.admin_roles)}
-//     // User.findOneAndUpdate(
-//     //   {_id:doc._id},
-//     //   {
-//     //   $push:{admin_roles:{
-//     //                     $each:[ROLES[0],ROLES[1],ROLES[2],ROLES[3],ROLES[4]]
-//     //                     }
-//     //         }
-//     //   }
-//     // )
-//     // .then((doc)=>{console.log(doc)})
-//   })
-// })
+User.find().then((data)=>{
+  data.forEach((doc)=>{
+      console.log(doc)
+      // doc.admin_type=undefined;
+      // doc.save();
+  })
+   
+})
 
 // User.findOneAndUpdate(
 //       {_id:"60cc98c9e585c21d212ec082"},
 //       {
-//       admin_roles:[]
+        
 //       }
 //     )
 //     .then((doc)=>{console.log(doc)})
