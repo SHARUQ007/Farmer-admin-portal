@@ -35,6 +35,39 @@ const OrdersSchema = new Schema({
    scheduledDate:{
     type:Date
    },
+   date:{
+     type:Date
+   },
+   remainingStems:{
+     type:Number
+   },
+   expected:{
+     type:Date
+   },
+   pincode:{
+     type:String
+   },
+   scheduledStems:{
+     type:Number
+   },
+   scheduledNumberofTrucks:{
+     type:Number
+   },
+   truckNumber: {
+     type:Array
+   },  
+  truckDrivername: {
+     type:Array
+   },
+   stemsLoadedforTruck:{
+     type:Array
+   },
+   arrivalTimeofTrucks:{
+     type:Array
+   },
+   stemLoadingTimeforTrucks:{
+     type:Array
+   },
 }, {
   timestamps: true
 });
