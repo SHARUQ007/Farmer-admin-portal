@@ -102,6 +102,7 @@ exports.create = (req, res) => {
         const map = mapsSerializer(data)
         res.send(map);
     }).catch(err => {
+        console.log(err)
         res.status(500).send({
             message: err.message || "Some error occurred while creating the Map."
         });

@@ -30,7 +30,6 @@ const UserSchema = new Schema({
 });
 
 UserSchema.plugin(mongoosePaginate);
-console.log("hai")
 
 UserSchema.methods = {
   checkPassword: function (inputPassword) {

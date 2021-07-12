@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
+const bcrypt = require("bcryptjs");
 
 const MapSchema = mongoose.Schema({
   name: { type: String, 'default': '' },
