@@ -87,6 +87,26 @@ orders(url = 'orders') {
           updateDate:(id,date) => http.post(url + "/scheduleDate" ,{id,date},config),
           delete: id => http.delete(url + "/" + id, config)
       }
+  },
+  transporterData(url="transporterData"){
+    const config = {
+        headers: {
+          'authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+      };
+
+      return {
+          fetchAll: () => http.get(url + '/list', config),
+          fetchPagination: (page, limit, name, category) => 
+              http.get(url + "?page=" + page + "&limit=" + limit + "&name=" + name + "&category=" + category, config),
+          fetchFreeTransporter: () => http.get(url + `/fetchFreeTransporter`, config),
+          create: newRecord => http.post(url, newRecord, config),
+          getScheduledData: (page, limit) => http.get(url + "?page=" + page +"&limit=" + limit, config),
+          getFilteredData: (page, limit,status,date) => http.post(url + "?page=" + page +"&limit=" + limit,{status,date},config),
+          update: (id, updatedRecord) => http.put(url + "/" + id, updatedRecord, config),
+          assignNewTransporter:(id,transporter_id) => http.post(url + "/assignNewTransporter" ,{id,transporter_id},config),
+          delete: id => http.delete(url + "/" + id, config)
+      }
   }
 
 }
