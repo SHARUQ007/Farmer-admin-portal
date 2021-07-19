@@ -81,7 +81,6 @@ exports.findOne = (req, res) => {
 };
 
 exports.create = (req, res) => {
-    console.log(req.body)
     if(!req.body.name || !req.body.email || !req.body.password) {
          return res.status(400).send({
              message: "Name, Email and Password can not be empty"
@@ -105,7 +104,6 @@ exports.create = (req, res) => {
 };
 
 exports.update = (req, res) => {
-    console.log(req.body,"body")
     if(!req.body.name || !req.body.email ) {
         return res.status(400).send({
             message: "Name and Email can not be empty"

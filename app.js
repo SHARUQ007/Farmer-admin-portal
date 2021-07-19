@@ -9,6 +9,7 @@ const config =require('./config/index.js');
 // routes
 const authRouter =require('./routes/auth.routes.js');
 const mapRouter =require('./routes/map.routes.js');
+const transporterDataRouter =require('./routes/transporterData.routes.js');
 const userRouter =require('./routes/user.routes.js');
 const farmerRouter =require('./routes/farmer.routes.js');
 const ordersRouter =require('./routes/orders.routes.js');
@@ -49,6 +50,7 @@ mongoose
 mongoose.set('useFindAndModify', false);
 // Use Routes
 app.use('/api/map', mapRouter);
+app.use('/api/transporterData', transporterDataRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/farmer', farmerRouter);

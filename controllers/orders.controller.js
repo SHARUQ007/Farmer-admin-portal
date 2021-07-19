@@ -26,7 +26,6 @@ const popupOrdersSerializer = data => ({
 
 // Retrieve all data
 exports.findAll =  (req, res) => {
-    console.log("haiii")
 
     Orders.find()
     .then(async data => {
@@ -41,7 +40,6 @@ exports.findAll =  (req, res) => {
 
 // Retrieve data with pagination
 exports.findPagination = async (req, res) => {
-    console.log("haiiiiiiiiiiiiiiii")
     const { page = 1, limit = 4} = req.query;
     let query={}
     const paginated = await Orders.paginate(

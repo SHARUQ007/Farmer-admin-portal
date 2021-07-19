@@ -1,4 +1,4 @@
-const Map =require('../models/map.model');
+const Transporter =require('../models/map.model');
 
 const mapsSerializer = data => ({
     id: data.id,
@@ -12,7 +12,7 @@ const mapsSerializer = data => ({
 
 // Retrieve all data
 exports.findAll =  (req, res) => {
-    Map.find()
+    Transporter.find()
     .then(async data => {
         const maps = await Promise.all(data.map(mapsSerializer));
         res.send(maps);
@@ -40,7 +40,7 @@ exports.findPagination = async (req, res) => {
     else if (name && name.trim() !== "") {
         query = { name: new RegExp(`${name}+`, "i") }
     }
-    const paginated = await Map.paginate(
+    const paginated = await Transporter.paginate(
         query,
         {
             page,
@@ -60,7 +60,7 @@ exports.findPagination = async (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-    Map.findById(req.params.id)
+    Transporter.findById(req.params.id)
         .then(data => {
             if(!data) {
                 return res.status(404).send({
@@ -72,7 +72,7 @@ exports.findOne = (req, res) => {
         }).catch(err => {
             if(err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "Map not found with id " + req.params.id
+                    message: "Transporter not found with id " + req.params.id
                 });
             }
             return res.status(500).send({
@@ -84,11 +84,11 @@ exports.findOne = (req, res) => {
 exports.create = (req, res) => {
     if(!req.body.name) {
          return res.status(400).send({
-             message: "Map name can not be empty"
+             message: "Transporter name can not be empty"
          });
     }
 
-    const map = new Map({
+    const map = new Transporter({
         name: req.body.name.trim(),
         mobile: req.body.mobile.trim(),
         number: req.body.number.trim(),
@@ -104,7 +104,7 @@ exports.create = (req, res) => {
     }).catch(err => {
         console.log(err)
         res.status(500).send({
-            message: err.message || "Some error occurred while creating the Map."
+            message: err.message || "Some error occurred while creating the Transporter."
         });
     });
 };
@@ -112,11 +112,11 @@ exports.create = (req, res) => {
 exports.update = (req, res) => {
     if(!req.body.name) {
         return res.status(400).send({
-            message: "Map name can not be empty"
+            message: "Transporter name can not be empty"
         });
     }
 
-    Map.findByIdAndUpdate(req.params.id, {
+    Transporter.findByIdAndUpdate(req.params.id, {
         name: req.body.name.trim(),
         mobile: req.body.mobile.trim(),
         number: req.body.number.trim(),
@@ -127,7 +127,7 @@ exports.update = (req, res) => {
     .then(data => {
         if(!data) {
             return res.status(404).send({
-                message: "Map not found with id " + req.params.id
+                message: "Transporter not found with id " + req.params.id
             });
         }
         const map = mapsSerializer(data)
@@ -135,7 +135,7 @@ exports.update = (req, res) => {
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "Map not found with id " + req.params.id
+                message: "Transporter not found with id " + req.params.id
             });
         }
         return res.status(500).send({
@@ -145,18 +145,18 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res) => {
-  Map.findByIdAndRemove(req.params.id)
+  Transporter.findByIdAndRemove(req.params.id)
      .then(map => {
          if(!map) {
              return res.status(404).send({
-                 message: "Map not found with id " + req.params.id
+                 message: "Transporter not found with id " + req.params.id
              });
          }
-         res.send({ id: req.params.id, message: "Map deleted successfully!" });
+         res.send({ id: req.params.id, message: "Transporter deleted successfully!" });
      }).catch(err => {
          if(err.kind === 'ObjectId' || err.name === 'NotFound') {
              return res.status(404).send({
-                 message: "Map not found with id " + req.params.id
+                 message: "Transporter not found with id " + req.params.id
              });
          }
          return res.status(500).send({

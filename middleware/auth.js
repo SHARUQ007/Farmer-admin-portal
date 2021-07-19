@@ -5,15 +5,14 @@ const User =require( '../models/user.model.js')
 const { JWT_SECRET } = config;
 
 
-
-User.find().then((data)=>{
-  data.forEach((doc)=>{
-      console.log(doc)
-      // doc.admin_type=undefined;
-      // doc.save();
-  })
+// User.find().then((data)=>{
+//   data.forEach((doc)=>{
+//       console.log(doc)
+//       // doc.admin_type=undefined;
+//       // doc.save();
+//   })
    
-})
+// })
 
 // User.findOneAndUpdate(
 //       {_id:"60cc98c9e585c21d212ec082"},
@@ -47,7 +46,7 @@ const auth=
       hasPermission: function (role) {
           async function inner(req,res,next){
               const user = await User.findOne({_id:req.user.id});
-              console.log(role,user.admin_roles.includes(role) ,user.admin_roles)
+              // console.log(role,user.admin_roles.includes(role) ,user.admin_roles)
               if(user && (user.admin_roles.includes(role) || user.admin_roles.includes("SUPER_ROLES")) ){
                 return next()
               }
