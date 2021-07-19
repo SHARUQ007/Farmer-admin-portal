@@ -36,6 +36,7 @@ var structure = [
       {id: 7, label: "Stem Availability Data", link: "/admin/orders", icon: <EcoIcon />  },
       {id: 8, label: "Scheduled stem ", link: "/admin/scheduledStem", icon: <CheckCircleOutlineIcon /> },
       {id: 9, label: "Scheduler", link: "/admin/usercontext", icon: <AdjustIcon /> },
+      {id: 10, label: "Transporter Data", link: "/admin/transporterData", icon: <AdjustIcon /> },
       { id: 4, type: "divider" },
       { id: 5, type: "title", label: "Details" },
       { id: 6, label: "Documents", link: "", icon: <LibraryIcon /> },

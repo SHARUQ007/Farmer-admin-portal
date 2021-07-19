@@ -18,6 +18,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import Dashboard from "../../pages/dashboard/Dashboard";
 import Orders from "../../pages/orders/Orders";
 import ScheduledStem from "../../pages/scheduledStem/ScheduledStem";
+import TransporterData from "../../pages/TransporterData/TransporterData";
 
 
 
@@ -66,6 +67,8 @@ function AdminLayout(props) {
                 <Route  exact path="/admin/orders/:name/:phone" component={Orders} />
                 
                 <Route  exact path="/admin/scheduledStem" component={ScheduledStem} />
+                <Route  exact path="/admin/transporterData" component={TransporterData} />
+
 
                 <Route exact path="/admin/map" component={Map} />
                 <Route exact path="/admin/map/add" component={AddForm} />
