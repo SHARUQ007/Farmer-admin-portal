@@ -47,6 +47,22 @@ class FarmerProvider extends React.PureComponent {
           console.log(err)
         })
     }
+
+    fetchFilteredPagination = async (page, rowsPerPage = 5,status=null,date=null) => {
+      this.setState({...this.state,isLoading:true});
+      API.farmer().getFilteredFarmer(page,rowsPerPage,status,date)
+        .then(res => {
+          this.setState ({
+            farmers : res.data.farmers,
+            meta:res.data.meta,
+            isLoading:false
+          })
+        })
+         .catch(err => {
+          this.setState({...this.state,isLoading:false,errorMsg:"Sorry something went wrong while fetching the scheduled stem orders data try again later"})
+          console.log(err)
+        })
+    }
     fetchById = async (name,phone,onSuccess) => {
       this.setState({...this.state,isLoading:true});
       API.farmer().fetchById(name,phone)
@@ -116,6 +132,7 @@ class FarmerProvider extends React.PureComponent {
               ...this.state,
               fetchFarmers : this.fetchFarmers,
               fetchPagination:this.fetchPagination,
+              fetchFilteredPagination:this.fetchFilteredPagination,
               fetchById : this.fetchById,
               createFarmer : this.createFarmer,
               updateFarmer : this.updateFarmer,

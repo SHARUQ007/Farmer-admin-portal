@@ -151,3 +151,29 @@ exports.delete = (req, res) => {
          });
      });
 };
+
+
+exports.filteredFarmer = async (req, res) => {
+    const { page = 1, limit = 4} = req.query;
+    let query;
+    if(req.body.status){
+     query = {status:req.body.status}
+    }
+
+    const paginated = await Farmer.paginate(
+        query,
+        {
+            page,
+            limit,
+            lean: true,
+            sort: { updatedAt: "desc" }
+        }
+    )
+    
+    const { docs } = paginated;
+    const farmers = await Promise.all(docs.map(farmersSerializer));
+    delete paginated["docs"];
+    const meta = paginated
+
+    res.json({ meta, farmers });
+};

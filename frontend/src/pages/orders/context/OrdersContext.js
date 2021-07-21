@@ -69,7 +69,7 @@ class OrdersProvider extends React.PureComponent {
       API.orders().fetchById(name,phone)
         .then(res =>{
             this.setState ({
-              orders : res.data.orders,
+            orders : res.data.orders,
             meta:res.data.meta,
             isLoading:false
             })
