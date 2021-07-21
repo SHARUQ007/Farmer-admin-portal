@@ -18,7 +18,7 @@ class ScheduledStemProvider extends React.PureComponent {
     };
    
     fetchPagination = async (page, rowsPerPage = 5) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.orders().getScheduledStem(page,rowsPerPage)
         .then(res => {
           this.setState ({
@@ -35,7 +35,7 @@ class ScheduledStemProvider extends React.PureComponent {
     }
 
     fetchFilteredPagination = async (page, rowsPerPage = 5,status=null,date=null) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.orders().getFilteredScheduledStem(page,rowsPerPage,status,date)
         .then(res => {
           this.setState ({
@@ -52,7 +52,7 @@ class ScheduledStemProvider extends React.PureComponent {
     }
 
     fetchById = async (name,phone, onSuccess) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.orders().fetchById(name,phone)
         .then(res =>{
             this.setState ({
@@ -68,7 +68,7 @@ class ScheduledStemProvider extends React.PureComponent {
     }
     
     createScheduledStem = (data, onSuccess)  => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.orders().create(data)
         .then(res =>{
             this.setState ({
@@ -88,7 +88,7 @@ class ScheduledStemProvider extends React.PureComponent {
     }
     
     updateScheduledStem = (id, data, onSuccess) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.orders().update(id, data)
         .then(res =>{
              if(res.data.status==="success"){
@@ -123,7 +123,7 @@ class ScheduledStemProvider extends React.PureComponent {
     }
     
     updateScheduledDate = (id, date,onSuccess) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.orders().updateDate(id, date)
         .then(res =>{
             if(res.data.status==="success"){

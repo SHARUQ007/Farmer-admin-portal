@@ -14,7 +14,6 @@ farmerRouter.get('/', auth.isAuthenticatedAdmin, farmerController.findPagination
 // Find one by ID
 farmerRouter.get('/get/', auth.isAuthenticatedAdmin, farmerController.findOne);
 //to get filtered status
-farmerRouter.post('/get/', auth.isAuthenticatedAdmin, farmerController.filteredFarmer);
 
 // Create
 farmerRouter.post('/', auth.isAuthenticatedAdmin,auth.hasPermission(ROLES),farmerController.create);

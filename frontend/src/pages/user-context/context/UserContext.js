@@ -17,7 +17,7 @@ class UserProvider extends React.PureComponent {
     };
 
     fetchUsers = async (page, rowsPerPage = 5, name = null, email = null) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.user().fetchPagination(page, rowsPerPage, name, email)
         .then(res => {
           this.setState ({
@@ -33,7 +33,7 @@ class UserProvider extends React.PureComponent {
     }
 
     fetchById = async (id, onSuccess) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.user().fetchById(id)
         .then(res =>{
             this.setState ({
@@ -51,7 +51,7 @@ class UserProvider extends React.PureComponent {
     }
     
     createUser = (data, onSuccess)  => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.user().create(data)
         .then(res =>{
             this.setState ({
@@ -70,7 +70,7 @@ class UserProvider extends React.PureComponent {
     }
     
     updateUser = (id, data, onSuccess) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.user().update(id, data)
         .then(res =>{
             this.setState ({
@@ -92,7 +92,7 @@ class UserProvider extends React.PureComponent {
     }
     
     deleteUser = (id, onSuccess) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.user().delete(id)
         .then(res =>{
           this.setState({...this.state,isLoading:false})

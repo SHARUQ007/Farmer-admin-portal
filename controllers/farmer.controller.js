@@ -27,9 +27,13 @@ exports.findAll =  (req, res) => {
 
 // Retrieve data with pagination
 exports.findPagination = async (req, res) => {
-    const { page = 1, limit = 4} = req.query;
-
+    const { page = 1, limit = 4,status=""} = req.query;
     let query = {}
+    if(status){
+     query["status"]= String(status)
+    }
+    console.log(status,"s",query)
+
     const paginated = await Farmer.paginate(
         query,
         {
@@ -41,6 +45,7 @@ exports.findPagination = async (req, res) => {
     )
     
     const { docs } = paginated;
+    console.log(docs)
     const farmers = await Promise.all(docs.map(farmersSerializer));
     delete paginated["docs"];
     const meta = paginated
@@ -150,30 +155,4 @@ exports.delete = (req, res) => {
              message: "Could not delete farmer with id " + req.params.id
          });
      });
-};
-
-
-exports.filteredFarmer = async (req, res) => {
-    const { page = 1, limit = 4} = req.query;
-    let query;
-    if(req.body.status){
-     query = {status:req.body.status}
-    }
-
-    const paginated = await Farmer.paginate(
-        query,
-        {
-            page,
-            limit,
-            lean: true,
-            sort: { updatedAt: "desc" }
-        }
-    )
-    
-    const { docs } = paginated;
-    const farmers = await Promise.all(docs.map(farmersSerializer));
-    delete paginated["docs"];
-    const meta = paginated
-
-    res.json({ meta, farmers });
 };
