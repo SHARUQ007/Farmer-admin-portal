@@ -53,7 +53,7 @@ exports.findPagination = async (req, res) => {
     )
     
     const { docs } = paginated;
-
+    console.log(docs)
     const orders = await Promise.all(docs.map(ordersSerializer));
     delete paginated["docs"];
     const meta = paginated
@@ -61,17 +61,27 @@ exports.findPagination = async (req, res) => {
     res.json({ meta, orders });
 };
 
-exports.findOne = (req, res) => {
-    Orders.find({name:req.query.name,phone:req.query.phone})
-        .then(async data => {
-            if(!data) {
-                return res.status(404).send({
-                    message: "orders not found with id " + req.params.id
-                });
-            }
-            const orders =await Promise.all(data.map(ordersSerializer));
-            res.send(orders);
-        }).catch(err => {
+exports.findOne = async (req, res) => {
+    const { page = 1, limit = 4} = req.query;
+    let query={name:req.query.name,phone:req.query.phone}
+    try{
+            const paginated = await Orders.paginate(
+                query,
+                {
+                    page,
+                    limit,
+                    lean: true,
+                    sort: { updatedAt: "desc" }
+                }
+            )
+            const { docs } = paginated;
+            
+            const orders = await Promise.all(docs.map(ordersSerializer));
+            delete paginated["docs"];
+            const meta = paginated
+            res.json({ meta, orders });
+    }
+    catch(err){
             if(err.kind === 'ObjectId') {
                 return res.status(404).send({
                     message: "Orders not found with id " + req.params.id
@@ -80,8 +90,8 @@ exports.findOne = (req, res) => {
             return res.status(500).send({
                 message: "Error retrieving orders with id " + req.params.id
             });
-        });
-};
+    }
+}
 
 exports.create = (req, res) => {
     if(!req.body.name) {
