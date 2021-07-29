@@ -7,6 +7,9 @@ const ROLES=["STEM_ROLES","SCHEDULED_STEM_ROLES"];
 // Retrieve All data
 ordersRouter.get('/list',auth.isAuthenticatedAdmin,ordersController.findAll);
 
+//get order profile
+ordersRouter.get("/image/:imageName",ordersController.getOrderPicture);
+
 // Retrieve data with pagination
 ordersRouter.get('/', auth.isAuthenticatedAdmin, ordersController.findPagination);
 

@@ -6,6 +6,7 @@ const mapsSerializer = data => ({
     mobile: data.mobile,
     password: data.password,
     number: data.number,
+    status:data.status?data.status:"",
     capacity: data.capacity,
     city:data.city,
     address:data.address,
@@ -53,6 +54,7 @@ exports.findPagination = async (req, res) => {
     )
     
     const { docs } = paginated;
+    console.log(docs)
     const maps = await Promise.all(docs.map(mapsSerializer));
 
     delete paginated["docs"];
@@ -96,6 +98,7 @@ exports.create = (req, res) => {
         name: req.body.name.trim(),
         mobile: req.body.mobile.trim(),
         number: req.body.number.trim(),
+        status:req.body.status.trim(),
         capacity: req.body.capacity.trim(),
         password: req.body.password.trim(),
         city:req.body.city,
@@ -130,6 +133,31 @@ exports.update = (req, res) => {
         capacity: req.body.capacity.trim(),
         password: req.body.password.trim(),
        
+    }, {new: true})
+    .then(data => {
+        if(!data) {
+            return res.status(404).send({
+                message: "Transporter not found with id " + req.params.id
+            });
+        }
+        const map = mapsSerializer(data)
+        res.send(map);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Transporter not found with id " + req.params.id
+            });
+        }
+        return res.status(500).send({
+            message: "Error updating map with id " + req.params.id
+        });
+    });
+};
+
+exports.updateStatus = (req, res) => {
+
+    Transporter.findByIdAndUpdate(req.params.id, {
+       status:req.body.status
     }, {new: true})
     .then(data => {
         if(!data) {

@@ -125,6 +125,27 @@ export const update = (id, input, onSuccess) => dispatch => {
         })
 }
 
+export const updateStatus = (id, status, onSuccess) => dispatch => {
+     dispatch({
+                type: ACTION_TYPES.MAP_LOADING,
+                payload: true
+            })
+    API.map().updateStatus(id, status)
+        .then(res =>{
+            dispatch({
+                type: ACTION_TYPES.MAP_UPDATE,
+                payload: res.data
+            })
+            onSuccess()
+        })
+        .catch(err => {
+                dispatch({
+                type: ACTION_TYPES.MAP_LOADING,
+                payload: false
+            })
+            console.log(err)
+        })
+}
 export const Delete = (id, onSuccess) => dispatch => {
      dispatch({
                 type: ACTION_TYPES.MAP_LOADING,

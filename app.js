@@ -4,6 +4,7 @@ const path =require('path');
 const cors =require('cors');
 const bodyParser =require('body-parser');
 const morgan =require('morgan');
+const Grid = require('gridfs-stream');
 const config =require('./config/index.js');
 
 // routes
@@ -48,13 +49,35 @@ mongoose
   using the useFindAndModify global option.*/
   
 mongoose.set('useFindAndModify', false);
+
+//db connection only for storing image
+var conn = mongoose.createConnection(db, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+// Initialize GridFS
+let gfs;
+conn.once('open', () => {
+  // console.log("console",conn.db)
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('HarvestImage');
+});
+
+
 // Use Routes
-app.use('/api/map', mapRouter);
+app.use('/api/map',mapRouter);
 app.use('/api/transporterData', transporterDataRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/farmer', farmerRouter);
-app.use('/api/orders', ordersRouter);
+//passing gridfs-stream as local var for getting image
+app.use('/api/orders',(req,res,next)=>
+                                  {
+                                    req.app.locals.gfs=gfs;
+                                    next();
+                                  },
+                                   ordersRouter);
 
 
 

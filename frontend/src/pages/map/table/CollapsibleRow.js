@@ -5,6 +5,8 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from "react-router-dom";
+import Dropdown from "./Dropdown";
+
 import '../style.css';
 import ConfirmDelete from './ConfirmDelete'
 
@@ -76,8 +78,14 @@ const CollapsibleRow = (props) => {
                           <TableCell className="collapse-cell-title"> Assigned Truck Capacity: </TableCell>
                           <TableCell className="collapse-cell-content"> {row.capacity} </TableCell>
                       </TableRow>
+                      <TableRow> 
+                          <TableCell className="collapse-cell-title"> Status: </TableCell>
+                          <Dropdown statusprop={row.status} 
+                           updateStatus={props.updateStatus} 
+                           id={row.id} 
+                            />  
+                      </TableRow>
 
-             
 
                   </TableBody>
                 </Table>

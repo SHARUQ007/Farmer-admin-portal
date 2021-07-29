@@ -17,6 +17,7 @@ import { Button } from "../../../../components/Wrappers";
 import Dropdown from './Dropdown';
 import Pagination from './Pagination'
 import FilteredDropdown from './FilteredDropdown';
+import ImageViewer from '../ImageViewer/ImageViewer';
 
 
 // const states = {
@@ -35,7 +36,13 @@ export default function TableComponent({data,isLoading,errorMsg,updateOrders,fet
    
    const [filteredDate,setFilteredDate]=React.useState("")
    const [filteredStatus,setFilteredStatus]=React.useState("")
+   const [src,setSrc]=React.useState(null);
+
    const classes = useStyles();
+
+  const showImage=(event)=>{
+    setSrc(event.target.attributes.imgsrc.value);
+  }
 
   const searchChange = async (event) => {
     const { value } = event.target
@@ -111,7 +118,7 @@ export default function TableComponent({data,isLoading,errorMsg,updateOrders,fet
             </TableRow>
           </TableHead>
           <TableBody >
-            {data.map(({ id, name, phone,orderId, noOfStems, farming,variety,status ,expected}) => (
+            {data.map(({ id, name, phone,orderId, noOfStems, farming,variety,status ,expected,image}) => (
               <TableRow key={id} >
                 <TableCell className="pl-3 fw-normal">
                   <Link to={"/admin/dashboard/"+name+"/"+phone}>
@@ -130,6 +137,9 @@ export default function TableComponent({data,isLoading,errorMsg,updateOrders,fet
                 <TableCell>{farming}</TableCell>
                 <TableCell>{variety}</TableCell>
                 <TableCell>{new Date(expected).toDateString()}</TableCell>
+                <TableCell><input type="button" className="px-1 closeButton" onClick={showImage} imgsrc={image} value="View Image"/></TableCell>
+                <ImageViewer src={src} setSrc={setSrc}/>
+ 
 
                 {/* <TableCell>
                    <Button
