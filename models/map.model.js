@@ -8,8 +8,10 @@ const MapSchema = mongoose.Schema({
   password: { type: String, 'default': '' },
   number: { type: String, 'default': '' },
   capacity: { type: Number, 'default': '' },
-
-  
+  password: { type: String, 'default': '' },
+  address: { type: String, 'default': '' },
+  city: { type: String, 'default': '' },
+  location:{type:Object,'default': {lat:'',log:''} }
 }, {
   timestamps: true
 });
