@@ -6,12 +6,14 @@ const MapSchema = mongoose.Schema({
   name: { type: String, 'default': '' },
   mobile: { type: String, 'default': '' },
   password: { type: String, 'default': '' },
+  status: { type: String, 'default': 'active' },
   number: { type: String, 'default': '' },
   capacity: { type: Number, 'default': '' },
   password: { type: String, 'default': '' },
   address: { type: String, 'default': '' },
   city: { type: String, 'default': '' },
   location:{type:Object,'default': {lat:'',log:''} }
+
 }, {
   timestamps: true
 });

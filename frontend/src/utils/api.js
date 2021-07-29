@@ -29,6 +29,7 @@ export default {
           fetchById: id => http.get(url + "/" + id, config),
           create: newRecord => http.post(url, newRecord, config),
           update: (id, updatedRecord) => http.put(url + "/" + id, updatedRecord, config),
+          updateStatus: (id, status) => http.put(url + "/updateStatus/" + id,status, config),
           delete: id => http.delete(url + "/" + id, config)
       }
   },

@@ -9,7 +9,8 @@ const ordersSerializer = data => ({
     status: data.status,
     farming: data.farming,
     variety: data.variety,
-    expected:data.expected
+    expected:data.expected,
+    image:data.image?data.image:""
 });
 const popupOrdersSerializer = data => ({
     id: data.id,
@@ -24,6 +25,32 @@ const popupOrdersSerializer = data => ({
     StemLoadingTimeforTrucks:data.StemLoadingTimeforTrucks
 });
 
+exports.getOrderPicture=(req, res) =>{
+    console.log("hai")
+  if(req.app.locals.gfs){
+        req.app.locals.gfs.files.findOne({
+          filename: req.params.imageName
+        }, (err, file) => {
+            console.log(file)
+          if (!file || file.length === 0) return res.status(404).json({
+            err: 'No file exists'
+          });
+          if (file.contentType === 'image/jpeg' || file.contentType === 'image/png' || file.contentType === 'image/jpg') {
+            const readstream = req.app.locals.gfs.createReadStream(file.filename);
+            readstream.pipe(res);
+          } else {
+            res.status(404).json({
+              err: 'Not an image'
+            });
+          }
+
+      });
+  }else{
+    res.status(404).json({
+              err: 'Not an image'
+            });
+  }
+}
 // Retrieve all data
 exports.findAll =  (req, res) => {
 
@@ -53,7 +80,6 @@ exports.findPagination = async (req, res) => {
     )
     
     const { docs } = paginated;
-    console.log(docs)
     const orders = await Promise.all(docs.map(ordersSerializer));
     delete paginated["docs"];
     const meta = paginated

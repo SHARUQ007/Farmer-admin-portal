@@ -99,6 +99,7 @@ const DataTable = ({ classes, ...props }) => {
                                 {props.maps.map((row, index) => (
                                     <CollapsibleRow 
                                         key={index} 
+                                        updateStatus={props.updateStatus}
                                         row={row} 
                                         onDelete={onDelete} 
                                     />
@@ -163,6 +164,7 @@ const mapStateToProps = state => ({
 
 const mapActionToProps = {
     fetchPagination: actions.Pagination,
+    updateStatus:actions.updateStatus,
     delete: actions.Delete
 }
 

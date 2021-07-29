@@ -1,78 +1,81 @@
-const { Schema, model } =require('mongoose');
+const mongoose = require("mongoose");
 const mongoosePaginate = require('mongoose-paginate-v2');
 
-// Create Schema
-const OrdersSchema = new Schema({
+const { ObjectId,Number} = mongoose.Schema.Types;
+
+const orderSchema = new mongoose.Schema({
+  userid:{
+    type:ObjectId,
+    ref:"User",
+    required:true
+  },
   name: {
     type: String,
-    required: true
+    required: true,
+    min: 2,
+    max: 255,
+  },
+  image:{
+    type:String,
+    default:null
+  },
+  orderId: {
+    type: String,
+    required: true,
   },
   phone: {
     type: String,
     required: true,
-    unique: true
-  },
-  orderId: {
-    type: Number,
-    required: true
   },
   noOfStems: {
     type: Number,
-    required:true
+    required: true,
+  },
+  remainingStems: {
+    type: Number,
+    required: true,
+  },
+  landCapacity: {
+    type: Number,
+    required: true,
+  },
+  expected: {
+    type: Date,
+    required: true,
+  },
+  active: {
+    type: Boolean,
+    default: true,
+  },
+  pincode: {
+    type: String,
   },
   status: {
     type: String,
-    required:true
   },
-  farming: {
-    type: String,
-    required:true
+  priority: {
+    type: Number,
+    default: 0,
+    required: true,
   },
-  variety: {
-    type: String,
-    required:true
+  date: {
+    type: Date,
+    default: Date.now(),
+    required: true,
   },
-   scheduledDate:{
-    type:Date
-   },
-   date:{
-     type:Date
-   },
-   remainingStems:{
-     type:Number
-   },
-   expected:{
-     type:Date
-   },
-   pincode:{
-     type:String
-   },
-   scheduledStems:{
-     type:Number
-   },
-   scheduledNumberofTrucks:{
-     type:Number
-   },
-   truckNumber: {
-     type:Array
-   },  
-  truckDrivername: {
-     type:Array
-   },
-   stemsLoadedforTruck:{
-     type:Array
-   },
-   arrivalTimeofTrucks:{
-     type:Array
-   },
-   stemLoadingTimeforTrucks:{
-     type:Array
-   },
-}, {
-  timestamps: true
+  farming:{
+    type:String,
+    required:true,
+  },
+  variety:{
+    type:String,
+    required:true
+  }
+ 
 });
 
-OrdersSchema.plugin(mongoosePaginate);
-const Orders = model('orders', OrdersSchema);
+orderSchema.plugin(mongoosePaginate);
 
-module.exports =Orders;
+const Order = mongoose.model("Order", orderSchema);
+
+module.exports = Order;

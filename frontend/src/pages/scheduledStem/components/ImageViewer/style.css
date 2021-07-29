@@ -1,0 +1,50 @@
+
+/*  POPUP */
+.popupContainer{
+  height: 100vh;
+  margin-top: 50px;
+  position: fixed;
+  background-color: rgb(0 0 0 / 14%);
+  width: 100vw;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: 300;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.popupCard {
+  min-height: 200px;
+  padding: 1rem;
+  width: 75%;
+  max-width: 450px;
+  border-radius: 10px;
+  background: white;
+  box-shadow: rgb(255 255 255 / 5%) -1vmin -1vmin 1vmin, rgb(0 0 0 / 30%) 1vmin 1vmin 1vmin;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.closeButton {
+  display: block;
+  margin: auto;
+  background-color: #398e3d;
+  color: white;
+  height: 30px;
+  margin: 0.8rem auto;
+  width:80px;
+  outline: none;
+  border-radius: 2px;
+  border: 1px solid #398e3d;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+.popupImage{
+  height: 300px;
+  width: 300px;
+}
+
+

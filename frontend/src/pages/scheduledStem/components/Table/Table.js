@@ -17,6 +17,8 @@ import{ ToastContainer }  from 'react-toastify';
 // components
 import Dropdown from './Dropdown';
 import FilteredDropdown from './FilteredDropdown';
+import ImageViewer from '../ImageViewer/ImageViewer';
+
 
 import Pagination from './Pagination'
 import PopupCard from "../PopupCard/PopupCard"
@@ -41,8 +43,13 @@ export default function TableComponent({data,popupData,isLoading,errorMsg,update
   const [filteredDate,setFilteredDate]=React.useState("")
 
   const [filteredStatus,setFilteredStatus]=React.useState("")
-  
+  const [src,setSrc]=React.useState(null);
+
   const classes = useStyles();
+
+  const showImage=(event)=>{
+    setSrc(event.target.attributes.imgsrc.value);
+  }
   
   function closePopup(){
     setId(null);
@@ -152,7 +159,7 @@ export default function TableComponent({data,popupData,isLoading,errorMsg,update
             </TableRow>
           </TableHead>
           <TableBody >
-            {data.map(({ id, name, phone,orderId, noOfStems, farming,variety,status,expected }) => (
+            {data.map(({ id, name, phone,orderId, noOfStems, farming,variety,status,expected,image }) => (
               <TableRow key={id} >
                 <TableCell className="pl-3 fw-normal" style={{cursor:"pointer",color:"blue"}} id={id} onClick={(e)=>{openPopup(e.target.id)}}>
                       {name}
@@ -170,6 +177,8 @@ export default function TableComponent({data,popupData,isLoading,errorMsg,update
                 <TableCell>{farming}</TableCell>
                 <TableCell>{variety}</TableCell>
                 <TableCell>{new Date(expected).toDateString()}</TableCell>
+                <TableCell><input type="button" className="px-1 closeButton" onClick={showImage} imgsrc={image} value="View Image"/></TableCell>
+                <ImageViewer src={src} setSrc={setSrc}/>
               </TableRow>
             ))}
           </TableBody>

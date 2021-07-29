@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import * as actions from "../../../actions/map";
 import PageTitle from "../../../components/PageTitle/PageTitle";
 import '../style.css';
+import Dropdown from "./Dropdown";
 
 const styles = theme => ({
 	paper: {
@@ -36,6 +37,7 @@ const initialFormState = {
 	number:"",
 	capacity:"",
 	address:"",
+	status:"active",
 	city: "",
 	location:{lat:"",log:""}
 
@@ -48,14 +50,15 @@ const AddForm = ({ classes, ...props }) => {
 	const handleInputChange = event => {
 		const { name, value } = event.target
 		if(name==="lat" || name==="log"){
-
 			let location={...map.location,[name]:value};
-
 			setMap({ ...map,location:location});
 		}else{
 			setMap({ ...map, [name]: value });
 		}
 		
+	}
+	const updateStatus=(status)=>{
+			setMap({ ...map,status:status});
 	}
 
 	const validate = () => {
@@ -216,7 +219,10 @@ const AddForm = ({ classes, ...props }) => {
 						onChange={handleInputChange}
 						{...(errors.log && { error: true, helperText: errors.log })}
 					/>
-				
+
+					<Dropdown statusprop={map.status} 
+                           updateStatus={updateStatus} 
+                            />  
 					<div className="form-button-container">
 						<Button
 							variant="contained"

@@ -19,6 +19,9 @@ mapRouter.post('/', auth.isAuthenticatedAdmin, auth.hasPermission(ROLES),mapCont
 // Update
 mapRouter.put('/:id', auth.isAuthenticatedAdmin,auth.hasPermission(ROLES), mapController.update);
 
+mapRouter.put('/updateStatus/:id', auth.isAuthenticatedAdmin,auth.hasPermission(ROLES), mapController.updateStatus);
+
+
 // Delete
 mapRouter.delete('/:id', auth.isAuthenticatedAdmin, auth.hasPermission(ROLES),mapController.delete);
 
