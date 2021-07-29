@@ -27,9 +27,13 @@ exports.findAll =  (req, res) => {
 
 // Retrieve data with pagination
 exports.findPagination = async (req, res) => {
-    const { page = 1, limit = 4} = req.query;
-
+    const { page = 1, limit = 4,status=""} = req.query;
     let query = {}
+    if(status){
+     query["status"]= String(status)
+    }
+    console.log(status,"s",query)
+
     const paginated = await Farmer.paginate(
         query,
         {
@@ -41,6 +45,7 @@ exports.findPagination = async (req, res) => {
     )
     
     const { docs } = paginated;
+    console.log(docs)
     const farmers = await Promise.all(docs.map(farmersSerializer));
     delete paginated["docs"];
     const meta = paginated

@@ -19,7 +19,7 @@ import {FarmerProvider, FarmerContext } from "./context/FarmerContext";
 
  function Dashboard(props) {
   const {phone, name} = useParams();
-  const {farmers,meta,isLoading,errorMsg,fetchPagination,updateFarmer,fetchById} = useContext(FarmerContext)
+  const {farmers,meta,isLoading,errorMsg,fetchPagination,fetchFilteredPagination,updateFarmer,fetchById} = useContext(FarmerContext)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   var classes = useStyles();
@@ -88,6 +88,7 @@ import {FarmerProvider, FarmerContext } from "./context/FarmerContext";
                    updateFarmer={updateFarmer}
                    rowsPerPage={rowsPerPage}
                    fetchPagination={fetchPagination} 
+                   fetchFilteredPagination={fetchFilteredPagination}
                    handleChangePage={handleChangePage}
                    handleChangeRowsPerPage={handleChangeRowsPerPage}/>
           </Widget>

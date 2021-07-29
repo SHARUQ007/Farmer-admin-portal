@@ -18,7 +18,7 @@ class TransporterDataProvider extends React.PureComponent {
     };
    
     fetchPagination = async (page, rowsPerPage = 5) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.transporterData().fetchPagination(page,rowsPerPage)
         .then(res => {
           this.setState ({
@@ -34,7 +34,7 @@ class TransporterDataProvider extends React.PureComponent {
     }
 
     fetchFilteredPagination = async (page, rowsPerPage = 5,status=null,date=null) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       alert(status)
       API.transporterData().getFilteredData(page,rowsPerPage,status,date)
         .then(res => {
@@ -51,7 +51,7 @@ class TransporterDataProvider extends React.PureComponent {
     }
 
     fetchFreeTransporter = async () => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.transporterData().fetchFreeTransporter()
         .then(res =>{
           console.log(res.data,"\n\nsssssss\n")
@@ -68,7 +68,7 @@ class TransporterDataProvider extends React.PureComponent {
     }
     
     createTransporterData = (data, onSuccess)  => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.transporterData().create(data)
         .then(res =>{
             this.setState ({
@@ -88,7 +88,7 @@ class TransporterDataProvider extends React.PureComponent {
     }
     
     updateTransporterData = (id, data, onSuccess) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.transporterData().update(id, data)
         .then(res =>{
              if(res.data.status==="success"){
@@ -123,7 +123,7 @@ class TransporterDataProvider extends React.PureComponent {
     }
     
     assignNewTransporter = (id,transporter_id,onSuccess) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.transporterData().assignNewTransporter(id,transporter_id)
         .then(res =>{
             if(res.data.status==="success"){               

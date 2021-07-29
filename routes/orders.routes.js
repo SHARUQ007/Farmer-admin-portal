@@ -16,7 +16,7 @@ ordersRouter.get('/scheduledStem',auth.isAuthenticatedAdmin,ordersController.get
 
 //to get filtered stem data
 
-ordersRouter.post('/scheduledStem', auth.isAuthenticatedAdmin,auth.hasPermission(ROLES[1]), ordersController.getFilteredStem);
+ordersRouter.post('/scheduledStem', auth.isAuthenticatedAdmin, ordersController.getFilteredStem);
 
 
 ordersRouter.post('/scheduleDate', auth.isAuthenticatedAdmin,auth.hasPermission(ROLES[1]), ordersController.updateScheduledDate);

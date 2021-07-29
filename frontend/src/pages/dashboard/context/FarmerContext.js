@@ -17,7 +17,7 @@ class FarmerProvider extends React.PureComponent {
     };
    
     fetchFarmers = async (page, rowsPerPage = 5, name = null, email = null) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.farmer().fetchAll()
         .then(res => {
           this.setState ({
@@ -32,7 +32,7 @@ class FarmerProvider extends React.PureComponent {
     }
 
     fetchPagination = async (page, rowsPerPage = 5, name = null, email = null) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.farmer().fetchPagination(page,rowsPerPage)
         .then(res => {
           this.setState ({
@@ -47,8 +47,24 @@ class FarmerProvider extends React.PureComponent {
           console.log(err)
         })
     }
+
+    fetchFilteredPagination = async (page, rowsPerPage = 5,status=null) => {
+      this.setState({...this.state,isLoading:true,errorMsg:null});
+      API.farmer().fetchFilteredFarmer(page,rowsPerPage,status)
+        .then(res => {
+          this.setState ({
+            farmers : res.data.farmers,
+            meta:res.data.meta,
+            isLoading:false
+          })
+        })
+         .catch(err => {
+          this.setState({...this.state,isLoading:false,errorMsg:"Sorry something went wrong while fetching the scheduled stem orders data try again later"})
+          console.log(err)
+        })
+    }
     fetchById = async (name,phone,onSuccess) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.farmer().fetchById(name,phone)
         .then(res =>{
             this.setState ({
@@ -64,7 +80,7 @@ class FarmerProvider extends React.PureComponent {
     }
     
     createFarmer = (data, onSuccess)  => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.farmer().create(data)
         .then(res =>{
             this.setState ({
@@ -81,7 +97,7 @@ class FarmerProvider extends React.PureComponent {
     }
     
     updateFarmer = (id, data, onSuccess) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.farmer().update(id, {status:data.status})
         .then(res =>{
             this.setState ({
@@ -102,7 +118,7 @@ class FarmerProvider extends React.PureComponent {
     }
     
     deleteFarmer = (id, onSuccess) => {
-      this.setState({...this.state,isLoading:true});
+      this.setState({...this.state,isLoading:true,errorMsg:null});
       API.farmer().delete(id)
         .then(res =>{
             this.setState({...this.state,isLoading:false});
@@ -116,6 +132,7 @@ class FarmerProvider extends React.PureComponent {
               ...this.state,
               fetchFarmers : this.fetchFarmers,
               fetchPagination:this.fetchPagination,
+              fetchFilteredPagination:this.fetchFilteredPagination,
               fetchById : this.fetchById,
               createFarmer : this.createFarmer,
               updateFarmer : this.updateFarmer,

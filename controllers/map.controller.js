@@ -7,7 +7,9 @@ const mapsSerializer = data => ({
     password: data.password,
     number: data.number,
     capacity: data.capacity,
-   
+    city:data.city,
+    address:data.address,
+    location:data.location
 });
 
 // Retrieve all data
@@ -67,6 +69,7 @@ exports.findOne = (req, res) => {
                     message: "map not found with id " + req.params.id
                 });
             }
+            console.log(data)
             const map = mapsSerializer(data)
             res.send(map);
         }).catch(err => {
@@ -82,6 +85,7 @@ exports.findOne = (req, res) => {
 };
 
 exports.create = (req, res) => {
+    console.log(req.body.location)
     if(!req.body.name) {
          return res.status(400).send({
              message: "Transporter name can not be empty"
@@ -94,11 +98,14 @@ exports.create = (req, res) => {
         number: req.body.number.trim(),
         capacity: req.body.capacity.trim(),
         password: req.body.password.trim(),
-      
+        city:req.body.city,
+        address:req.body.address,
+        location:{lat:req.body.location.lat,log:req.body.location.log}
     });
 
     map.save()
     .then(data => {
+        console.log(data);
         const map = mapsSerializer(data)
         res.send(map);
     }).catch(err => {

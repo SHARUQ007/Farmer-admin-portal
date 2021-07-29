@@ -61,6 +61,7 @@ export default {
         fetchAll: () => http.get(url + '/list', config),
         fetchPagination: (page, limit, name, category) => 
             http.get(url + "?page=" + page + "&limit=" + limit + "&name=" + name + "&category=" + category, config),
+        fetchFilteredFarmer:(page,limit,status)=> http.get(url + "?page=" + page + "&limit=" + limit + "&status=" + status , config),
         fetchById: (name,phone) => http.get(url + `/get?name=${name}&phone=${phone}`, config),
         create: newRecord => http.post(url, newRecord, config),
         update: (id, updatedRecord) => http.put(url + "/" + id, updatedRecord, config),

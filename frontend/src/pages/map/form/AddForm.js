@@ -35,7 +35,9 @@ const initialFormState = {
 	password:"",
 	number:"",
 	capacity:"",
-	city: ""
+	address:"",
+	city: "",
+	location:{lat:"",log:""}
 
 }
 
@@ -45,7 +47,14 @@ const AddForm = ({ classes, ...props }) => {
 	
 	const handleInputChange = event => {
 		const { name, value } = event.target
-			setMap({ ...map, [name]: value })
+		if(name==="lat" || name==="log"){
+
+			let location={...map.location,[name]:value};
+
+			setMap({ ...map,location:location});
+		}else{
+			setMap({ ...map, [name]: value });
+		}
 		
 	}
 
@@ -70,15 +79,26 @@ const AddForm = ({ classes, ...props }) => {
 			formIsValid = false;
 			tempErrors["number"] = "Cannot be empty";
 		}
+		if(!map.address || map.address.trim() ===  ""){
+			formIsValid = false;
+			tempErrors["address"] = "Cannot be empty";
+		}
+		if(!map.city || map.city.trim() ===  ""){
+			formIsValid = false;
+			tempErrors["city"] = "Cannot be empty";
+		}
 		if(!map.capacity || map.capacity.trim() ===  ""){
 			formIsValid = false;
 			tempErrors["capacity"] = "Cannot be empty";
 		}
-
-	
-
-
-      
+		if(!map.location.lat ||map.location.lat.trim() ===  "" ){
+			formIsValid = false;
+			tempErrors["lat"] = "Cannot be empty";
+		}
+		if(!map.location.log ||map.location.log.trim() ===  "" ){
+			formIsValid = false;
+			tempErrors["log"] = "Cannot be empty";
+		}
 		setErrors(tempErrors);
 		return formIsValid;
     }
@@ -155,15 +175,46 @@ const AddForm = ({ classes, ...props }) => {
 						{...(errors.capacity && { error: true, helperText: errors.capacity })}
 					/>
 
+					<TextField
+						name="address"
+						variant="outlined"
+						label="address"
+						fullWidth
+						value={map.address}
+						onChange={handleInputChange}
+						{...(errors.address && { error: true, helperText: errors.address })}
+					/>
+				
 					
 					<TextField
 						name="city"
 						variant="outlined"
-						label="City"
+						label="city"
 						fullWidth
 						value={map.city}
 						onChange={handleInputChange}
 						{...(errors.city && { error: true, helperText: errors.city })}
+					/>
+				
+
+					<TextField
+						name="lat"
+						variant="outlined"
+						label="lat"
+						fullWidth
+						value={map.location.lat}
+						onChange={handleInputChange}
+						{...(errors.lat && { error: true, helperText: errors.lat })}
+					/>
+				
+					<TextField
+						name="log"
+						variant="outlined"
+						label="Log"
+						fullWidth
+						value={map.location.log}
+						onChange={handleInputChange}
+						{...(errors.log && { error: true, helperText: errors.log })}
 					/>
 				
 					<div className="form-button-container">
