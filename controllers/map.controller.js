@@ -10,6 +10,7 @@ const mapsSerializer = data => ({
     capacity: data.capacity,
     city:data.city,
     address:data.address,
+    weightOfTruck:data.weightOfTruck,
     location:data.location
 });
 
@@ -99,8 +100,9 @@ exports.create = (req, res) => {
         mobile: req.body.mobile.trim(),
         number: req.body.number.trim(),
         status:req.body.status.trim(),
-        capacity: req.body.capacity.trim(),
+        capacity: req.body.capacity,
         password: req.body.password.trim(),
+        weightOfTruck:req.body.weightOfTruck,
         city:req.body.city,
         address:req.body.address,
         location:{lat:req.body.location.lat,log:req.body.location.log}
@@ -130,7 +132,7 @@ exports.update = (req, res) => {
         name: req.body.name.trim(),
         mobile: req.body.mobile.trim(),
         number: req.body.number.trim(),
-        capacity: req.body.capacity.trim(),
+        capacity: req.body.capacity,
         password: req.body.password.trim(),
        
     }, {new: true})

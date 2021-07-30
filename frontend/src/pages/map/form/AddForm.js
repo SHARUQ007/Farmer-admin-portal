@@ -35,6 +35,7 @@ const initialFormState = {
 	mobile:"",
 	password:"",
 	number:"",
+	weightOfTruck:"",
 	capacity:"",
 	address:"",
 	status:"active",
@@ -93,6 +94,10 @@ const AddForm = ({ classes, ...props }) => {
 		if(!map.capacity || map.capacity.trim() ===  ""){
 			formIsValid = false;
 			tempErrors["capacity"] = "Cannot be empty";
+		}
+		if(!map.weightOfTruck || map.weightOfTruck.trim() ===  ""){
+			formIsValid = false;
+			tempErrors["weightOfTruck"] = "Cannot be empty";
 		}
 		if(!map.location.lat ||map.location.lat.trim() ===  "" ){
 			formIsValid = false;
@@ -166,6 +171,16 @@ const AddForm = ({ classes, ...props }) => {
 						value={map.number}
 						onChange={handleInputChange}
 						{...(errors.number && { error: true, helperText: errors.number })}
+					/>
+
+					<TextField
+						name="weightOfTruck"
+						variant="outlined"
+						label="Weight Of Truck"
+						fullWidth
+						value={map.weightOfTruck}
+						onChange={handleInputChange}
+						{...(errors.weightOfTruck && { error: true, helperText: errors.weightOfTruck })}
 					/>
 
 					<TextField

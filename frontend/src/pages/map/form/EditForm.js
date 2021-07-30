@@ -35,6 +35,7 @@ const initialFormState = {
 	password:"",
 	number:"",
 	capacity:"",
+	weightOfTruck:"",
 	address:"",
 	city: "",
 	location:{lat:"",log:""}
@@ -99,6 +100,10 @@ const EditForm = ({ classes, ...props }) => {
 		if(!map.capacity ){
 			formIsValid = false;
 			tempErrors["capacity"] = "Cannot be empty";
+		}
+		if(!map.weightOfTruck ){
+			formIsValid = false;
+			tempErrors["weightOfTruck"] = "Cannot be empty";
 		}
 		if(!map.location.lat ||map.location.lat.trim() ===  "" ){
 			formIsValid = false;
@@ -173,6 +178,16 @@ const EditForm = ({ classes, ...props }) => {
 						value={map.capacity}
 						onChange={handleInputChange}
 						{...(errors.capacity && { error: true, helperText: errors.capacity })}
+					/>
+
+					<TextField
+						name="weightOfTruck"
+						variant="outlined"
+						label="Weight Of Truck"
+						fullWidth
+						value={map.weightOfTruck}
+						onChange={handleInputChange}
+						{...(errors.weightOfTruck && { error: true, helperText: errors.weightOfTruck })}
 					/>
 
 					<TextField
