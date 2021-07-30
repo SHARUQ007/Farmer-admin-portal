@@ -7,6 +7,7 @@ const MapSchema = mongoose.Schema({
   mobile: { type: String, 'default': '' },
   password: { type: String, 'default': '' },
   status: { type: String, 'default': 'active' },
+  weightOfTruck:{type:Number},
   number: { type: String, 'default': '' },
   capacity: { type: Number, 'default': '' },
   password: { type: String, 'default': '' },
