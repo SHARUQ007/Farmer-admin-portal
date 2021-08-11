@@ -91,7 +91,7 @@ export default function ScheduledStems({data,scheduleDate,isLoading,errorMsg,met
                     </TableRow>
                 </TableFooter>
         </Table>
-         <div className="form-button-container">
+         <div style={{margin:"1rem auto",width:"fit-content"}}>
             <Button
               variant="contained"
               color="secondary"
