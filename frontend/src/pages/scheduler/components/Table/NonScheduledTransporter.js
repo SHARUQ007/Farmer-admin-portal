@@ -55,12 +55,13 @@ export default function NonScheduledTransporter({data,isLoading,errorMsg,meta,fe
             </TableRow>
           </TableHead>
           <TableBody >
-            {data.map(({truckDrivername,truckdrivermobile,truckcapacity,trucknumber}) => (
+            {data.map(({truckDrivername,truckdrivermobile,truckcapacity,trucknumber,scheduleDate}) => (
               <TableRow  >
                 <TableCell>{truckDrivername}</TableCell>  
                 <TableCell>{truckdrivermobile}</TableCell>
                 <TableCell>{truckcapacity}</TableCell>
                 <TableCell>{trucknumber}</TableCell>
+                <TableCell>{scheduleDate}</TableCell>
               </TableRow>
             ))}
           </TableBody>

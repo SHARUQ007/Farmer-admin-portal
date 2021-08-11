@@ -34,7 +34,7 @@ function Scheduler(props) {
           updateHyperParameter,updateInputParameter
         } = useContext(SchedulerContext)
 
-  const {isLoading,meta,errorMsg}=schedulerData;
+  const {isLoading,errorMsg}=schedulerData;
   
   var classes = useStyles();
 
@@ -108,6 +108,7 @@ function Scheduler(props) {
             bodyClass={classes.tableWidget}
           >
             <ScheduledStems data={schedulerData.stemAvailability}  
+                            scheduleDate={schedulerData.scheduleDate}
                     meta={schedulerData.stemMeta}
                     isLoading={schedulerData.isLoading}
                     errorMsg={errorMsg}

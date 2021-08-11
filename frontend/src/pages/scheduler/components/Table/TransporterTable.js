@@ -44,7 +44,6 @@ export default function TransporterTable({data,isLoading,errorMsg,meta,fetchSche
   }
   if(data.length>0){
       var keys = Object.keys(data[0])
-      keys.shift(); // delete "id" key
       return (
         <>
         <Table className="mb-0">
@@ -57,15 +56,17 @@ export default function TransporterTable({data,isLoading,errorMsg,meta,fetchSche
             </TableRow>
           </TableHead>
           <TableBody >
-            {data.map(({trucknumber,truckdrivername,allocatedFarmerName,allocatedFarmerId,stems,typeOfFarming,stemLoadingTime}) => (
+            {data.map(({trucknumber,truckdrivername,scheduleDate,allocatedFarmerName,allocatedFarmerId,stems,typeOfFarming,stemLoadingTime}) => (
               <TableRow >
-                <TableCell className="pl-3 fw-normal" >{trucknumber}</TableCell>
+                <TableCell >{trucknumber}</TableCell>
                 <TableCell>{truckdrivername}</TableCell>
                 <TableCell>{allocatedFarmerName}</TableCell>
                 <TableCell>{allocatedFarmerId}</TableCell>
                 <TableCell>{stems}</TableCell>
                 <TableCell>{typeOfFarming}</TableCell>
                 <TableCell>{stemLoadingTime}</TableCell>
+                <TableCell>{scheduleDate}</TableCell>
+
               </TableRow>
             ))}
           </TableBody>

@@ -40,7 +40,6 @@ const initialFormState = {
 }
 
 const InputForm = (props) => {
-	console.log(props,"propssssssssssssssss")
 	const [inputParams, setInputParams ] = useState(initialFormState);
 
 	const [ errors, setErrors ] = useState({})
@@ -129,7 +128,6 @@ const InputForm = (props) => {
        		props.updateInputParameter(inputParams,onSuccess);
         }
     }
-    
 
 	return (
 		<React.Fragment>

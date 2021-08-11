@@ -14,6 +14,7 @@ class SchedulerProvider extends React.PureComponent {
         nonScheduledTransporter:[],
         nonTransporterMeta:{},
         stemAvailability:[],
+        scheduleDate:"",
         stemMeta:{},
         inputParams:{},
         hyperParams:{}, 
@@ -82,6 +83,7 @@ class SchedulerProvider extends React.PureComponent {
           this.setState ({
             ...this.state,
            stemAvailability:res.data.stemAvailability,
+           scheduleDate:res.data.scheduleDate,
            stemMeta:res.data.meta,
            isLoading:false
           })

@@ -44,7 +44,6 @@ export default function ScheduledFarmer({data,isLoading,errorMsg,meta,fetchSched
 
   if(data.length>0){
       var keys = Object.keys(data[0])
-      keys.shift(); // delete "id" key
       return (
         <>
         <Table className="mb-0">
@@ -59,11 +58,14 @@ export default function ScheduledFarmer({data,isLoading,errorMsg,meta,fetchSched
           <TableBody >
             {data.map(({name,transactionId,scheduleDate,scheduledStems, farming,variety}) => (
                 <TableRow>
+                    <TableCell>{name}</TableCell>
+
                     <TableCell>{transactionId}</TableCell>
                     <TableCell>{scheduleDate}</TableCell>
                     <TableCell>{scheduledStems}</TableCell>
                     <TableCell>{farming}</TableCell>
                     <TableCell>{variety}</TableCell>
+
                 </TableRow>
             ))}
           </TableBody>

@@ -20,14 +20,16 @@ const useStyles = makeStyles({
         width: '100%',
         textTransform:"uppercase",
         textAlign:"center",
+
       },
   });
 
-export default function ScheduledStems({data,isLoading,errorMsg,meta,fetchStemAvailability}) {
+export default function ScheduledStems({data,scheduleDate,isLoading,errorMsg,meta,fetchStemAvailability}) {
 
   const classes = useStyles();
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
+
   
   const handleChangePage = async (event, newPage) => {
         await setPage(newPage);
@@ -42,12 +44,20 @@ export default function ScheduledStems({data,isLoading,errorMsg,meta,fetchStemAv
             fetchStemAvailability(1, val)
         }
   }
+  var totalStems=0;
+
   if(data.length>0){
       var keys = Object.keys(data[0])
-      keys.shift(); // delete "id" key
+      
+      data.forEach((order)=>{
+        totalStems+=order.noOfStems;
+      })
+      
       return (
         <>
         <Table className="mb-0">
+         <Typography variant="p" component="p"  style={{margin:"1rem"}}>Total Stems Avaialble for schedule:{totalStems}</Typography>
+         <Typography variant="p" component="p"  style={{margin:"1rem"}}>Schedule Date:{scheduleDate}</Typography>
           <TableHead>
             <TableRow>
               {keys.map(key => (
@@ -68,6 +78,7 @@ export default function ScheduledStems({data,isLoading,errorMsg,meta,fetchStemAv
               </TableRow>
             ))}
           </TableBody>
+
           <TableFooter>
                     <TableRow>
                         <Pagination 
@@ -80,6 +91,14 @@ export default function ScheduledStems({data,isLoading,errorMsg,meta,fetchStemAv
                     </TableRow>
                 </TableFooter>
         </Table>
+         <div className="form-button-container">
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              type="submit"
+            >Schedule</Button>
+          </div>
         </>
       );
     }
@@ -87,11 +106,22 @@ export default function ScheduledStems({data,isLoading,errorMsg,meta,fetchStemAv
     else if(!isLoading && !errorMsg){
       return(
         <>
+              <Typography variant="p" component="p"  style={{margin:"1rem"}}>Total Stems Avaialble for schedule:{totalStems}</Typography>
+              <Typography variant="p" component="p"  style={{margin:"1rem"}}>Schedule Date:{scheduleDate}</Typography>
             <div className={classes.root}>
+             
                 <Typography variant="h3" component="h3"  style={{margin:"1rem"}}>
                   No Results Found.
                 </Typography>
             </div>
+            <div style={{margin:"1rem auto",width:"fit-content"}}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  type="submit"
+                >Schedule</Button>
+          </div>
         </>
 
             )
