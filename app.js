@@ -14,6 +14,8 @@ const transporterDataRouter =require('./routes/transporterData.routes.js');
 const userRouter =require('./routes/user.routes.js');
 const farmerRouter =require('./routes/farmer.routes.js');
 const ordersRouter =require('./routes/orders.routes.js');
+const schedulerRouter =require('./routes/scheduler.routes.js');
+
 
 const { MONGO_URI, MONGO_DB_NAME } = config;
 
@@ -71,6 +73,7 @@ app.use('/api/transporterData', transporterDataRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/farmer', farmerRouter);
+app.use('/api/scheduler',schedulerRouter);
 //passing gridfs-stream as local var for getting image
 app.use('/api/orders',(req,res,next)=>
                                   {

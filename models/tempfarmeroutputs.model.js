@@ -28,12 +28,11 @@ const TempfarmeroutputSchema = new mongoose.Schema({
     ref:"dbObjectiId",
     
   },
-
  
 });
 
-orderSchema.plugin(mongoosePaginate);
+TempfarmeroutputSchema.plugin(mongoosePaginate);
 
-const Tempfarmeroutput = mongoose.model("Tempfarmeroutput", orderSchema);
+const Tempfarmeroutput = mongoose.model("Tempfarmeroutput", TempfarmeroutputSchema);
 
 module.exports = Tempfarmeroutput;

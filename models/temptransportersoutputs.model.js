@@ -44,8 +44,8 @@ const TemptransportersoutputSchema = new mongoose.Schema({
  
 });
 
-orderSchema.plugin(mongoosePaginate);
+TemptransportersoutputSchema.plugin(mongoosePaginate);
 
-const Temptransportersoutput = mongoose.model("Temptransportersoutput", orderSchema);
+const Temptransportersoutput = mongoose.model("Temptransportersoutput", TemptransportersoutputSchema);
 
 module.exports = Temptransportersoutput;

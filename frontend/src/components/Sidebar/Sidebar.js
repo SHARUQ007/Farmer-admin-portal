@@ -31,11 +31,10 @@ import { AuthContext } from "../../context/AuthContext";
 var structure = [
       { id: 0, label: "Farmer", link: "/admin/dashboard", icon: <PersonPinCircleIcon /> },
       { id: 3, label: "Transporter", link: "/admin/map", icon: <LocalShippingIcon /> },
-      // { id: 1, label: "Admin Users", link: "/admin/user", icon: <BusinessIcon /> },
       { id: 2, label: "Admin User", link: "/admin/usercontext", icon: <BusinessIcon />  },
       {id: 7, label: "Stem Availability Data", link: "/admin/orders", icon: <EcoIcon />  },
       {id: 8, label: "Scheduled stem ", link: "/admin/scheduledStem", icon: <CheckCircleOutlineIcon /> },
-      {id: 9, label: "Scheduler", link: "/admin/usercontext", icon: <AdjustIcon /> },
+      {id: 9, label: "Scheduler", link: "/admin/scheduler", icon: <AdjustIcon /> },
       {id: 10, label: "Transporter Data", link: "/admin/transporterData", icon: <AdjustIcon /> },
       { id: 4, type: "divider" },
       { id: 5, type: "title", label: "Details" },
