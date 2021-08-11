@@ -109,6 +109,37 @@ orders(url = 'orders') {
           assignNewTransporter:(id,transporter_id) => http.post(url + "/assignNewTransporter" ,{id,transporter_id},config),
           delete: id => http.delete(url + "/" + id, config)
       }
-  }
+  },
+  scheduler(url = 'scheduler') {
+      const config = {
+        headers: {
+          'authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+      };
+
+      return {
+          fetchScheduledFarmer: (page, limit) => 
+              http.get(url + "/scheduledFarmer?page=" + page + "&limit=" + limit, config),
+          
+          fetchScheduledTransporter: (page, limit) => 
+              http.get(url + "/scheduledTransporter?page=" + page + "&limit=" + limit, config),
+          
+          fetchNonScheduledTransporter: (page, limit) => 
+              http.get(url + "/NonScheduledTransporter?page=" + page + "&limit=" + limit, config),
+          
+          fetchStemAvailability: (page, limit) => 
+              http.get(url + "/stemAvailability?page=" + page + "&limit=" + limit, config),
+
+          fetchInputParameter:()=>http.get(url+"/inputParameter",config),
+
+          updateInputParameter:(data)=>http.post(url+"/inputParameter",data,config),
+          
+          fetchHyperParameter:()=>http.get(url+"/hyperParameter",config),
+
+          updateHyperParameter:(data)=>http.post(url+"/hyperParameter",data,config),
+
+          
+      }
+  },
 
 }

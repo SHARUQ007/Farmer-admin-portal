@@ -153,7 +153,7 @@ exports.update = (req, res) => {
             message: "Orders name can not be empty"
         });
     }
-
+    console.log(req.body)
     Orders.findByIdAndUpdate(req.params.id, {
         status:req.body.status.trim(),
     }, {new: true})

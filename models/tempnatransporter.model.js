@@ -17,7 +17,7 @@ const TempnatransporterSchema = new mongoose.Schema({
   
   truckdrivermobile:{
       type:String,
-  },
+  },  
   truckcapacity:{
     type:Number,
   },
@@ -29,8 +29,8 @@ const TempnatransporterSchema = new mongoose.Schema({
  
 });
 
-orderSchema.plugin(mongoosePaginate);
+TempnatransporterSchema.plugin(mongoosePaginate);
 
-const Tempnatransporter = mongoose.model("Tempnatransporter", orderSchema);
+const Tempnatransporter = mongoose.model("Tempnatransporter", TempnatransporterSchema);
 
 module.exports = Tempnatransporter;
