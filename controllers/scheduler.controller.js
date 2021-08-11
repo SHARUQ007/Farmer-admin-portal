@@ -16,6 +16,7 @@ const transporterDataSerializer = data => ({
    typeOfFarming:data.typeOfFarming,   
    truckNumber:data.truckNumber,
    stemLoadingTime:data.stemLoadingTime,
+   scheduleDate:data.scheduleDate
 });
 
 
@@ -24,17 +25,17 @@ const nonScheduledTransporterSerializer = data => ({
    truckDrivername:data.truckdrivername,
    truckdrivermobile:data.truckdrivermobile,   
    truckcapacity:data.truckcapacity,
+   scheduleDate:data.scheduleDate
 });
 
 const scheduledFarmerSerializer = data => ({
    name:data.name,
-   truckDrivername:data.truckDrivername,
    transactionId:data.transactionId,   
    scheduleDate:data.scheduleDate,
    scheduledStems:data.scheduledStems,
    farming:data.farming,   
    truckNumber:data.truckNumber,
-   variety:data.variety,
+   variety:data.variety
 });
 
 
@@ -59,11 +60,11 @@ const hyperParameterSerializer = data => ({
 
 const stemAvailabilitySerializer=data=>({
     name:data._name,
-    transactionId:data.transactionId, 
-    scheduleDate:data.scheduleDate,
-    scheduledStems:data.scheduledStems,
+    transactionId:data.orderId, 
+    requestDate:data.scheduleDate,
     farming:data.farming,
     variety:data.variety,
+    bananaStem:data.noOfStems
 })
 //algoInputs.find({}).then((A)=>console.log(A))
 // Retrieve data with pagination
@@ -135,23 +136,51 @@ exports.findNonScheduledTransporter = async (req, res) => {
 // Retrieve data with pagination
 exports.findStemAvailability = async (req, res) => {
     const { page = 1, limit = 4} = req.query;
-    let query={status:"Recieved"}
-    const paginated = await Orders.paginate(
-        query,
-        {
-            page,
-            limit,
-            lean: true,
-            sort: { updatedAt: "desc" }
-        }
-    )
-    
-    const { docs } = paginated;
-    const  stemAvailability =  await Promise.all(docs.map(stemAvailabilitySerializer));
-    delete paginated["docs"];
-    const meta = paginated
 
-    res.json({ meta, stemAvailability});
+    // <=
+
+    algoinputs=await algoInputs.findOne({});
+    // console.log(algoinputs);
+
+    function addDay(date,days) {
+        date.setDate(date.getDate() + days);
+        return date;
+    }
+
+    if(algoinputs)
+    {
+
+        CurrentDate=new Date(algoinputs.CurrentDate);
+
+        SchedulingAfter=algoinputs.SchedulingAfter;
+
+        let scheduleDate= addDay(CurrentDate,SchedulingAfter); 
+
+        let nextDay=addDay(CurrentDate,SchedulingAfter+1);
+
+        let query={status:"Recieved",expected:{$gte:scheduleDate,$lt:nextDay}}
+
+        const paginated = await Orders.paginate(
+            query,
+            {
+                page,
+                limit,
+                lean: true,
+                sort: { updatedAt: "desc" }
+            }
+        )
+        
+        const { docs } = paginated;
+        const  stemAvailability =  await Promise.all(docs.map(stemAvailabilitySerializer));
+        delete paginated["docs"];
+        // console.log(docs)
+        const meta = paginated
+        scheduleDate=scheduleDate.toDateString();
+        res.json({ meta, stemAvailability,scheduleDate:scheduleDate});
+    }
+    else{
+        res.json({ meta, stemAvailability:[],scheduleDate:scheduleDate});
+    }
 };
 
 exports.findInputParameter = async (req, res) => {
