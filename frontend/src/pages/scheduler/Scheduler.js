@@ -128,7 +128,7 @@ function Scheduler(props) {
         </Grid>
         <Grid item xs={12}>
               <Widget
-                title="Hyepr Parameter"
+                title="Hyper Parameter"
                 upperTitle
                 noBodyPadding
                 bodyClass={classes.tableWidget}
