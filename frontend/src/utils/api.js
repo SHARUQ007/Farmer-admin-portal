@@ -136,9 +136,7 @@ orders(url = 'orders') {
           
           fetchHyperParameter:()=>http.get(url+"/hyperParameter",config),
 
-          updateHyperParameter:(data)=>http.post(url+"/hyperParameter",data,config),
-
-          
+          updateHyperParameter:(data)=>http.post(url+"/hyperParameter",data,config)
       }
   },
 

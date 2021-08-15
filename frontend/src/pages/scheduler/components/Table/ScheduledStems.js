@@ -48,9 +48,9 @@ export default function ScheduledStems({data,scheduleDate,isLoading,errorMsg,met
 
   if(data.length>0){
       var keys = Object.keys(data[0])
-      
+
       data.forEach((order)=>{
-        totalStems+=order.noOfStems;
+        totalStems+=Number(order.noOfStems);
       })
       
       return (

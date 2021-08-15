@@ -2,11 +2,13 @@ const tempFarmerOutputs =require('../models/tempfarmeroutputs.model');
 const tempNaTransporter =require('../models/tempnatransporter.model');
 const tempTransoprtersOutputs=require('../models/temptransportersoutputs.model');
 const transporterData =require('../models/transporterData.model');
+
 const Orders =require('../models/orders.model');
 
 
 const algoInputs =require('../models/algoinputs.model');
-// tempTransoprtersOutputs.find({}).then(a=>console.log(a))
+
+
 const transporterDataSerializer = data => ({
    trucknumber:data.trucknumber,
    truckDrivername:data.truckDrivername,
