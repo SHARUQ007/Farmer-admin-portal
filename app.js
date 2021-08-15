@@ -64,10 +64,6 @@ conn.once('open', () => {
   // console.log("console",conn.db)
   gfs = Grid(conn.db, mongoose.mongo);
   gfs.collection('HarvestImage');
-  // conn.db.listCollections().toArray(function (err, names) {
-  //       console.log(names); // [{ name: 'dbname.myCollection' }]
-  //       module.exports.Collection = names;
-  //   });
 });
 
 
