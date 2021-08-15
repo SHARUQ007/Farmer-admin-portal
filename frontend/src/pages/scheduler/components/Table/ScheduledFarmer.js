@@ -59,7 +59,6 @@ export default function ScheduledFarmer({data,isLoading,errorMsg,meta,fetchSched
             {data.map(({name,transactionId,scheduleDate,scheduledStems, farming,variety}) => (
                 <TableRow>
                     <TableCell>{name}</TableCell>
-
                     <TableCell>{transactionId}</TableCell>
                     <TableCell>{scheduleDate}</TableCell>
                     <TableCell>{scheduledStems}</TableCell>

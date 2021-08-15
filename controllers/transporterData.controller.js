@@ -1,16 +1,9 @@
 const TransporterData = require('../models/transporterData.model')    
 const Transporter =require('../models/map.model');
 
-// id=["60ef0c0cd8e45e29425d30fb","60ef0c0cd8e45e29425d30fa","60ef0c0dd8e45e29425d30fc"," 60ef0c0cd8e45e29425d30f9"]
-// TransporterData.find({}).then(data=>{
-//     data.forEach(datas=>{
-//         if(id.includes(String(datas._id))){
-//             console.log(datas._id)
-//             TransporterData.findOneAndUpdate({_id:datas._id},{scheduleDate:null}).then(d=>{console.log(d)})
+const MasterDMtransporterfarmer =require('../models/MasterDMtransporterfarmer');
+const MasterTMtransporterfarmer =require('../models/MasterTMtransporterfarmer');
 
-//         }
-// })
-// })
 const transporterDataSerializer = data => ({
    id: data.id,
    transporter_id:data.transporter_id,
@@ -130,16 +123,22 @@ exports.assignNewTransporter =async  (req, res) => {
     }
 };
 
-exports.delete = (req, res) => {
-  TransporterData.findByIdAndRemove(req.params.id)
-     .then(transporter => {
-         if(!transporter) {
-             return res.status(404).send({
-                 message: "TransporterData not found with id " + req.params.id
-             });
-         }
-         res.send({ id: req.params.id, message: "TransporterData deleted successfully!" });
-     }).catch(err => {
+exports.delete = async (req, res) => {
+    try {
+        
+        let transporter=await TransporterData.findByIdAndRemove(req.params.id)
+        if(!transporter) {
+                 return res.status(404).send({
+                     message: "TransporterData not found with id " + req.params.id
+                 });
+        }
+        
+        transporter=await MasterTMtransporterfarmer.findOneAndRemove({transporterid:req.params.id});
+        transporter=await MasterDMtransporterfarmer.findOneAndRemove({transporterid:req.params.id});
+        
+        res.send({ id: req.params.id, message: "TransporterData deleted successfully!" });
+    }
+    catch(err) {
          if(err.kind === 'ObjectId' || err.name === 'NotFound') {
              return res.status(404).send({
                  message: "TransporterData not found with id " + req.params.id
@@ -148,7 +147,7 @@ exports.delete = (req, res) => {
          return res.status(500).send({
              message: "Could not delete transporter with id " + req.params.id
          });
-     });
+    }
 };
 
 exports.getFilteredStem=async (req,res)=>{
