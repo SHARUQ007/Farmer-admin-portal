@@ -107,7 +107,6 @@ exports.create = (req, res) => {
 };
 
 exports.update = (req, res) => {
-    console.log(req.body,"hxhh")
     if(!req.body.status) {
         return res.status(400).send({
             message: "Farmer status can not be empty"

@@ -135,9 +135,7 @@ function Login(props) {
                     Forget Password
                   </Button>
                 </div>
-            </React.Fragment>
-        
-
+            </React.Fragment>        
         </div>
         <Typography color="primary" className={classes.copyright}>
           © 2021 Gencrest Admin
