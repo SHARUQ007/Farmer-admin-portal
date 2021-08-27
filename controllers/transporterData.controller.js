@@ -102,7 +102,6 @@ exports.assignNewTransporter =async  (req, res) => {
                         status:"Pending"    
                  })
                 if(newTransporterData){
-                    console.log(newTransporterData)
                     res.json({status:"success",message:"successfully assiged new transporter"})
                 }
                 else{
@@ -148,6 +147,34 @@ exports.delete = async (req, res) => {
              message: "Could not delete transporter with id " + req.params.id
          });
     }
+};
+exports.update = (req, res) => {
+    if(!req.body.status) {
+        return res.status(400).send({
+            message: "Transporter status can not be empty"
+        });
+    }
+    TransporterData.findByIdAndUpdate({_id:req.params.id}, {
+        status: req.body.status.trim()
+    })
+    .then(data => {
+        if(!data) {
+            return res.status(404).send({
+                message: "Transporter not found with id " + req.params.id
+            });
+        }
+        res.json({status:"success",message:"successfully changed status"})
+    }).catch(err => {
+        console.log(err)
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Transporter not found with id " + req.params.id
+            });
+        }
+        return res.status(500).send({
+            message: "Error updating farmer with id " + req.params.id
+        });
+    });
 };
 
 exports.getFilteredStem=async (req,res)=>{

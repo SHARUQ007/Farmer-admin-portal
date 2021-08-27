@@ -5,22 +5,6 @@ const User =require( '../models/user.model.js')
 const { JWT_SECRET } = config;
 
 
-// User.find().then((data)=>{
-//   data.forEach((doc)=>{
-//       console.log(doc)
-//       // doc.admin_type=undefined;
-//       // doc.save();
-//   })
-   
-// })
-
-// User.findOneAndUpdate(
-//       {_id:"60cc98c9e585c21d212ec082"},
-//       {
-        
-//       }
-//     )
-//     .then((doc)=>{console.log(doc)})
 const auth=
     {
       isAuthenticatedAdmin:function (req,res,next) {

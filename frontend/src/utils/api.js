@@ -105,7 +105,7 @@ orders(url = 'orders') {
           create: newRecord => http.post(url, newRecord, config),
           getScheduledData: (page, limit) => http.get(url + "?page=" + page +"&limit=" + limit, config),
           getFilteredData: (page, limit,status,date) => http.post(url + "?page=" + page +"&limit=" + limit,{status,date},config),
-          update: (id, updatedRecord) => http.put(url + "/" + id, updatedRecord, config),
+          update: (id, status) => http.put(url + "/" + id, status, config),
           assignNewTransporter:(id,transporter_id) => http.post(url + "/assignNewTransporter" ,{id,transporter_id},config),
           delete: id => http.delete(url + "/" + id, config)
       }
