@@ -20,6 +20,8 @@ transporterDataRouter.get('/fetchFreeTransporter', auth.isAuthenticatedAdmin, tr
 
 
 // Update status
+transporterDataRouter.put('/:id', auth.isAuthenticatedAdmin, auth.hasPermission(ROLES),transporterDataController.update);
+
 transporterDataRouter.post('/assignNewTransporter', auth.isAuthenticatedAdmin,transporterDataController.assignNewTransporter);
 
 // Delete

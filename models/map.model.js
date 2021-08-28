@@ -23,11 +23,15 @@ MapSchema.plugin(mongoosePaginate);
 
 MapSchema.methods = {
   checkPassword: function (inputPassword) {
-    return bcrypt.compareSync(inputPassword, this.password);
+    return (inputPassword===this.password);
+    // bcrypt.compareSync(inputPassword, this.password);
   },
   hashPassword: (plainTextPassword) => {
-    return bcrypt.hashSync(plainTextPassword, 10);
+    return plainTextPassword;
   }
+  // hashPassword: (plainTextPassword) => {
+  //   return bcrypt.hashSync(plainTextPassword, 10);
+  // }
 };
 
 // Define hooks for pre-saving
@@ -38,7 +42,8 @@ MapSchema.pre("save", function (next) {
     next();
   } else {
     console.log("models/user.js hashPassword in pre save");
-    this.password = this.hashPassword(this.password);
+    //  this.hashPassword(this.password);
+    this.password =this.password;
     next();
   }
 });

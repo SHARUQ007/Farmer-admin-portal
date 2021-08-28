@@ -116,27 +116,27 @@ class AuthProvider extends React.PureComponent {
       }
     }
     
-    register = (email, name, password, history, setIsLoading, setErrorMessage) => {
-      setIsLoading(true);
+    // register = (email, name, password, history, setIsLoading, setErrorMessage) => {
+    //   setIsLoading(true);
     
-      if (!!email && !!name && !!password) {
-        API.auth().register({ email, name, password })
-            .then(res => {
-              // console.log(res)
-              setErrorMessage(null)
-              setIsLoading(false);
-              history.push('/admin/login')
-            })
-            .catch(err => {
-              console.log(err.response.data)
-              setErrorMessage(err.response.data.error)
-              setIsLoading(false);
-            });
-      } else {
-        setErrorMessage("All field is required")
-        setIsLoading(false);
-      }
-    }
+    //   if (!!email && !!name && !!password) {
+    //     API.auth().register({ email, name, password })
+    //         .then(res => {
+    //           // console.log(res)
+    //           setErrorMessage(null)
+    //           setIsLoading(false);
+    //           history.push('/admin/login')
+    //         })
+    //         .catch(err => {
+    //           console.log(err.response.data)
+    //           setErrorMessage(err.response.data.error)
+    //           setIsLoading(false);
+    //         });
+    //   } else {
+    //     setErrorMessage("All field is required")
+    //     setIsLoading(false);
+    //   }
+    // }
 
     logout = (history) => {
       this.setState({ 

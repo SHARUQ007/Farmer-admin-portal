@@ -37,43 +37,43 @@ exports.login =  async (req, res) => {
     }
 };
 
-exports.register =  async (req, res) => {
-    const { name, email, password } = req.body;
+// exports.register =  async (req, res) => {
+//     const { name, email, password } = req.body;
 
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: 'Please enter all fields' });
-    }
+//     if (!name || !email || !password) {
+//       return res.status(400).json({ message: 'Please enter all fields' });
+//     }
 
-    try {
-      const user = await User.findOne({ email });
-      if (user) throw Error('User already exists');
+//     try {
+//       const user = await User.findOne({ email });
+//       if (user) throw Error('User already exists');
 
-      const newUser = new User({
-        name,
-        email,
-        password
-      });
+//       const newUser = new User({
+//         name,
+//         email,
+//         password
+//       });
 
-      const savedUser = await newUser.save();
-      if (!savedUser) throw Error('Something went wrong saving the user');
+//       const savedUser = await newUser.save();
+//       if (!savedUser) throw Error('Something went wrong saving the user');
 
-      const token = jwt.sign({ id: savedUser._id }, JWT_SECRET, {
-        expiresIn: 3600
-      });
+//       const token = jwt.sign({ id: savedUser._id }, JWT_SECRET, {
+//         expiresIn: 3600
+//       });
 
-      res.status(200).json({
-        token,
-        user: {
-          id: savedUser.id,
-          name: savedUser.name,
-          email: savedUser.email
-        }
-      });
+//       res.status(200).json({
+//         token,
+//         user: {
+//           id: savedUser.id,
+//           name: savedUser.name,
+//           email: savedUser.email
+//         }
+//       });
 
-    } catch (e) {
-      res.status(400).json({ error: e.message });
-    }
-};
+//     } catch (e) {
+//       res.status(400).json({ error: e.message });
+//     }
+// };
 
 /**
  * @route   GET api/auth/user

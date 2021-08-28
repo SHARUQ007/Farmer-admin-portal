@@ -29,21 +29,15 @@ function Login(props) {
 
   // global
   // var userDispatch = useUserDispatch();
-  const { login, register } = useContext(AuthContext)
+  const { login} = useContext(AuthContext)
 
   // local
   var [isLoading, setIsLoading] = useState(false);
   var [errorMessage, setErrorMessage] = useState(null);
-  var [activeTabId, setActiveTabId] = useState(0);
-  var [nameValue, setNameValue] = useState("");
   var [emailValue, setEmailValue] = useState("");
   var [passwordValue, setPasswordValue] = useState("");
 
-  const handleChangeTab = (id) => {
-    setActiveTabId(id)
-    // setErrorMessage(null)
-  }
-
+  
   const handleLogin = () => {
     login(
       emailValue,
@@ -54,16 +48,7 @@ function Login(props) {
     )
   }
 
-  const handleRegister = () => {
-    register(
-      emailValue,
-      nameValue,
-      passwordValue,
-      props.history,
-      setIsLoading,
-      setErrorMessage,
-    )
-  }
+  
 
   return (
     <Grid container className={classes.container}>
@@ -74,17 +59,14 @@ function Login(props) {
       <div className={classes.formContainer}>
         <div className={classes.form}>
           <Tabs
-            value={activeTabId}
-            onChange={(e, id) => handleChangeTab(id)}
             indicatorColor="primary"
             textColor="primary"
             centered
           >
             <Tab label="Login" classes={{ root: classes.tab }} />
-            <Tab label="New User" classes={{ root: classes.tab }} />
+          
           </Tabs>
 
-          {activeTabId === 0 && (
             <React.Fragment>
 
                 {errorMessage && (
@@ -153,93 +135,7 @@ function Login(props) {
                     Forget Password
                   </Button>
                 </div>
-
-
-            </React.Fragment>
-          )}
-          {activeTabId === 1 && (
-            <React.Fragment>
-              
-              {errorMessage && (
-                <Fade in={true}>
-                  <Typography color="secondary" className={classes.errorMessage}>
-                    {errorMessage}
-                  </Typography>
-                </Fade>
-              )}
-              <TextField
-                id="name"
-                InputProps={{
-                  classes: {
-                    underline: classes.textFieldUnderline,
-                    input: classes.textField,
-                  },
-                }}
-                value={nameValue}
-                onChange={e => setNameValue(e.target.value)}
-                margin="normal"
-                label="Name"
-                placeholder="Name"
-                type="text"
-                fullWidth
-              />
-              <TextField
-                id="email"
-                InputProps={{
-                  classes: {
-                    underline: classes.textFieldUnderline,
-                    input: classes.textField,
-                  },
-                }}
-                value={emailValue}
-                onChange={e => setEmailValue(e.target.value)}
-                margin="normal"
-                label="Email"
-                placeholder="Email"
-                type="email"
-                fullWidth
-              />
-              <TextField
-                id="password"
-                InputProps={{
-                  classes: {
-                    underline: classes.textFieldUnderline,
-                    input: classes.textField,
-                  },
-                }}
-                value={passwordValue}
-                onChange={e => setPasswordValue(e.target.value)}
-                margin="normal"
-                label="Password"
-                placeholder="Password"
-                type="password"
-                fullWidth
-              />
-              <div className={classes.creatingButtonContainer}>
-                {isLoading ? (
-                  <CircularProgress size={26} />
-                ) : (
-                  <Button
-                    onClick={handleRegister}
-                    disabled={
-                      emailValue.length === 0 ||
-                      passwordValue.length === 0 ||
-                      nameValue.length === 0
-                    }
-                    size="large"
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    className={classes.createAccountButton}
-                  >
-                    Create your account
-                  </Button>
-                )}
-              </div>
-           
-            </React.Fragment>
-          )}
-
+            </React.Fragment>        
         </div>
         <Typography color="primary" className={classes.copyright}>
           © 2021 Gencrest Admin

@@ -36,7 +36,7 @@ export default function DialogSelect(props) {
 
   //this will run when the props change to set rescheduled
   React.useEffect(()=>{
-    setStatus(props.statusprop);
+     setStatus(props.statusprop);
      setColor(String(props.statusprop).toLowerCase());
   },[props.statusprop])
 
@@ -79,8 +79,7 @@ export default function DialogSelect(props) {
   };
 
   const updateStatus=()=>{
-    props.farmerData.status=status; 
-    props.updateScheduledStem(props.id,props.farmerData,done)
+    props.updateTransporterData(props.id,status,done)
     setOpen(false);
   }
   return (

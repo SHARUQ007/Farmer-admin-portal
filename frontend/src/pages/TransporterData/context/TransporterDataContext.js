@@ -87,16 +87,16 @@ class TransporterDataProvider extends React.PureComponent {
         })
     }
     
-    updateTransporterData = (id, data, onSuccess) => {
+    updateTransporterData = (id, status, onSuccess) => {
       this.setState({...this.state,isLoading:true,errorMsg:null});
-      API.transporterData().update(id, data)
+      API.transporterData().update(id,{status:status})
         .then(res =>{
              if(res.data.status==="success"){
              //instead of getting data from server we manuly changing the data it save the bandwidth
              let tempOrders=[...this.state.transporterData];
              for(let i=0;i<this.state.transporterData.length;i++){
                     if(tempOrders[i].id===id){
-                      tempOrders[i].status=data.status;
+                      tempOrders[i].status=status;
                       //if ordered find break this 
                       break;
                     }
