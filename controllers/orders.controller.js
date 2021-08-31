@@ -1,6 +1,7 @@
 const Orders =require('../models/orders.model');
 const fs = require('fs');
 const path =require('path');
+
 const ordersSerializer = data => ({
     id: data.id,
     name: data.name,
@@ -325,7 +326,6 @@ exports.updateScheduledDate=async (req,res)=>{
     
 exports.sendJSON = (req, res) => {
     let stream = fs.createWriteStream(path.join(__dirname, "../../stemAvaliblityData.json"));
-    console.log("lkjhgfdfghj")
    Orders.find({})
         .then(async orders => {
             if(!orders) {  
@@ -340,9 +340,10 @@ exports.sendJSON = (req, res) => {
                 stream.write(JSON.stringify(order),()=>{
                     res.download(path.join(__dirname, "../../stemAvaliblityData.json"),"stemAvaliblityData.json",(err) => {
                             if (err) {
-                                console.log("")
                             } else {
                                 console.log('file downloaded')
+                                fs.unlinkSync(path.join(__dirname, "../../stemAvaliblityData.json"));
+                                
                             }
                         }
                     )
@@ -377,9 +378,11 @@ exports.scheduledSendJSON = (req, res) => {
                 stream.write(JSON.stringify(order),()=>{
                     res.download(path.join(__dirname, "../../scheduledStemAvaliblityData.json"),"scheduledStemAvaliblityData.json",(err) => {
                             if (err) {
-                                console.log("")
+                            
                             } else {
                                 console.log('file downloaded')
+                                fs.unlinkSync(path.join(__dirname, "../../scheduledStemAvaliblityData.json"));
+
                             }
                         }
                     )

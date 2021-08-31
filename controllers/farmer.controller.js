@@ -157,13 +157,13 @@ exports.delete = (req, res) => {
 };
 
 exports.sendJSON = (req, res) => {
-
     let stream = fs.createWriteStream(path.join(__dirname, "../../farmer.json"));
+    console.log(stream)
     Farmer.find({})
         .then(async data => {
             if(!data) {
                 return res.status(404).send({
-                    message: "farmer not found with id "
+                    message: "farmer not found"
                 });
             }
             const farmers = await Promise.all(data.map(farmersSerializer));
@@ -174,23 +174,27 @@ exports.sendJSON = (req, res) => {
                 stream.write(JSON.stringify(farmer),()=>{
                     res.download(path.join(__dirname, "../../farmer.json"),"farmer.json",(err) => {
                             if (err) {
-                                console.log("")
+                                
                             } else {
                                 console.log('file downloaded')
+                                fs.unlinkSync(path.join(__dirname, "../../farmer.json"));
+
                             }
                         }
                     )
                 })
             });
+            stream.on("close",()=>{console.log("hai")})
+
 
         }).catch(err => {
             if(err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "Farmer not found with id " + req.params.id
+                    message: "Failed" 
                 });
             }
             return res.status(500).send({
-                message: "Error retrieving farmer with id "+err + req.params.id
+                message: "Error retrieving farmer "
             });
         });
 };

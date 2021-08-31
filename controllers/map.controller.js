@@ -217,9 +217,10 @@ exports.sendJSON = (req, res) => {
                 stream.write(JSON.stringify(Transporter),()=>{
                     res.download(path.join(__dirname, "../../transporter.json"),"transporter.json",(err) => {
                             if (err) {
-                                console.log("")
                             } else {
                                 console.log('file downloaded')
+                                fs.unlinkSync(path.join(__dirname, "../../transporter.json"));
+                                
                             }
                         }
                     )
