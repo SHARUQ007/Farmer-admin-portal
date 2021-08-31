@@ -2,7 +2,8 @@ const tempFarmerOutputs =require('../models/tempfarmeroutputs.model');
 const tempNaTransporter =require('../models/tempnatransporter.model');
 const tempTransoprtersOutputs=require('../models/temptransportersoutputs.model');
 const transporterData =require('../models/transporterData.model');
-
+const fs = require('fs');
+const path =require('path');
 const Orders =require('../models/orders.model');
 
 

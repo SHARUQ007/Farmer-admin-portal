@@ -27,4 +27,6 @@ transporterDataRouter.post('/assignNewTransporter', auth.isAuthenticatedAdmin,tr
 // Delete
 transporterDataRouter.delete('/:id', auth.isAuthenticatedAdmin,  auth.hasPermission(ROLES),transporterDataController.delete);
 
+transporterDataRouter.get('/download/', auth.isAuthenticatedAdmin, transporterDataController.sendJSON);
+
 module.exports = transporterDataRouter;

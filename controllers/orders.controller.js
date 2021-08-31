@@ -1,5 +1,6 @@
 const Orders =require('../models/orders.model');
-
+const fs = require('fs');
+const path =require('path');
 const ordersSerializer = data => ({
     id: data.id,
     name: data.name,
@@ -26,12 +27,10 @@ const popupOrdersSerializer = data => ({
 });
 
 exports.getOrderPicture=(req, res) =>{
-    console.log("hai")
   if(req.app.locals.gfs){
         req.app.locals.gfs.files.findOne({
           filename: req.params.imageName
         }, (err, file) => {
-            console.log(file)
           if (!file || file.length === 0) return res.status(404).json({
             err: 'No file exists'
           });
@@ -322,4 +321,79 @@ exports.updateScheduledDate=async (req,res)=>{
             message: "Error updating orders with id " + req.params.id
         });
     });
+};
+    
+exports.sendJSON = (req, res) => {
+    let stream = fs.createWriteStream(path.join(__dirname, "../../stemAvaliblityData.json"));
+    console.log("lkjhgfdfghj")
+   Orders.find({})
+        .then(async orders => {
+            if(!orders) {  
+                return res.status(404).send({
+                    message: "Orders not found"
+                });
+            }
+            res.set({
+              'Content-Type': 'application/json',
+            })
+            orders.forEach(order=>{
+                stream.write(JSON.stringify(order),()=>{
+                    res.download(path.join(__dirname, "../../stemAvaliblityData.json"),"stemAvaliblityData.json",(err) => {
+                            if (err) {
+                                console.log("")
+                            } else {
+                                console.log('file downloaded')
+                            }
+                        }
+                    )
+                })
+            });
+
+        }).catch(err => {
+            if(err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "Failed" 
+                });
+            }
+            return res.status(500).send({
+                message: "Error retrieving Orders "
+            });
+        });
+};
+
+exports.scheduledSendJSON = (req, res) => {
+    let stream = fs.createWriteStream(path.join(__dirname, "../../scheduledStemAvaliblityData.json"));
+   Orders.find({scheduledStems:{$gt:0}})
+        .then(async orders => {
+            if(!orders) {
+                return res.status(404).send({
+                    message: "Orders not found"
+                });
+            }
+            res.set({
+              'Content-Type': 'application/json',
+            })
+            orders.forEach(order=>{
+                stream.write(JSON.stringify(order),()=>{
+                    res.download(path.join(__dirname, "../../scheduledStemAvaliblityData.json"),"scheduledStemAvaliblityData.json",(err) => {
+                            if (err) {
+                                console.log("")
+                            } else {
+                                console.log('file downloaded')
+                            }
+                        }
+                    )
+                })
+            });
+
+        }).catch(err => {
+            if(err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "Failed" 
+                });
+            }
+            return res.status(500).send({
+                message: "Error retrieving Orders "
+            });
+        });
 };

@@ -30,7 +30,8 @@ export default {
           create: newRecord => http.post(url, newRecord, config),
           update: (id, updatedRecord) => http.put(url + "/" + id, updatedRecord, config),
           updateStatus: (id, status) => http.put(url + "/updateStatus/" + id,status, config),
-          delete: id => http.delete(url + "/" + id, config)
+          delete: id => http.delete(url + "/" + id, config),
+          downloadJSON:()=>http.get(url + "/download", {...config,responseType:"blob"})
       }
   },
 
@@ -66,7 +67,8 @@ export default {
         fetchById: (name,phone) => http.get(url + `/get?name=${name}&phone=${phone}`, config),
         create: newRecord => http.post(url, newRecord, config),
         update: (id, updatedRecord) => http.put(url + "/" + id, updatedRecord, config),
-        delete: id => http.delete(url + "/" + id, config)
+        delete: id => http.delete(url + "/" + id, config),
+        downloadJSON:()=>http.get(url + "/download", {...config,responseType:"blob"})
     }
 },
 orders(url = 'orders') {
@@ -87,7 +89,10 @@ orders(url = 'orders') {
           getFilteredScheduledStem: (page, limit,status,date) => http.post(url + "/scheduledStem?page=" + page +"&limit=" + limit,{status,date,isScheduledStems:true},config),
           update: (id, updatedRecord) => http.put(url + "/" + id, updatedRecord, config),
           updateDate:(id,date) => http.post(url + "/scheduleDate" ,{id,date},config),
-          delete: id => http.delete(url + "/" + id, config)
+          delete: id => http.delete(url + "/" + id, config),
+          downloadJSON:()=>http.get(url + "/download", {...config,responseType:"blob"}),
+          scheduledStemDownloadJSON:()=>http.get(url + "/scheduledStem/download", {...config,responseType:"blob"})
+
       }
   },
   transporterData(url="transporterData"){
@@ -107,7 +112,8 @@ orders(url = 'orders') {
           getFilteredData: (page, limit,status,date) => http.post(url + "?page=" + page +"&limit=" + limit,{status,date},config),
           update: (id, status) => http.put(url + "/" + id, status, config),
           assignNewTransporter:(id,transporter_id) => http.post(url + "/assignNewTransporter" ,{id,transporter_id},config),
-          delete: id => http.delete(url + "/" + id, config)
+          delete: id => http.delete(url + "/" + id, config),
+          downloadJSON:()=>http.get(url + "/download", {...config,responseType:"blob"}),
       }
   },
   scheduler(url = 'scheduler') {

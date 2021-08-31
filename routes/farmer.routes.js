@@ -24,4 +24,7 @@ farmerRouter.put('/:id', auth.isAuthenticatedAdmin, auth.hasPermission(ROLES),fa
 // Delete
 farmerRouter.delete('/:id', auth.isAuthenticatedAdmin,  auth.hasPermission(ROLES),farmerController.delete);
 
+//download json
+farmerRouter.get('/download/', auth.isAuthenticatedAdmin, farmerController.sendJSON);
+
 module.exports = farmerRouter;

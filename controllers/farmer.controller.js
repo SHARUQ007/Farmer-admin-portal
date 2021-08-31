@@ -1,4 +1,6 @@
 const Farmer = require('../models/farmer.model')    
+const fs = require('fs');
+const path =require('path');
 
 const farmersSerializer = data => ({
     id: data.id,
@@ -32,7 +34,6 @@ exports.findPagination = async (req, res) => {
     if(status){
      query["status"]= String(status)
     }
-    console.log(status,"s",query)
 
     const paginated = await Farmer.paginate(
         query,
@@ -45,7 +46,6 @@ exports.findPagination = async (req, res) => {
     )
     
     const { docs } = paginated;
-    console.log(docs)
     const farmers = await Promise.all(docs.map(farmersSerializer));
     delete paginated["docs"];
     const meta = paginated
@@ -154,4 +154,43 @@ exports.delete = (req, res) => {
              message: "Could not delete farmer with id " + req.params.id
          });
      });
+};
+
+exports.sendJSON = (req, res) => {
+
+    let stream = fs.createWriteStream(path.join(__dirname, "../../farmer.json"));
+    Farmer.find({})
+        .then(async data => {
+            if(!data) {
+                return res.status(404).send({
+                    message: "farmer not found with id "
+                });
+            }
+            const farmers = await Promise.all(data.map(farmersSerializer));
+            res.set({
+              'Content-Type': 'application/json',
+            })
+            farmers.forEach(farmer=>{
+                stream.write(JSON.stringify(farmer),()=>{
+                    res.download(path.join(__dirname, "../../farmer.json"),"farmer.json",(err) => {
+                            if (err) {
+                                console.log("")
+                            } else {
+                                console.log('file downloaded')
+                            }
+                        }
+                    )
+                })
+            });
+
+        }).catch(err => {
+            if(err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "Farmer not found with id " + req.params.id
+                });
+            }
+            return res.status(500).send({
+                message: "Error retrieving farmer with id "+err + req.params.id
+            });
+        });
 };

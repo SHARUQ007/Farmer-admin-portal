@@ -125,6 +125,18 @@ class FarmerProvider extends React.PureComponent {
           onSuccess()
         })
     }
+
+    downloadJSON=()=>{
+      API.farmer().downloadJSON()
+        .then(res =>{
+          const url = window.URL.createObjectURL(new Blob([res.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'farmerData.json'); //or any other extension
+          document.body.appendChild(link);
+          link.click();
+        })
+    }
     render() {
       return (
         <Provider
@@ -136,7 +148,8 @@ class FarmerProvider extends React.PureComponent {
               fetchById : this.fetchById,
               createFarmer : this.createFarmer,
               updateFarmer : this.updateFarmer,
-              deleteFarmer : this.deleteFarmer
+              deleteFarmer : this.deleteFarmer,
+              downloadJSON:this.downloadJSON
           }}
         >
           {this.props.children}

@@ -9,6 +9,8 @@ mapRouter.get('/list', auth.isAuthenticatedAdmin, mapController.findAll);
 
 // Retrieve data with pagination
 mapRouter.get('/', auth.isAuthenticatedAdmin, mapController.findPagination);
+//dont change order
+mapRouter.get('/download/', auth.isAuthenticatedAdmin, mapController.sendJSON);
 
 // Find one by ID
 mapRouter.get('/:id', auth.isAuthenticatedAdmin, mapController.findOne);
@@ -24,5 +26,6 @@ mapRouter.put('/updateStatus/:id', auth.isAuthenticatedAdmin,auth.hasPermission(
 
 // Delete
 mapRouter.delete('/:id', auth.isAuthenticatedAdmin, auth.hasPermission(ROLES),mapController.delete);
+
 
 module.exports = mapRouter;

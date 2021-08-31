@@ -131,7 +131,18 @@ class OrdersProvider extends React.PureComponent {
           onSuccess("Sorry something went wrong",true);
           console.log(err)})
     }
-    
+    downloadJSON=()=>{
+      debugger
+      API.orders().downloadJSON()
+        .then(res =>{
+          const url = window.URL.createObjectURL(new Blob([res.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'ordersData.json'); //or any other extension
+          document.body.appendChild(link);
+          link.click();
+        })
+    }
   
     render() {
       return (
@@ -144,6 +155,8 @@ class OrdersProvider extends React.PureComponent {
               fetchFilteredPagination:this.fetchFilteredPagination,
               createOrders : this.createOrders,
               updateOrders : this.updateOrders,
+              downloadJSON:this.downloadJSON
+
           }}
         >
           {this.props.children}
