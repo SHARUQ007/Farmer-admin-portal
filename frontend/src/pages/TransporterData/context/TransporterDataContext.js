@@ -140,7 +140,17 @@ class TransporterDataProvider extends React.PureComponent {
           console.log(err)}
          )
     }
-    
+    downloadJSON=()=>{
+      API.transporterData().downloadJSON()
+        .then(res =>{
+          const url = window.URL.createObjectURL(new Blob([res.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'transporterData.json'); //or any other extension
+          document.body.appendChild(link);
+          link.click();
+        })
+    }
     render() {
       return (
         <Provider
@@ -153,7 +163,8 @@ class TransporterDataProvider extends React.PureComponent {
               createTransporterData : this.createTransporterData,
               updateTransporterData : this.updateTransporterData,
                assignNewTransporter: this.assignNewTransporter,
-              deleteTransporterData : this.deleteTransporterData
+              deleteTransporterData : this.deleteTransporterData,
+              downloadJSON:this.downloadJSON
           }}
         >
           {this.props.children}

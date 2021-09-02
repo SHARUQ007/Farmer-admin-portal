@@ -163,7 +163,17 @@ class ScheduledStemProvider extends React.PureComponent {
           console.log(err)}
          )
     }
-    
+    downloadJSON=()=>{
+      API.orders().scheduledStemDownloadJSON()
+        .then(res =>{
+          const url = window.URL.createObjectURL(new Blob([res.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'scheduledStemData.json'); //or any other extension
+          document.body.appendChild(link);
+          link.click();
+        })
+    }
     render() {
       return (
         <Provider
@@ -176,7 +186,8 @@ class ScheduledStemProvider extends React.PureComponent {
               createScheduledStem : this.createScheduledStem,
               updateScheduledStem : this.updateScheduledStem,
                updateScheduledDate: this.updateScheduledDate,
-              deleteScheduledStem : this.deleteScheduledStem
+              deleteScheduledStem : this.deleteScheduledStem,
+              downloadJSON:this.downloadJSON
           }}
         >
           {this.props.children}

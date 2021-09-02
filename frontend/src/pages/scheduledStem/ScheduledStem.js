@@ -20,7 +20,7 @@ import { ScheduledStemContext ,ScheduledStemProvider} from "./context/ScheduledS
 
  function ScheduledStem(props) {
   const { name,phone} = useParams();
-  const { orders,popupData,meta,isLoading,errorMsg,fetchPagination,fetchFilteredPagination,updateScheduledStem,fetchById ,updateScheduledDate} = useContext(ScheduledStemContext)
+  const { orders,popupData,meta,isLoading,errorMsg,fetchPagination,downloadJSON,fetchFilteredPagination,updateScheduledStem,fetchById ,updateScheduledDate} = useContext(ScheduledStemContext)
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -49,10 +49,11 @@ import { ScheduledStemContext ,ScheduledStemProvider} from "./context/ScheduledS
             fetchPagination(1, val)
         }
     };
+    
   return (
     <>
     <Loader isOpen={isLoading}/>
-      <PageTitle title="Admin Dashboard - Scheduled Stem Availability Data" button="Latest Reports" />
+      <PageTitle title="Admin Dashboard - Scheduled Stem Availability Data" button="Download JSON" onClick={downloadJSON} />
       <Grid container spacing={4}>
        
         <Grid item xs={12}>

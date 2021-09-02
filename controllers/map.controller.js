@@ -1,5 +1,6 @@
 const Transporter =require('../models/map.model');
-
+const fs = require('fs');
+const path =require('path');
 const mapsSerializer = data => ({
     id: data.id,
     name: data.name,
@@ -55,7 +56,6 @@ exports.findPagination = async (req, res) => {
     )
     
     const { docs } = paginated;
-    console.log(docs)
     const maps = await Promise.all(docs.map(mapsSerializer));
 
     delete paginated["docs"];
@@ -72,7 +72,6 @@ exports.findOne = (req, res) => {
                     message: "map not found with id " + req.params.id
                 });
             }
-            console.log(data)
             const map = mapsSerializer(data)
             res.send(map);
         }).catch(err => {
@@ -88,7 +87,6 @@ exports.findOne = (req, res) => {
 };
 
 exports.create = (req, res) => {
-    console.log(req.body.location)
     if(!req.body.name) {
          return res.status(400).send({
              message: "Transporter name can not be empty"
@@ -110,7 +108,6 @@ exports.create = (req, res) => {
 
     map.save()
     .then(data => {
-        console.log(data);
         const map = mapsSerializer(data)
         res.send(map);
     }).catch(err => {
@@ -200,4 +197,46 @@ exports.delete = (req, res) => {
              message: "Could not delete map with id " + req.params.id
          });
      });
+};
+
+exports.sendJSON = (req, res) => {
+    let stream = fs.createWriteStream(path.join(__dirname, "../../transporter.json"));
+   Transporter.find({})
+        .then(async data => {
+            console.log("data")
+            if(!data) {
+                return res.status(404).send({
+                    message: "Transporter not found"
+                });
+            }
+            const transporters = await Promise.all(data.map(mapsSerializer));
+            res.set({
+              'Content-Type': 'application/json',
+            })
+            transporters.forEach(Transporter=>{
+                stream.write(JSON.stringify(Transporter),()=>{
+                    res.download(path.join(__dirname, "../../transporter.json"),"transporter.json",(err) => {
+                            if (err) {
+                            } else {
+                                console.log('file downloaded')
+                                fs.unlinkSync(path.join(__dirname, "../../transporter.json"));
+                                
+                            }
+                        }
+                    )
+                })
+            });
+
+        }).catch(err => {
+            console.log(err)
+
+            if(err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "Failed" 
+                });
+            }
+            return res.status(500).send({
+                message: "Error retrieving Transporter "
+            });
+        });
 };

@@ -1,6 +1,7 @@
 const TransporterData = require('../models/transporterData.model')    
 const Transporter =require('../models/map.model');
-
+const fs = require('fs');
+const path =require('path');
 const MasterDMtransporterfarmer =require('../models/MasterDMtransporterfarmer');
 const MasterTMtransporterfarmer =require('../models/MasterTMtransporterfarmer');
 
@@ -45,7 +46,6 @@ exports.findPagination = async (req, res) => {
     )
     
     const { docs } = paginated;
-    console.log(paginated)
 
     const transporterData = await Promise.all(docs.map(transporterDataSerializer));
     delete paginated["docs"];
@@ -75,7 +75,6 @@ exports.findFreeTransporter = (req, res) => {
 };
 
 exports.assignNewTransporter =async  (req, res) => {
-    console.log(req.body,"hxhh")
     if(!req.body.id && req.body.transporter_id) {
         return res.status(400).send({
             message: "TransporterData status can not be empty"
@@ -179,7 +178,6 @@ exports.update = (req, res) => {
 
 exports.getFilteredStem=async (req,res)=>{
      try{
-        console.log(req.body)
         const { page = 1, limit = 4} = req.query;
         let query={}
         
@@ -223,3 +221,45 @@ exports.getFilteredStem=async (req,res)=>{
     }
 
 }
+
+  
+exports.sendJSON = (req, res) => {
+    let stream = fs.createWriteStream(path.join(__dirname, "../../transporterData.json"));
+   TransporterData.find({})
+        .then(async transporterDatas => {
+            if(!transporterDatas) {
+                return res.status(404).send({
+                    message: "TransporterData not found"
+                });
+            }
+            res.set({
+              'Content-Type': 'application/json',
+            })
+            transporterDatas = await Promise.all(transporterDatas.map(transporterDataSerializer));
+            transporterDatas.forEach(transporterData=>{
+                stream.write(JSON.stringify(transporterData),()=>{
+                    res.download(path.join(__dirname, "../../transporterData.json"),"transporterData.json",(err) => {
+                            if (err) {
+                                
+                            } else {
+                                console.log('file downloaded')
+                                fs.unlinkSync(path.join(__dirname, "../../transporterData.json"));
+                                
+                            }
+                        }
+                    )
+                })
+            });
+
+        }).catch(err => {
+            if(err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "Failed" 
+                });
+            }
+            console.log(err)
+            return res.status(500).send({
+                message: "Error retrieving TransporterData "
+            });
+        });
+};

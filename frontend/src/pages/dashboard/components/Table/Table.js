@@ -50,6 +50,9 @@ export default function TableComponent({data,isLoading,errorMsg,updateFarmer,fet
       return (
         <>
          <div>
+          <Button variant="contained" color="primary" onClick={resetFilter} style={{margin:"0.5rem 1rem 0rem 1rem",height:"35px"}} size="large">
+                         Clear
+                      </Button>
             <div className="table-filter" >
               
                 <div style={{displa:"flex",alignItems:"flex-end"}}>

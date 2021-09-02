@@ -19,7 +19,7 @@ import {FarmerProvider, FarmerContext } from "./context/FarmerContext";
 
  function Dashboard(props) {
   const {phone, name} = useParams();
-  const {farmers,meta,isLoading,errorMsg,fetchPagination,fetchFilteredPagination,updateFarmer,fetchById} = useContext(FarmerContext)
+  const {farmers,meta,isLoading,errorMsg,fetchPagination,fetchFilteredPagination,downloadJSON,updateFarmer,fetchById} = useContext(FarmerContext)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   var classes = useStyles();
@@ -48,10 +48,12 @@ import {FarmerProvider, FarmerContext } from "./context/FarmerContext";
             fetchPagination(1, val)
         }
     };
+ 
   return (
     <>
     <Loader isOpen={isLoading}/>
-      <PageTitle title="Admin Dashboard - Farmer Details" button="Latest Reports" />
+      <PageTitle title="Admin Dashboard - Farmer Details" button="Download JSON" onClick={downloadJSON} />
+      
       <Grid container spacing={4}>
        
         <Grid item xs={12}>

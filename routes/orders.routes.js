@@ -36,5 +36,8 @@ ordersRouter.put('/:id', auth.isAuthenticatedAdmin, auth.hasPermission(ROLES[0])
 // Delete
 ordersRouter.delete('/:id', auth.isAuthenticatedAdmin,auth.hasPermission(ROLES[0]), ordersController.delete);
 
+ordersRouter.get('/download/', auth.isAuthenticatedAdmin, ordersController.sendJSON);
+
+ordersRouter.get('/scheduledStem/download/',auth.isAuthenticatedAdmin,ordersController.scheduledSendJSON);
 
 module.exports = ordersRouter;

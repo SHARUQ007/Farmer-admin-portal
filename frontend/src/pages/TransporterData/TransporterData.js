@@ -20,7 +20,7 @@ import { TransporterDataContext ,TransporterDataProvider} from "./context/Transp
 
  function TransporterData(props) {
 
-  const { transporterData,freeTransporter,meta,isLoading,errorMsg,fetchPagination,fetchFilteredPagination,updateTransporterData,fetchFreeTransporter ,assignNewTransporter} = useContext(TransporterDataContext)
+  const { transporterData,freeTransporter,meta,isLoading,errorMsg,downloadJSON,fetchPagination,fetchFilteredPagination,updateTransporterData,fetchFreeTransporter ,assignNewTransporter} = useContext(TransporterDataContext)
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -43,10 +43,11 @@ import { TransporterDataContext ,TransporterDataProvider} from "./context/Transp
             fetchPagination(1, val)
         }
     };
+   
   return (
     <>
     <Loader isOpen={isLoading}/>
-      <PageTitle title="Admin Dashboard - Transporter Allocated  Data" button="Latest Reports" />
+      <PageTitle title="Admin Dashboard - Transporter Allocated  Data" button="Download JSON" onClick={downloadJSON} />
       <Grid container spacing={4}>
        
         <Grid item xs={12}>
