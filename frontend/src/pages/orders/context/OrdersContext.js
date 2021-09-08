@@ -132,7 +132,6 @@ class OrdersProvider extends React.PureComponent {
           console.log(err)})
     }
     downloadJSON=()=>{
-      debugger
       API.orders().downloadJSON()
         .then(res =>{
           const url = window.URL.createObjectURL(new Blob([res.data]));

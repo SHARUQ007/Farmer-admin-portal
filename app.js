@@ -25,7 +25,6 @@ const app = express();
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("frontend/build"));
 }
-app.use(express.static("frontend/build"));
 // CORS Middleware
 app.use(cors());
 // Logger Middleware

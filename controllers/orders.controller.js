@@ -54,7 +54,7 @@ exports.getOrderPicture=(req, res) =>{
 // Retrieve all data
 exports.findAll =  (req, res) => {
 
-    Orders.find()
+    Orders.find().sort({"_id":-1})
     .then(async data => {
         const orders = await Promise.all(data.map(ordersSerializer));
         res.send(orders);
@@ -75,11 +75,13 @@ exports.findPagination = async (req, res) => {
             page,
             limit,
             lean: true,
-            sort: { updatedAt: "desc" }
+            sort: {"_id":-1}
         }
     )
     
     const { docs } = paginated;
+        console.log(docs[0])
+
     const orders = await Promise.all(docs.map(ordersSerializer));
     delete paginated["docs"];
     const meta = paginated
@@ -208,7 +210,7 @@ exports.getScheduledStem=async (req,res)=>{
                 page,
                 limit,
                 lean: true,
-                sort: { updatedAt: "desc" }
+                sort: {"_id":-1}
             }
         )
         const { docs } = paginated;
@@ -263,7 +265,7 @@ exports.getFilteredStem=async (req,res)=>{
                 page,
                 limit,
                 lean: true,
-                sort: { updatedAt: "desc" }
+                 sort: {"_id":-1}
             }
         )
         const { docs } = paginated;
