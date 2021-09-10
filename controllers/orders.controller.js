@@ -12,6 +12,7 @@ const ordersSerializer = data => ({
     farming: data.farming,
     variety: data.variety,
     expected:data.expected,
+    scheduledDate: data.scheduledDate,
     image:data.image?data.image:""
 });
 const popupOrdersSerializer = data => ({
@@ -295,17 +296,22 @@ exports.getFilteredStem=async (req,res)=>{
 
 }
 
+// Orders.findOne({_id:"61377cf219006e0016a140c0"}).then(a=>console.log(a.status))
+// Orders.findOneAndUpdate({_id:"61377cf219006e0016a140c0"},{status:"us"}).then(a=>console.log(a))
+
 exports.updateScheduledDate=async (req,res)=>{
      if(!req.body.id) {
         return res.status(400).send({
             message: "Orders id can not be empty"
         });
     }
-    Orders.findByIdAndUpdate({_id:req.body.id}, {
+    console.log(req.body,new Date(req.body.date))
+    Orders.findOneAndUpdate({_id:req.body.id}, {
         scheduledDate:new Date(req.body.date),
-        status:"Scheduled",    
-    }, {new: true})
+        status:"Scheduled",
+    })
     .then(data => {
+        console.log(data)
         if(!data) {
             return res.status(404).send({
                 message: "Orders not found with id " + req.params.id

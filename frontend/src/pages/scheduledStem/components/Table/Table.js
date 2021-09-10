@@ -60,9 +60,9 @@ export default function TableComponent({data,popupData,isLoading,errorMsg,update
       date=new Date(date);
       let year=date.getFullYear();
       let month=date.getMonth()+1;
-      month=month>10?month:"0"+month;
+      month=month>=10?month:"0"+month;
       let day=date.getDate();
-      day=day>10?day:"0"+day;
+      day=day>=10?day:"0"+day;
       date=year+"-"+month+"-"+day;
       return date;
     }
@@ -159,7 +159,7 @@ export default function TableComponent({data,popupData,isLoading,errorMsg,update
             </TableRow>
           </TableHead>
           <TableBody >
-            {data.map(({ id, name, phone,orderId, noOfStems, farming,variety,status,expected,image }) => (
+            {data.map(({ id, name, phone,orderId, noOfStems, farming,variety,status,expected,scheduledDate,image }) => (
               <TableRow key={id} >
                 <TableCell className="pl-3 fw-normal" style={{cursor:"pointer",color:"blue"}} id={id} onClick={(e)=>{openPopup(e.target.id)}}>
                       {name}
@@ -177,6 +177,7 @@ export default function TableComponent({data,popupData,isLoading,errorMsg,update
                 <TableCell>{farming}</TableCell>
                 <TableCell>{variety}</TableCell>
                 <TableCell>{new Date(expected).toDateString()}</TableCell>
+                <TableCell>{new Date(scheduledDate).toDateString()}</TableCell>
                 <TableCell><input type="button" className="px-1 closeButton" onClick={showImage} imgsrc={image} value="View Image"/></TableCell>
                 <ImageViewer src={src} setSrc={setSrc}/>
               </TableRow>
