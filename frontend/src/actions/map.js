@@ -103,7 +103,6 @@ export const create = (input, onSuccess) => dispatch => {
 }
 
 export const update = (id, input, onSuccess) => dispatch => {
-    alert("hai")
      dispatch({
                 type: ACTION_TYPES.MAP_LOADING,
                 payload: true

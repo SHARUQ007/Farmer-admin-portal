@@ -125,14 +125,7 @@ exports.update = (req, res) => {
         });
     }
 
-    Transporter.findByIdAndUpdate(req.params.id, {
-        name: req.body.name.trim(),
-        mobile: req.body.mobile.trim(),
-        number: req.body.number.trim(),
-        capacity: req.body.capacity,
-        password: req.body.password.trim(),
-       
-    }, {new: true})
+    Transporter.findByIdAndUpdate(req.params.id, {...req.body}, {new: true})
     .then(data => {
         if(!data) {
             return res.status(404).send({
