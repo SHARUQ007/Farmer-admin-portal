@@ -67,6 +67,9 @@ const orderSchema = new mongoose.Schema({
     type:String,
     required:true,
   },
+  scheduledDate:{
+    type:Date
+  },
   variety:{
     type:String,
     required:true

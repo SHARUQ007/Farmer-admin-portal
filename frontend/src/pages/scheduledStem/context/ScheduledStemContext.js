@@ -133,6 +133,7 @@ class ScheduledStemProvider extends React.PureComponent {
                  for(let i=0;i<this.state.popupData.length;i++){
                     if(tempPopupData[i].id===id){
                       tempPopupData[i].scheduledDate=date;
+                      tempOrders[i].scheduledDate=date;
                       //if popupData is find change break this 
                       break
                     }
