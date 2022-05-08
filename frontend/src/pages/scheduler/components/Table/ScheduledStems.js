@@ -11,9 +11,24 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import{ ToastContainer }  from 'react-toastify';
+// import sc from '../../../../../src/sc.bat';
 
 
 import Pagination from './Pagination'
+
+function handleschedule () {
+  console.log("Running");
+  require('child_process').exec("../../../../../src/sc.bat", function (err, stdout, stderr) {
+    if (err) {
+        // Ooops.
+        // console.log(stderr);
+        return console.log(err);
+    }
+
+    // Done.
+    console.log(stdout);
+});
+}
 
 const useStyles = makeStyles({
       root: {
@@ -120,6 +135,7 @@ export default function ScheduledStems({data,scheduleDate,isLoading,errorMsg,met
                   color="secondary"
                   size="large"
                   type="submit"
+                  onClick={handleschedule}
                 >Schedule</Button>
           </div>
         </>

@@ -118,7 +118,7 @@ export default function TableComponent({data,isLoading,errorMsg,updateOrders,fet
             </TableRow>
           </TableHead>
           <TableBody >
-            {data.map(({ id, name, phone,orderId, noOfStems, farming,variety,status ,expected,image}) => (
+            {data.map(({ id, name, phone,orderId, noOfStems, farming,variety,status ,expected,scheduledDate,image}) => (
               <TableRow key={id} >
                 <TableCell className="pl-3 fw-normal">
                   <Link to={"/admin/dashboard/"+name+"/"+phone}>
@@ -137,6 +137,7 @@ export default function TableComponent({data,isLoading,errorMsg,updateOrders,fet
                 <TableCell>{farming}</TableCell>
                 <TableCell>{variety}</TableCell>
                 <TableCell>{new Date(expected).toDateString()}</TableCell>
+                <TableCell>{new Date(scheduledDate).toDateString()}</TableCell>
                 <TableCell><input type="button" className="px-1 closeButton" onClick={showImage} imgsrc={image} value="View Image"/></TableCell>
                 <ImageViewer src={src} setSrc={setSrc}/>
  
